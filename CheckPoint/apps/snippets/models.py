@@ -8,10 +8,11 @@ class Contact(models.Model):
     )
     last_name = models.CharField(
         max_length=255,
-
     )
 
     email = models.EmailField()
+
+    phone = models.CharField(max_length=12,default='000000000000')
 
     def __str__(self):
 
@@ -19,4 +20,5 @@ class Contact(models.Model):
             self.first_name,
             self.last_name,
             self.email,
+            self.phone,
         ])
