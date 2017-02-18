@@ -1,7 +1,9 @@
 from django.db import models
 
 
-class Contact(models.Model):
+#creating a model for Users as an example, this wil not be used, but is an example for how
+#to use models. This model wil be created as a table in the dabase
+class User(models.Model):
 
     first_name = models.CharField(
         max_length=255,

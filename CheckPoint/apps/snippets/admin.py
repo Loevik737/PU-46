@@ -1,4 +1,5 @@
 from django.contrib import admin
 from . import models;
 # Register your models here.
-admin.site.register(models.Contact)
+#registering the user model so we can edit it in the adming panel
+admin.site.register(models.User)
