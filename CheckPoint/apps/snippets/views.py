@@ -10,25 +10,31 @@ def index(request):
 
 #a view that shows the user info and form for editing
 def user_info(request):
-    #if the user clicks the submit button a POST request is sent
-    if request.method == 'POST':
-        #user is the user you are loged in with
-        user = request.user
-        #get the fom from the post request
-        form = UpdateUser(request.POST)
-        #if the form is valid go into the if statement
-        if form.is_valid():
-            #set user.username to the post we got
-            user.username = request.POST['username']
-            #set user.email to the post we got
-            user.email = request.POST['email']
-            #save teh user
-            user.save()
-            #rederect to the same page but now with updated info
-            return HttpResponseRedirect('../users')
+    #user is the user you are loged in with
+    user = request.user
+    if user.is_authenticated:
+        #if the user clicks the submit button a POST request is sent
+        if request.method == 'POST':
+            #get the fom from the post request
+            form = UpdateUser(request.POST)
+            #if the form is valid go into the if statement
+            if form.is_valid():
+                #set user.username to the post we got
+                user.username = request.POST['username']
+                #set user.email to the post we got
+                user.email = request.POST['email']
+                #save teh user
+                user.save()
+                #rederect to the same page but now with updated info
+                return HttpResponseRedirect('../users')
+        else:
+            #the form is the form class from forms.spy
+            form = UpdateUser()
+        args = {}
+        args['form'] = form
+        return render(request, 'users/user.html', args)
+
     else:
-        #the form is the form class from forms.spy
-        form = UpdateUser()
-    args = {}
-    args['form'] = form
-    return render(request, 'users/user.html', args)
+        args = {}
+        args['user'] = '';
+        return render(request, 'users/user.html', args)

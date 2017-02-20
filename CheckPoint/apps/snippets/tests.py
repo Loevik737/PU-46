@@ -16,3 +16,9 @@ class formTests(TestCase):
             'username': [u'This field is required.'],
             'email': [u'This field is required.']
         })
+
+class viewTests(TestCase):
+
+    def test_userInfo_view_template(self):
+        response = self.client.get('/users/')
+        self.assertTemplateUsed(response, 'users/user.html','users/base.html')
