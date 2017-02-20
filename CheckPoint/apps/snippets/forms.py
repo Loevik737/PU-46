@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django import forms
 
 # a formclass witch we can use to change user data
-class UpdateProfile(forms.ModelForm):
+class UpdateUser(forms.ModelForm):
     #creating a formfield for username
     username = forms.CharField(required=True,label='Change username',
                     widget=forms.TextInput(attrs={'placeholder': 'new username'}))

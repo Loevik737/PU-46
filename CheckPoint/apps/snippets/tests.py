@@ -1,11 +1,18 @@
 from django.test import TestCase
-from models import User
+from forms import UpdateUser
 # Create your tests here.
-class UserTests(TestCase):
-    """User model tests."""
-    def test_str(self):
-        user = User(first_name='John', last_name='Smith',email='test@test.com')
-        self.assertEquals(
-            str(user),
-            'John Smith test@test.com',
-        )
+class formTests(TestCase):
+
+    def test_userUpdate_form_full(self):
+        form_data = {'username': 'hei','email':'per@per.com'}
+        form = UpdateUser(data=form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_userUpdate_form_empty(self):
+        form_data = {}
+        form = UpdateUser(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors, {
+            'username': [u'This field is required.'],
+            'email': [u'This field is required.']
+        })

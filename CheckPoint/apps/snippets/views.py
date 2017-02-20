@@ -2,7 +2,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.shortcuts import render_to_response,render
-from forms import UpdateProfile
+from forms import UpdateUser
 
 #a default index view
 def index(request):
@@ -15,7 +15,7 @@ def user_info(request):
         #user is the user you are loged in with
         user = request.user
         #get the fom from the post request
-        form = UpdateProfile(request.POST)
+        form = UpdateUser(request.POST)
         #if the form is valid go into the if statement
         if form.is_valid():
             #set user.username to the post we got
@@ -28,7 +28,7 @@ def user_info(request):
             return HttpResponseRedirect('../users')
     else:
         #the form is the form class from forms.spy
-        form = UpdateProfile()
+        form = UpdateUser()
     args = {}
     args['form'] = form
     return render(request, 'users/user.html', args)
