@@ -2,12 +2,12 @@
 {% block title %}User{% endblock %}
 {% block content %}
         <!--Checks if there is userobjects in users -->
-        {% if users %}
+        {% if user %}
             <ul>
               <!--If there is, show the information in a forloop-->
-                {% for user in users %}
-                <li>{{ user.first_name}} {{ user.last_name}} {{ user.email}} {{ user.phone}}</li>
-                {% endfor %}
+                
+                <li>{{ user.email}}</li>
+
             </ul>
         <!--If there is no objects, tell the user-->
         {% else %}

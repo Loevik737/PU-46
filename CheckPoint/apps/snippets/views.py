@@ -12,7 +12,7 @@ def show_users(request):
     context = RequestContext(request)
     # Query the database for a list of ALL users currently stored.
     if request.user.is_authenticated:
-        context_dict = {'user': user}
+        context_dict = {'user': request.user}
     else:
         context_dict = {'user': 'you are not authenticated'}
     # Place the list in our context_dict dictionary which will be passed to the template engine.
