@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'CheckPoint.apps.snippets',
     'CheckPoint.apps.loginPortal',
 ]
@@ -83,9 +82,13 @@ WSGI_APPLICATION = 'CheckPoint.wsgi.application'
 
 DATABASES = {
     'default': {
+        #telling django to use mysql
         'ENGINE': 'django.db.backends.mysql',
+        #the database name we want to connect to is django_db
         'NAME': 'django_db',
+        #username to connect is default root
         'USER': 'root',
+        #password to connect is default root
         'PASSWORD': 'root',
     }
 }

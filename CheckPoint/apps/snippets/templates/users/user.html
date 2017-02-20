@@ -1,16 +1,21 @@
 {% extends 'users/base.html' %}
 {% block title %}User{% endblock %}
 {% block content %}
-        <!--Checks if there is userobjects in users -->
+        <!--Checks if there is a userobject in user -->
         {% if user %}
             <ul>
-              <!--If there is, show the information in a forloop-->
-
-                <li>{{user.username}}{{ user.email}}</li>
-
+              <!--If there is, show the information-->
+                <li>Username: {{user.username}}</li>
+                <li>email: {{user.email}} </li>
             </ul>
-        <!--If there is no objects, tell the user-->
+            <form method="POST" action="/users/" class="" />
+            <!--csrf token to stop csrf attacks-->
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Update</button>
+            </form>
+        <!--If there is no object, tell the user-->
         {% else %}
-            <strong>There are no users present.</strong>
+            <strong>You are not loged in</strong>
         {% endif %}
 {% endblock %}
