@@ -5,8 +5,8 @@
         {% if user %}
             <ul>
               <!--If there is, show the information in a forloop-->
-                
-                <li>{{ user.email}}</li>
+
+                <li>{{user.username}}{{ user.email}}</li>
 
             </ul>
         <!--If there is no objects, tell the user-->
