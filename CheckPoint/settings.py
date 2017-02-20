@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'CheckPoint.apps.loginPortal',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +68,11 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGIN_REDIRECT_URL = 'home'
+
+#Form template
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 WSGI_APPLICATION = 'CheckPoint.wsgi.application'
 
