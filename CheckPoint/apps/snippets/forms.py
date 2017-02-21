@@ -4,10 +4,10 @@ from django import forms
 # a formclass witch we can use to change user data
 class UpdateUser(forms.ModelForm):
     #creating a formfield for username
-    username = forms.CharField(required=True,label='Change username',
+    username = forms.CharField(required=False,label='Change username',
                     widget=forms.TextInput(attrs={'placeholder': 'new username'}))
     #creating a formfield for email
-    email = forms.EmailField(required=True,label='Change email',
+    email = forms.EmailField(required=False,label='Change email',
                     widget=forms.TextInput(attrs={'placeholder': 'new email...'}))
     #teh model we wil use wil be the auth User modelm and the fields are named username,email
     class Meta:

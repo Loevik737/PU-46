@@ -8,11 +8,18 @@
                 <li>Username: {{user.username}}</li>
                 <li>email: {{user.email}} </li>
             </ul>
-            <form method="POST" action="/users/" class="" />
-            <!--csrf token to stop csrf attacks-->
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Update</button>
+            {{info_message}}
+            <form method="POST" action="/users/" name="update_info_form" class="updateInfoClass" />
+              <!--csrf token to stop csrf attacks-->
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" name="update_info">Update</button>
+            </form>
+            <form method="POST" action="/users/" name="change_password_form" class="changePasswordClass" />
+              <!--csrf token to stop csrf attacks-->
+              {% csrf_token %}
+              {{ change_password_form.as_p }}
+              <button type="submit" name="change_password">Change Password</button>
             </form>
         <!--If there is no object, tell the user-->
         {% else %}
