@@ -9,7 +9,7 @@ from django.contrib import messages
 
 #a default index view
 def index(request):
-    return HttpResponse("Hello, world. You're at the snippets index.")
+    return HttpResponse("Hello, world. You're at the user app")
 
 #a view that shows the user info and form for editing
 def user_info(request):
@@ -40,7 +40,7 @@ def user_info(request):
                     #save the new userinfo
                     user.save()
                     #rederect to the same page but now with updated info
-                    return HttpResponseRedirect('../users')
+                    return HttpResponseRedirect('../edit')
             else:
                 #if the update button wasn't clicked, set the form empty
                 form = UpdateUser();
@@ -52,7 +52,7 @@ def user_info(request):
                 if change_password_form.is_valid():
                     change_password_form.save()
                     update_session_auth_hash(request, user)
-                    return HttpResponseRedirect('../users')
+                    return HttpResponseRedirect('../edit')
             else:
                 #if the update button wasn't clicked, set the form empty
                 change_password_form = PasswordChangeForm(user)
@@ -61,8 +61,8 @@ def user_info(request):
         else:
             args['form'] = UpdateUser()
             args['change_password_form'] = PasswordChangeForm(user)
-        return render(request, 'users/user.html', args)
+        return render(request, 'user/user.html', args)
 
     else:
         args['user'] = '';
-        return render(request, 'users/user.html', args)
+        return render(request, 'user/user.html', args)

@@ -1,4 +1,4 @@
-{% extends 'users/base.html' %}
+{% extends 'user/base.html' %}
 {% block title %}User{% endblock %}
 {% block content %}
         <!--Checks if there is a userobject in user -->
@@ -9,13 +9,13 @@
                 <li>email: {{user.email}} </li>
             </ul>
             {{info_message}}
-            <form method="POST" action="/users/" name="update_info_form" class="updateInfoClass" />
+            <form method="POST" action="/user/edit/" name="update_info_form" class="updateInfoClass" />
               <!--csrf token to stop csrf attacks-->
               {% csrf_token %}
               {{ form.as_p }}
               <button type="submit" name="update_info">Update</button>
             </form>
-            <form method="POST" action="/users/" name="change_password_form" class="changePasswordClass" />
+            <form method="POST" action="/user/edit/" name="change_password_form" class="changePasswordClass" />
               <!--csrf token to stop csrf attacks-->
               {% csrf_token %}
               {{ change_password_form.as_p }}
