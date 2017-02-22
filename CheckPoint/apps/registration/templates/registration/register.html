@@ -2,11 +2,12 @@
 {% block title %}User Registration{% endblock %}
 {% block head %}User Registration{% endblock %}
 {% block content %}
+    <h2>Create user</h2>
     <form method="post" action=".">{% csrf_token %}
         <table border="0">
             {{ form.as_table }}
         </table>
-        <input type="submit" value="Register" />
+        <input class="acceptButton" type="submit" value="Register" />
     </form>
     <a href="{% url 'login' %}">Login</a>
 {% endblock %}
