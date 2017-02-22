@@ -1,23 +1,23 @@
-<!DOCTYPE html>
+{% load staticfiles %}
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>{% block title %}Django Simple Login{% endblock %}</title>
-</head>
-<body>
-  <header>
-    <h1>Django Simple Login</h1>
-    {% if user.is_authenticated %}
-      Hi {{ user.username }}!
-      <a href="{% url 'logout' %}">logout</a>
-    {% else %}
-      <a href="{% url 'login' %}">login</a>
-    {% endif %}
-  </header>
-  <hr>
-  <main>
-    {% block content %}
-    {% endblock %}
-  </main>
-  <hr>
-</body>
+    <head>
+        <title>Users</title>
+        <!-- loads the css form the static folder-->
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    </head>
+
+    <header>
+          <h1>Checkpoint</h1>
+    </header>
+
+    <body>
+      <section id="main">
+        <!--other html snippets will be added in the block under-->
+        {% block content %}
+        {% endblock %}
+      </section>
+      <footer>
+      </footer>
+    </body>
+</html>
