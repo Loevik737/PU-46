@@ -13,14 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
-from django.contrib import admin
-from CheckPoint.apps.registration.views import register, registration_complete
+from django.conf.urls import include, url
+from CheckPoint.apps.registration.views import register, register_success
 
-urlpatterns = [
-    url(r'^snippets/', include('CheckPoint.apps.snippets.urls')),
-    url(r'^admin/', admin.site.urls),
-    url(r'^accounts/register/$', register, name='register'),
-    url(r'^accounts/register/complete/$', registration_complete,
-        name='registration_complete')
-]
+urlpatterns =  [url(r'^register/$', register, name="register"),
+                url(r'^register/success/$', register_success, name="register_success"),
+    ]

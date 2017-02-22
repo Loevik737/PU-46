@@ -1,26 +1,34 @@
 from django.shortcuts import render
 
 # Create your views here.
+from CheckPoint.apps.registration.forms import *
+from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
-from django.contrib.auth.forms import UserCreationForm
-from django.template.context_processors import csrf
+from django.template import RequestContext
 
 
+@csrf_protect
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/accounts/register/complete')
-
+            user = User.objects.create_user(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+                email=form.cleaned_data['email']
+            )
+            return HttpResponseRedirect('/register/success/')
     else:
-        form = UserCreationForm()
-    token = {}
-    token.update(csrf(request))
-    token['form'] = form
+        form = RegistrationForm()
 
-    return render(request, '../Templates/registration_form.html', token)
+    return render(request,
+        'register.html',
+                  {'form': form}
+    )
 
-def registration_complete(request):
-    return render_to_response('../Templates/registration_complete.html')
+
+def register_success(request):
+    return render(request,
+        'registersuccess.html',
+    )
