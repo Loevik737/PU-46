@@ -9,8 +9,10 @@ class UpdateUser(forms.ModelForm):
     #creating a formfield for email
     email = forms.EmailField(required=False,label='Change email',
                     widget=forms.TextInput(attrs={'placeholder': 'new email...'}))
+    #creating a formfield for last name
     first_name = forms.CharField(required=False,label='Change first name',
                     widget=forms.TextInput(attrs={'placeholder': 'new first name'}))
+    #creating a formfield for last name
     last_name = forms.CharField(required=False,label='Change last name',
                     widget=forms.TextInput(attrs={'placeholder': 'new last name'}))
     #the model we will use will be the auth User model and the fields are named username,email

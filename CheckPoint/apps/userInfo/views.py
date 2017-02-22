@@ -40,8 +40,10 @@ def user_info(request):
                         #set user.email to the post we got
                         user.email = emailAddress
                     if first_name != '':
+                        #set user.first_name to the post we got
                         user.first_name = first_name
                     if last_name != '':
+                        #set user.last_name to the post we got
                         user.last_name = last_name
                     #save the new userinfo
                     user.save()
