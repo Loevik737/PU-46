@@ -23,12 +23,12 @@ def register(request):
         form = RegistrationForm()
 
     return render(request,
-        'register.html',
+        'registration/register.html',
                   {'form': form}
     )
 
 
 def register_success(request):
     return render(request,
-        'registersuccess.html',
+        'registration/registersuccess.html',
     )

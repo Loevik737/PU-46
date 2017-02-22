@@ -13,12 +13,14 @@
               <!--csrf token to stop csrf attacks-->
               {% csrf_token %}
               {{ form.as_p }}
+                <!--Giving the post request the name update_info so we can differ the forms-->
               <button type="submit" name="update_info">Update</button>
             </form>
             <form method="POST" action="/user/edit/" name="change_password_form" class="changePasswordClass" />
               <!--csrf token to stop csrf attacks-->
               {% csrf_token %}
               {{ change_password_form.as_p }}
+              <!--Giving the post request the name change_password so we can differ the forms-->
               <button type="submit" name="change_password">Change Password</button>
             </form>
         <!--If there is no object, tell the user-->

@@ -37,13 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    
-    'CheckPoint.apps.registration'
-
-
     'CheckPoint.apps.userInfo',
     'CheckPoint.apps.loginPortal',
+    'CheckPoint.apps.registration'
 ]
 
 MIDDLEWARE = [
