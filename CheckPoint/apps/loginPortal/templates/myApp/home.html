@@ -4,5 +4,8 @@
 
 {% block content %}
   <h2>Home</h2>
-  <h3>{{ user }}</h3>
+  <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+  <h3>Username: {{ user.username }}</h3>
+  <p><a href="{% url 'editUser' %}">Min side</a></p>
+  <p><a href="{% url 'logout' %}">Log out</a></p>
 {% endblock %}

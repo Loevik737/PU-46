@@ -7,6 +7,7 @@
               <!--If there is, show the information-->
                 <li>Username: {{user.username}}</li>
                 <li>email: {{user.email}} </li>
+                <li>Name: {{user.first_name}} {{user.last_name}} </li>
             </ul>
             {{info_message}}
             <form method="POST" action="/user/edit/" name="update_info_form" class="updateInfoClass" />
@@ -21,6 +22,7 @@
               {{ change_password_form.as_p }}
               <button type="submit" name="change_password">Change Password</button>
             </form>
+            <p><a href="{% url 'home' %}">Home</a></p>
         <!--If there is no object, tell the user-->
         {% else %}
             <strong>You are not loged in</strong>

@@ -29,6 +29,8 @@ def user_info(request):
                 if form.is_valid():
                     username = request.POST.get('username','')
                     emailAddress = request.POST.get('email','')
+                    first_name = request.POST.get('first_name', '')
+                    last_name = request.POST.get('last_name', '')
                     #only update the fields that are not empty
                     if username != '':
                         #set user.username to the post we got
@@ -37,6 +39,10 @@ def user_info(request):
                     if emailAddress != '':
                         #set user.email to the post we got
                         user.email = emailAddress
+                    if first_name != '':
+                        user.first_name = first_name
+                    if last_name != '':
+                        user.last_name = last_name
                     #save the new userinfo
                     user.save()
                     #rederect to the same page but now with updated info
