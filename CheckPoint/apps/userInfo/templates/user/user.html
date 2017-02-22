@@ -1,0 +1,28 @@
+{% extends 'user/base.html' %}
+{% block title %}User{% endblock %}
+{% block content %}
+        <!--Checks if there is a userobject in user -->
+        {% if user %}
+            <ul>
+              <!--If there is, show the information-->
+                <li>Username: {{user.username}}</li>
+                <li>email: {{user.email}} </li>
+            </ul>
+            {{info_message}}
+            <form method="POST" action="/user/edit/" name="update_info_form" class="updateInfoClass" />
+              <!--csrf token to stop csrf attacks-->
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" name="update_info">Update</button>
+            </form>
+            <form method="POST" action="/user/edit/" name="change_password_form" class="changePasswordClass" />
+              <!--csrf token to stop csrf attacks-->
+              {% csrf_token %}
+              {{ change_password_form.as_p }}
+              <button type="submit" name="change_password">Change Password</button>
+            </form>
+        <!--If there is no object, tell the user-->
+        {% else %}
+            <strong>You are not loged in</strong>
+        {% endif %}
+{% endblock %}

@@ -16,6 +16,10 @@ Including another URLconf
 from django.conf.urls import include, url
 from CheckPoint.apps.registration.views import register, register_success
 
-urlpatterns =  [url(r'^register/$', register, name="register"),
-                url(r'^register/success/$', register_success, name="register_success"),
-    ]
+urlpatterns = 
+    [url(r'^register/$', register, name="register"),
+    url(r'^register/success/$', register_success, name="register_success"),
+    url(r'^admin/', admin.site.urls),
+    url(r'^login/', include('CheckPoint.apps.loginPortal.urls')),
+    url(r'^user/', include('CheckPoint.apps.userInfo.urls')),
+]

@@ -37,9 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'CheckPoint.apps',
+
+    
     'CheckPoint.apps.registration'
 
+
+    'CheckPoint.apps.userInfo',
+    'CheckPoint.apps.loginPortal',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +61,7 @@ ROOT_URLCONF = 'CheckPoint.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,6 +74,11 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_REDIRECT_URL = 'home'
+
+#Form template
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
 WSGI_APPLICATION = 'CheckPoint.wsgi.application'
 
 
@@ -78,8 +87,14 @@ WSGI_APPLICATION = 'CheckPoint.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        #telling django to use mysql
+        'ENGINE': 'django.db.backends.mysql',
+        #the database name we want to connect to is django_db
+        'NAME': 'django_db',
+        #username to connect is default root
+        'USER': 'root',
+        #password to connect is default root
+        'PASSWORD': 'root',
     }
 }
 
