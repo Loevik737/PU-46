@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'CheckPoint.apps.userInfo',
-    'CheckPoint.apps.loginPortal',
-    'CheckPoint.apps.registration'
     'CheckPoint.apps.plan',
     'CheckPoint.apps.subject',
+    'CheckPoint.apps.loginPortal',
+    'CheckPoint.apps.registration',
 
 ]
 

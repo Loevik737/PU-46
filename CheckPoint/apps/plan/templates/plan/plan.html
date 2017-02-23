@@ -1,12 +1,8 @@
-{% extends 'plan/base.html' %}
+{% extends 'base.html' %}
 {% block title %}Plan{% endblock %}
 {% block content %}
         <!--Checks if there is a userobject in user -->
         {% if user %}
-           <!DOCTYPE html>
-        <html>
-            <body>
-
             <h2>Plan</h2>
             {% if weeks %}
                 {% for week in weeks %}
@@ -29,11 +25,6 @@
             {% else %}
                  <strong>No weeks in plan</strong>
             {% endif %}
-            {% load static %}
-            <script type="text/javascript"  src="{% static 'js/plan.js' %}"></script>
-
-            </body>
-        </html>
         {% else %}
             <strong>You are not logged in</strong>
         {% endif %}
