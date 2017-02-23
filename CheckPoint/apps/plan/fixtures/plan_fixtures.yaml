@@ -69,6 +69,7 @@
     objectives:
     - 1
     - 2
+    - 3
 
 - model: plan.Lecture
   pk: 3
@@ -102,4 +103,10 @@
   pk: 2
   fields:
     learning_objective: "Learn something else."
+    subject: 1
+
+- model: plan.Objectives
+  pk: 3
+  fields:
+    learning_objective: "Learn web development in Assembly"
     subject: 1
