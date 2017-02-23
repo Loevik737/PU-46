@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'CheckPoint.apps.userInfo',
     'CheckPoint.apps.loginPortal',
     'CheckPoint.apps.registration'
+    'CheckPoint.apps.plan',
+    'CheckPoint.apps.subject',
+
 ]
 
 MIDDLEWARE = [

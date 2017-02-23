@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^plan/', include('CheckPoint.apps.plan.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^login/', include('CheckPoint.apps.loginPortal.urls')),
     url(r'^user/', include('CheckPoint.apps.userInfo.urls')),
