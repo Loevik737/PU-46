@@ -1,0 +1,41 @@
+{% extends 'plan/base.html' %}
+{% block title %}Plan{% endblock %}
+{% block content %}
+        <!--Checks if there is a userobject in user -->
+        {% if user %}
+           <!DOCTYPE html>
+        <html>
+            <body>
+
+            <h2>Plan</h2>
+            {% if weeks %}
+                {% for week in weeks %}
+                    <button class="accordion"> Uke {{ week.week_number }} </button>
+                    {% if lectures %}
+                        {% for lecture in lectures %}
+                            <div class="panel">
+                                <h3>Kommentar:</h3>
+                                <p> {{ lecture.comment }} </p>
+                                {% if objectives %}
+                                    <h3>Læringsmål: </h3>
+                                    {% for objective in objectives %}
+                                        <p> {{ objective.learning_objective }} </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                 <strong>No weeks in plan</strong>
+            {% endif %}
+            {% load static %}
+            <script type="text/javascript"  src="{% static 'js/plan.js' %}"></script>
+
+            </body>
+        </html>
+        {% else %}
+            <strong>You are not logged in</strong>
+        {% endif %}
+
+{% endblock %}

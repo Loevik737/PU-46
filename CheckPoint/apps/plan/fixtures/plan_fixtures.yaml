@@ -1,0 +1,105 @@
+- model: plan.Plan
+  pk: 1
+  fields:
+    title: "Plan for digdat."
+    subject: 1
+    term: "Vaar"
+    year: 2016
+
+- model: plan.Week
+  pk: 1
+  fields:
+    week_number: 1
+    plan: 1
+
+- model: plan.Week
+  pk: 2
+  fields:
+    week_number: 2
+    plan: 1
+
+- model: plan.Week
+  pk: 3
+  fields:
+    week_number: 3
+    plan: 1
+
+- model: plan.Week
+  pk: 4
+  fields:
+    week_number: 4
+    plan: 1
+
+- model: plan.Week
+  pk: 5
+  fields:
+    week_number: 5
+    plan: 1
+
+- model: plan.Week
+  pk: 6
+  fields:
+    week_number: 6
+    plan: 1
+
+- model: subject.Subject
+  pk: 1
+  fields:
+    code: "TDT4100"
+    name: "Digdat"
+
+- model: plan.Lecture
+  pk: 1
+  fields:
+    date_added: 2017-02-22T19:49:12.957415
+    comment: "Kommentar1"
+    plan: 1
+    week: 1
+    objectives:
+    - 1
+    - 2
+
+- model: plan.Lecture
+  pk: 2
+  fields:
+    date_added: 2017-02-22T19:49:12.957415
+    comment: "Kommentar2"
+    plan: 1
+    week: 2
+    objectives:
+    - 1
+    - 2
+
+- model: plan.Lecture
+  pk: 3
+  fields:
+    date_added: 2017-02-22T19:49:12.957415
+    comment: "Kommentar3"
+    plan: 1
+    week: 3
+    objectives:
+    - 1
+    - 2
+
+- model: plan.Lecture
+  pk: 4
+  fields:
+    date_added: 2017-02-22T19:49:12.957415
+    comment: "Kommentar4"
+    plan: 1
+    week: 3
+    objectives:
+    - 1
+    - 2
+
+- model: plan.Objectives
+  pk: 1
+  fields:
+    learning_objective: "Learn something."
+    subject: 1
+
+- model: plan.Objectives
+  pk: 2
+  fields:
+    learning_objective: "Learn something else."
+    subject: 1

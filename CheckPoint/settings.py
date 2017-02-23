@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'CheckPoint.apps',
+    'CheckPoint.apps.plan',
+    'CheckPoint.apps.subject',
 ]
 
 MIDDLEWARE = [
