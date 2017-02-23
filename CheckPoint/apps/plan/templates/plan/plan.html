@@ -7,7 +7,7 @@
             {% if weeks %}
                 {% for week in weeks %}
                     <button class="accordion"> Uke {{ week.week_number }} </button>
-                    {% if lectures %}
+                    {% if week.lectures.all %}
                         {% for lecture in week.lectures.all %}
                             <div class="panel">
                                 <h3>Kommentar:</h3>
@@ -20,6 +20,8 @@
                                 {% endif %}
                             </div>
                         {% endfor %}
+                        {% else %}
+                        <div class="panel">No lectures this week</div>
                     {% endif %}
                 {% endfor %}
             {% else %}
