@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Users</title>
+        <!-- loads the base css form the static folder-->
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/baseStyle.css' %}" />
+    </head>
+
+    <header>
+          <h1>Checkpoint</h1>
+    </header>
+
+    <body>
+      <section id="main">
+        <!--other html snippets will be added in the block under-->
+        {% block content %}
+        {% endblock %}
+      </section>
+      <script type="text/javascript"  src="{% static 'js/plan.js' %}"></script>
+    </body>
+</html>
