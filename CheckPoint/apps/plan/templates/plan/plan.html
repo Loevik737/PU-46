@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block title %}Plan{% endblock %}
 {% block content %}
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/planStyle.css' %}" />
         <!--Checks if there is a userobject in user -->
         {% if user %}
             <h2>Plan</h2>

@@ -75,6 +75,7 @@ TEMPLATES = [
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "CheckPoint/static"),
+    '/var/www/static/',
 ]
 
 LOGIN_REDIRECT_URL = 'home'
