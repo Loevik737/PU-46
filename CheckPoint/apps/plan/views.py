@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 from .models import Plan, Week, Lecture, Objectives
 from CheckPoint.apps.subject.models import Subject
+from forms import CreatePlan
 
 
 def index(request, plan_id):
@@ -23,8 +24,19 @@ def index(request, plan_id):
     }
     return render(request, 'plan/plan.html', context)
 
-#weeks = plans.weeks.all()
-#    lectures = plans.weeks.lecturs.all()
-#    user = request.user
-#'week': weeks,
-#        'lectures': lectures,*/
+def create_plan(request):
+    #the dictionary we will send to the html template
+    context={}
+    #if we get a POST request jump into the if statement
+    if request.method == 'POST':
+        #set for to the POST request we got
+        form = CreatePlan(request.POST)
+        #if the form was valid,save it and redirect us to the site for the new plan
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('../'+ str(Plan.objects.latest('id').id))
+    else:
+        #if we dont get a POST request, send the form class with the dictionary to the template
+        form = CreatePlan()
+        context['form'] = form
+    return render(request,'plan/createplan.html',context)

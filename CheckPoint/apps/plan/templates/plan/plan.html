@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/planStyle.css' %}" />
         <!--Checks if there is a userobject in user -->
         {% if user %}
-            <h2>Plan</h2>
+            <h2>Plan for {{subject.name}}({{subject.code}})</h2>
             {% if weeks %}
                 {% for week in weeks %}
                     <button class="accordion"> Uke {{ week.week_number }} </button>
