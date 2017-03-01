@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Assignment{% endblock %}
+{% block content %}
+        <!--Checks if there is a userobject in user -->
+        {% if user %}
+            <h2>Assignment {{assignment.title}} for {{assignment.subject.name}}({{assignment.subject.code}})</h2>
+            {% if multipleChoiseQuestions %}
+                <strong>Multiple Choice Questions</strong>
+                {% for mcq in multipleChoiseQuestions %}
+                  <p>{{mcq.question}}</p>
+                  {% for choise in mcq.choises %}
+                    <p>{{choise}}</p>
+                  {% endfor %}
+                {% endfor %}
+            {% else %}
+                 <strong>No multiple choise questions</strong>
+            {% endif %}
+            {% if trueFalseQuestions %}
+                <strong>True/False Questions</strong>
+                {% for tfq in trueFalseQuestions %}
+                  <p>{{tfq.question}}</p>
+                {% endfor %}
+            {% else %}
+                 <strong>No True/false questions</strong>
+            {% endif %}
+            {% if oneWordQuestions %}
+                <strong>One Word Questions</strong>
+                {% for owq in oneWordQuestions %}
+                  <p>{{owq.question}}</p>
+                {% endfor %}
+            {% else %}
+                 <strong>No one word questions</strong>
+            {% endif %}
+
+        {% else %}
+            <strong>You are not logged in</strong>
+        {% endif %}
+
+{% endblock %}

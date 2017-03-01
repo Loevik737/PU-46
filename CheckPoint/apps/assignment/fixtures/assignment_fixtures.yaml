@@ -1,0 +1,29 @@
+- model: assignment.Assignment
+  pk: 1
+  fields:
+    title: "Our Solar System"
+    subject: 2
+    term: "Vaar"
+    year: 2016
+
+- model: assignment.MultipleChoiseQuestion
+  pk: 1
+  fields:
+    question: "How many planets are there from the Sun to Mars?"
+    choises: 1,2,3,4
+    answear: "4"
+    assignment: 1
+
+- model: assignment.TrueFalseQuestion
+  pk: 1
+  fields:
+    question: "Is Mars the fourth planet?"
+    answear: True
+    assignment: 1
+
+- model: assignment.OneWordQuestion
+  pk: 1
+  fields:
+    question: "Whitch planet is the fourth planet?"
+    answear: "Mars"
+    assignment: 1
