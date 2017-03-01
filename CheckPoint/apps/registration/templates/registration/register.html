@@ -3,7 +3,7 @@
 {% block head %}User Registration{% endblock %}
 {% block content %}
     <h2>Create user</h2>
-    <form method="post" action=".">{% csrf_token %}
+    <form method="post" action=".">{% csrf_token %} <!--csrf token to stop csrf attacks-->
         <table border="0">
             {{ form.as_table }}
         </table>
