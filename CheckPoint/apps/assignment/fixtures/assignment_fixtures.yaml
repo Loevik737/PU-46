@@ -10,7 +10,7 @@
   pk: 1
   fields:
     question: "How many planets are there from the Sun to Mars?"
-    choises: 1,2,3,4
+    choises: "hei,paa,deg"
     answear: "4"
     assignment: 1
 

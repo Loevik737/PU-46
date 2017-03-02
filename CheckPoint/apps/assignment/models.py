@@ -6,10 +6,10 @@ import datetime
 from django.db import models
 
 #choises that can be taken, (number(as an id), Text for the choice)
-MY_CHOICES =  ((1, '1'),
-               (2, '2'),
-               (3, '3'),
-               (4, '4'))
+MY_CHOICES = (('item_key1', 'Choice 1'),
+              ('item_key2', 'Choice 2'),
+              ('item_key3', 'Choice 3'),
+              ('item_key4', 'Choice 4'))
 
 class Assignment(models.Model):
     title = models.CharField(max_length=500)

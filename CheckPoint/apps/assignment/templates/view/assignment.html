@@ -3,6 +3,7 @@
 {% block content %}
         <!--Checks if there is a userobject in user -->
         {% if user %}
+        <!--Test form-->
             <h2>Assignment {{assignment.title}} for {{assignment.subject.name}}({{assignment.subject.code}})</h2>
             {% if multipleChoiseQuestions %}
                 <strong>Multiple Choice Questions</strong>
@@ -11,10 +12,35 @@
                   {% for choise in mcq.choises %}
                     <p>{{choise}}</p>
                   {% endfor %}
+                  <form method="post" action="./edit">{% csrf_token %}
+                    <input class="acceptButton" type="submit" value="{{mcq}}" name="delete_question" />
+                  </form>
                 {% endfor %}
             {% else %}
                  <strong>No multiple choise questions</strong>
             {% endif %}
+
+            <form method="post" action="./edit">{% csrf_token %}
+              <h3>Make a new Multiple Choice Question</h3>
+                    {% if mcq_form.question%}
+                      <label>{{mcq_form.question.label}}</label>
+                      <p>{{mcq_form.question}}</p>
+                    {% endif %}
+                    <p>{{mcq_form.errors}}</p>
+                    {% if mcq_form.answear%}
+                      <label>{{mcq_form.answear.label}}</label>
+                      <p>{{mcq_form.answear}}</p>
+                    {% endif %}
+
+                    {% for value, text in mcq_form.choises.field.choices %}
+                      <p class="ui slider checkbox">
+                        <label>{{ text }}</label>
+                        <input id="id_choice_{{ forloop.counter0 }}" name="choice_{{ forloop.counter0 }}">
+                      </p>
+                    {% endfor %}
+                <input class="acceptButton" type="submit" value="Make question" name="create_question" />
+            </form>
+
             {% if trueFalseQuestions %}
                 <strong>True/False Questions</strong>
                 {% for tfq in trueFalseQuestions %}
