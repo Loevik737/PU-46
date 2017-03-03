@@ -21,6 +21,7 @@ class Objectives(models.Model):
 
 
 class Lecture(models.Model):
+    title = models.CharField(max_length=100)
     date_added = models.DateField(auto_now_add=True)
     comment = models.TextField(blank=True)
     plan = models.ForeignKey(Plan, related_name='lectures')

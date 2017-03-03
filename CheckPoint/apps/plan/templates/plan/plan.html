@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 {% block title %}Plan{% endblock %}
 {% block content %}
-        {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/planStyle.css' %}" />
         <!--Checks if there is a userobject in user -->
         {% if user %}
-            <h2>Plan for {{subject.name}}({{subject.code}})</h2>
+            <h2>Plan</h2>
             {% if weeks %}
                 {% for week in weeks %}
+
                     <button class="accordion"> Uke {{ week.week_number }} </button>
                     {% if week.lectures.all %}
+                        <div class="panel">
                         {% for lecture in week.lectures.all %}
-                            <div class="panel">
-                                <h3>Kommentar:</h3>
+                                <div class="lecture">
+                                <h3>{{ lecture.title }}</h3>
                                 <p> {{ lecture.comment }} </p>
                                 {% if objectives %}
                                     <h3>Læringsmål: </h3>
@@ -20,8 +20,26 @@
                                         <p> {{ objective.learning_objective }} </p>
                                     {% endfor %}
                                 {% endif %}
-                            </div>
+                                </div>
                         {% endfor %}
+                        <button id="myBtn">Legg til forelesning</button>
+                        <!-- The Modal -->
+                        <div id="myModal" class="modal">
+                          <!-- Modal content -->
+                          <div class="modal-content">
+                              <form class="form-inline" action="{% url 'createLecture' %}" method="post">
+                                  {% csrf_token %}
+                                  <div class="form-group">
+                                      {{ create_lecture_form.as_p }}
+                                  </div>
+                                  <input type="hidden" name="plan_id" value="{{ plan.id }}" />
+                                  <input type="hidden" name="week_id" value="{{ week.id }}" />
+                                  <input class="acceptButton" type="submit" value="create" />
+                              </form>
+                            <span class="close">&times;</span>
+                          </div>
+                        </div>
+                        </div>
                         {% else %}
                         <div class="panel">No lectures this week</div>
                     {% endif %}
