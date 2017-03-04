@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Assignment{% endblock %}
+{% block content %}
+        <!--Checks if there is a userobject in user -->
+        {% if user %}
+        <!--Test form-->
+            <h2>Edit Assignment {{assignment.title}} for {{assignment.subject.name}}({{assignment.subject.code}})</h2>
+            {% if multipleChoiseQuestions %}
+                <strong>Multiple Choice Questions</strong>
+                {% for mcq in multipleChoiseQuestions %}
+                  <p><b>Question: {{forloop.counter0}}</b> {{mcq.question}}</p>
+                  {% for choise in mcq.choises %}
+                    <p><b>Choice {{forloop.counter0}}:</b> {{choise}}</p>
+                  {% endfor %}
+                  <p><b>Answear:</b> {{mcq.answear}}</p>
+                  {% if mcq_form %}
+                  <form method="post" action="./edit">{% csrf_token %}
+                    <input type="hidden" value="{{mcq.id}}" name="mcq_id">
+                    <input class="deleteButton" type="submit" value="Delete question" name="delete_mcq_question" />
+                  </form>
+                  {% endif %}
+                {% endfor %}
+            {% else %}
+                 <strong>No multiple choise questions</strong>
+            {% endif %}
+            {% if mcq_form %}
+            <form method="post" action="./edit">{% csrf_token %}
+              <h3>Make a new Multiple Choice Question</h3>
+                    {% if mcq_form.question%}
+                      <label>{{mcq_form.question.label}}</label>
+                      <p>{{mcq_form.question}}</p>
+                    {% endif %}
+                    <p>{{mcq_form.errors}}</p>
+                    {% if mcq_form.answear%}
+                      <label>{{mcq_form.answear.label}}</label>
+                      <p>{{mcq_form.answear}}</p>
+                    {% endif %}
+                    {% for value, text in mcq_form.choises.field.choices %}
+                      <p class="ui slider checkbox">
+                        <label>{{ text }}</label>
+                        <input id="id_choice_{{ forloop.counter0 }}" name="choice_{{ forloop.counter0 }}">
+                      </p>
+                    {% endfor %}
+                <input class="acceptButton" type="submit" value="Make question" name="create_mcq_question" />
+            </form>
+            {% endif %}
+            {% if trueFalseQuestions %}
+                <strong>True/False Questions</strong>
+                {% for tfq in trueFalseQuestions %}
+                  <p>Question {{forloop.counter0}}: {{tfq.question}}</p>
+                  <p>Answear: {{tfq.answear}}</p>
+                  {% if tfq_form %}
+                  <form method="post" action="./edit">{% csrf_token %}
+                    <input type="hidden" value="{{tfq.id}}" name="tfq_id">
+                    <input class="deleteButton" type="submit" value="Delete question" name="delete_tfq_question" />
+                  </form>
+                  {% endif %}
+                {% endfor %}
+            {% else %}
+                 <strong>No True/false questions</strong>
+            {% endif %}
+            {% if tfq_form %}
+            <form method="post" action="./edit">{% csrf_token %}
+              <h3>Make a new True/false Question</h3>
+                  {{tfq_form.as_p}}
+                <input class="acceptButton" type="submit" value="Make question" name="create_tfq_question" />
+            </form>
+            {% endif %}
+            {% if oneWordQuestions %}
+                <strong>One Word Questions</strong>
+                {% for owq in oneWordQuestions %}
+                  <p>Question {{forloop.counter0}}: {{owq.question}}</p>
+                  <p>Answear: {{owq.answear}}</p>
+                  {% if owq_form %}
+                  <form method="post" action="./edit">{% csrf_token %}
+                    <input type="hidden" value="{{owq.id}}" name="owq_id">
+                    <input class="deleteButton" type="submit" value="Delete question" name="delete_owq_question" />
+                  </form>
+                  {% endif %}
+                {% endfor %}
+            {% else %}
+                 <strong>No one word questions</strong>
+            {% endif %}
+            {% if owq_form %}
+            <form method="post" action="./edit">{% csrf_token %}
+              <h3>Make a new One Word Question</h3>
+                  {{owq_form.as_p}}
+                <input class="acceptButton" type="submit" value="Make question" name="create_owq_question" />
+            </form>
+            {% endif %}
+        {% else %}
+            <strong>You are not logged in</strong>
+        {% endif %}
+
+{% endblock %}

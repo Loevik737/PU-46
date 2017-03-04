@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}User{% endblock %}
 {% block content %}
-<h1>Make a new Assignment</h1>
+<h2>Make a new Assignment</h2>
 <!--form for creating a new plan-->
 <form method="post" action=".">{% csrf_token %}
         {{ form.as_p }}

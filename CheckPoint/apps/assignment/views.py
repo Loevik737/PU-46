@@ -40,7 +40,7 @@ def create_assignment(request):
         #if we dont get a POST request, send the form class with the dictionary to the template
         form = CreateAssignment()
         context['form'] = form
-    return render(request,'make/createAssignment.html',context)
+    return render(request,'create/createAssignment.html',context)
 
 def edit_assignment(request, assignment_id):
     context={}
@@ -111,4 +111,4 @@ def edit_assignment(request, assignment_id):
         'oneWordQuestions': oneWordQuestions,
 
     }
-    return render(request, 'view/assignment.html', context)
+    return render(request, 'edit/editAssignment.html', context)
