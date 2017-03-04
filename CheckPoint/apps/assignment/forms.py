@@ -1,4 +1,4 @@
-from models import Assignment, MultipleChoiseQuestion
+from models import Assignment, MultipleChoiseQuestion,TrueFalseQuestion,OneWordQuestion
 from django import forms
 from CheckPoint.apps.subject.models import Subject
 from django.forms import ModelChoiceField
@@ -34,3 +34,22 @@ class CreateMultipleChoiseQuestion(forms.ModelForm):
     class Meta:
         model = MultipleChoiseQuestion
         fields = ('question','answear','choises')
+
+class CreateTrueFalseQuestion(forms.ModelForm):
+    question = forms.CharField(required=True,label="Question:",
+                    widget=forms.TextInput(attrs={'placeholder': 'questin...'}))
+    answear = forms.BooleanField(required=False, initial=False, label='True?:')
+
+    class Meta:
+        model = TrueFalseQuestion
+        fields = ('question','answear')
+
+class CreateOneWordQuestion(forms.ModelForm):
+    question = forms.CharField(required=True,label="Question:",
+                    widget=forms.TextInput(attrs={'placeholder': 'questin...'}))
+    answear = forms.CharField(required=True,label="Answear:",
+                    widget=forms.TextInput(attrs={'placeholder': 'answear...'}))
+
+    class Meta:
+        model = OneWordQuestion
+        fields = ('question','answear')

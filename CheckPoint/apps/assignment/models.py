@@ -34,5 +34,5 @@ class TrueFalseQuestion(models.Model):
 
 class OneWordQuestion(models.Model):
     question = models.CharField(max_length=500)
-    answear = models.CharField(max_length=200)
+    answear = models.CharField(max_length=100)
     assignment = models.ForeignKey(Assignment, related_name='OneWordQuestions')
