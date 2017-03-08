@@ -11,7 +11,7 @@ class Plan(models.Model):
 
 
 class Week(models.Model):
-    week_number = models.IntegerField(verbose_name='Ukenummer')
+    week_number = models.IntegerField(blank=True, verbose_name='Ukenummer')
     plan = models.ForeignKey(Plan, related_name='weeks')
 
 

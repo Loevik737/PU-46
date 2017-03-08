@@ -14,11 +14,15 @@ button.accordion {
 button.accordion.active, button.accordion:hover {
     background-color: #ddd;
 }
+/* */
+div.lecture {
+    background-color: #79aec8;
+}
+
 
 div.panel {
     padding: 0 18px;
     display: none;
-    background-color: white;
 }
 
 /* The Modal (background) */
@@ -58,3 +62,4 @@ div.panel {
     text-decoration: none;
     cursor: pointer;
 }
+

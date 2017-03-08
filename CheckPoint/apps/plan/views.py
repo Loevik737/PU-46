@@ -1,10 +1,10 @@
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, reverse
 
 from .models import Plan, Week, Lecture, Objectives
-from CheckPoint.apps.subject.models import Subject
-from .forms import CreatePlan, CreateLectureForm
+from .forms import CreatePlan, CreateLectureForm, DeleteLectureForm,\
+    CreateWeekForm, DeleteWeekForm
+from django.shortcuts import get_object_or_404
 
 
 def index(request, plan_id):
@@ -20,7 +20,11 @@ def index(request, plan_id):
         'lectures': lectures,
         'subject': subject,
         'objectives': objectives,
-        'create_lecture_form': CreateLectureForm(),
+        'create_or_edit_lecture_form': CreateLectureForm(),
+        'delete_lecture_form': DeleteLectureForm(),
+        'create_week_form': CreateWeekForm(),
+        'delete_week_form': DeleteWeekForm(),
+
     }
     return render(request, 'plan/plan.html', context)
 
@@ -41,24 +45,71 @@ def create_plan(request):
         context['form'] = form
     return render(request,'plan/createplan.html',context)
 
-
-def create_lecture(request):
+def create_or_edit_lecture(request, id=None):
+    if id:
+        lecture = request.POST.get('lecture', None)
+    else:
+        lecture = Lecture()
     if request.method == 'POST':
         plan_id = request.POST.get('plan_id', None)
         week_id = request.POST.get('week_id', None)
         plan = Plan.objects.get(id=plan_id)
         week = Week.objects.get(id=week_id)
         # if we get a POST request jump into the if statemen
-        form = CreateLectureForm(request.POST)
+        form = CreateLectureForm(request.POST or None, instance=lecture)
         if form.is_valid():
             lecture = form.save(commit=False)
             lecture.plan = plan
             lecture.week = week
-            lecture.save_m2m()
+            lecture.save()
             objectives = form.cleaned_data.pop('objectives_form_field').split(';')
             lecture_objectives = []
             for objective in objectives:
-                lecture_objective, exists = Objectives.objects.get_or_create(learning_objective=objective, subject=plan.subject)
+                lecture_objective, exists = Objectives.objects.get_or_create(learning_objective=objective,
+                                                                             subject=plan.subject)
                 lecture_objectives.append(lecture_objective)
             lecture.objectives = lecture_objectives
             lecture.save()
+        return HttpResponseRedirect(reverse('plan', args=[plan_id]))
+
+def delete_lecture(request):
+    lecture_id = request.POST.get('lecture_id', None)
+    lecture_to_delete = get_object_or_404(Lecture, id=lecture_id)
+    plan_id = lecture_to_delete.plan.id
+
+    if request.method == 'POST':
+        form = DeleteLectureForm(request.POST, instance=lecture_to_delete)
+        if form.is_valid():
+            lecture_to_delete.delete()
+            return HttpResponseRedirect(reverse('plan', args=[plan_id]))
+
+def edit_lecture(request, id=None):
+    lecture = get_object_or_404(Lecture, pk=id)
+    form = CreateLectureForm(request.POST or None, instance=lecture)
+    if request.POST and form.is_valid():
+        form.save()
+
+def create_week(request):
+    if request.method == 'POST':
+        plan_id = request.POST.get('plan_id', None)
+        plan = Plan.objects.get(id=plan_id)
+        week_number = int(request.POST.get('week_number')) + 1
+        form = CreateWeekForm()
+
+        if form.is_valid():
+            week = form.save(commit=False)
+            week.plan = plan
+            week.week_number = week_number
+            week.save()
+            return HttpResponseRedirect(reverse('plan', args=[plan_id]))
+
+def delete_week(request):
+    week_id = request.POST.get('week_id', None)
+    week_to_delete = get_object_or_404(Week, id=week_id)
+    plan_id = week_to_delete.plan.id
+
+    if request.method == 'POST':
+        form = DeleteWeekForm(request.POST, instance=week_to_delete)
+        if form.is_valid():
+            week_to_delete.delete()
+            return HttpResponseRedirect(reverse('plan', args=[plan_id]))

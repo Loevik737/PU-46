@@ -1,4 +1,4 @@
-from .models import Plan, Lecture, Objectives
+from .models import Plan, Lecture, Week
 from django import forms
 from django.forms import ModelForm
 from CheckPoint.apps.subject.models import Subject
@@ -40,3 +40,18 @@ class CreateLectureForm(ModelForm):
         model = Lecture
         exclude = ['plan','week', 'objectives']
         fields = ['title', 'comment']
+
+class DeleteLectureForm(ModelForm):
+    class Meta:
+        model =  Lecture
+        fields = []
+
+class CreateWeekForm(ModelForm):
+    class Meta:
+        model = Week
+        exclude = ['plan', 'week_number']
+
+class DeleteWeekForm(ModelForm):
+    class Meta:
+        model = Week
+        fields = []
