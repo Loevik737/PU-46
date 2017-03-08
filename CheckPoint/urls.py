@@ -22,5 +22,7 @@ urlpatterns = [
     url(r'^user/', include('CheckPoint.apps.userInfo.urls')),
     url(r'^register/', include('CheckPoint.apps.registration.urls')),
     url(r'^plan/', include('CheckPoint.apps.plan.urls')),
-    url(r'^home/', include('CheckPoint.apps.home.urls'))
+    url(r'^home/', include('CheckPoint.apps.home.urls')),
+    url(r'^subjects/', include('CheckPoint.apps.subject.urls')),
+
 ]

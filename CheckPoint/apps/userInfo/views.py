@@ -72,5 +72,5 @@ def user_info(request):
         return render(request, 'user/user.html', args)
 
     else:
-        args['user'] = '';
+        args['user'] = ''
         return render(request, 'user/user.html', args)
