@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Assignment{% endblock %}
 {% block content %}
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/planStyle.css' %}" />
         <!--Checks if there is a userobject in user -->
         {% if user %}
         <!--Test form-->
             <h2>Edit Assignment {{assignment.title}} for {{assignment.subject.name}}({{assignment.subject.code}})</h2>
+            <button class="accordion">Edit Multiple Choice Questions</button>
+            <div class="panel">
             {% if multipleChoiseQuestions %}
                 <strong>Multiple Choice Questions</strong>
                 {% for mcq in multipleChoiseQuestions %}
@@ -24,7 +28,7 @@
                  <strong>No multiple choise questions</strong>
             {% endif %}
             {% if mcq_form %}
-            <form method="post" action="./edit">{% csrf_token %}
+            <form method="post" action="./edit" class="panel">{% csrf_token %}
               <h3>Make a new Multiple Choice Question</h3>
                     {% if mcq_form.question%}
                       <label>{{mcq_form.question.label}}</label>
@@ -44,6 +48,9 @@
                 <input class="acceptButton" type="submit" value="Make question" name="create_mcq_question" />
             </form>
             {% endif %}
+              </div>
+            <button class="accordion">Edit True/False Questions</button>
+            <div class="panel">
             {% if trueFalseQuestions %}
                 <strong>True/False Questions</strong>
                 {% for tfq in trueFalseQuestions %}
@@ -66,6 +73,9 @@
                 <input class="acceptButton" type="submit" value="Make question" name="create_tfq_question" />
             </form>
             {% endif %}
+            </div>
+            <button class="accordion">Edit One Word Questions</button>
+            <div class="panel">
             {% if oneWordQuestions %}
                 <strong>One Word Questions</strong>
                 {% for owq in oneWordQuestions %}
@@ -91,5 +101,6 @@
         {% else %}
             <strong>You are not logged in</strong>
         {% endif %}
-
+        </div>
+<script type="text/javascript"  src="{% static 'js/plan.js' %}"></script>
 {% endblock %}

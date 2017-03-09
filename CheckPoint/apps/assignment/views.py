@@ -56,7 +56,7 @@ def edit_assignment(request, assignment_id):
             question = request.POST.get('question')
             answear = request.POST.get('answear')
             choises = request.POST.get('choice_0')+","+request.POST.get('choice_1')+","+request.POST.get('choice_2') +","+request.POST.get('choice_3')
-            #Need to find a better way
+            #Need to find a better way for validation here. All other forma are properly validated
             mcq = MultipleChoiseQuestion()
             mcq.assignment = Assignment.objects.get(id=assignment_id)
             mcq.question = question
