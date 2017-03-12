@@ -20,13 +20,13 @@ class Assignment(models.Model):
 #pip install django-multiselectfield
 class MultipleChoiseQuestion(models.Model):
     question = models.CharField(max_length=500)
-    #importing MultiSelectField and using th choises as defined earlier
+    #importing MultiSelectField and using the choises as defined earlier
     choises = MultiSelectField(choices=MY_CHOICES,
                                  max_choices=4)
     answear = models.CharField(max_length=500, default="")
     assignment = models.ForeignKey(Assignment, related_name='MultipleChoiseQuestions')
 
-
+#the TrueFalseQuestion and OneWordQuestion classes  are normal model clases with nothing new to comment
 class TrueFalseQuestion(models.Model):
     question = models.CharField(max_length=200)
     answear = models.BooleanField(default=False)

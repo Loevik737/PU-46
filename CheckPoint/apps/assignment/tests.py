@@ -1,11 +1,13 @@
 
 from django.test import TestCase
 # Create your tests here.
-from forms import CreateAssignment,CreateMultipleChoiseQuestion,CreateTrueFalseQuestion
+from forms import CreateAssignment,CreateMultipleChoiseQuestion,CreateTrueFalseQuestion,CreateOneWordQuestion
 from models import Assignment
 from CheckPoint.apps.subject.models import Subject
 
-class assignmentTest( TestCase):
+#the tests below should be easy to understand, and contains nothing only tests for assignment
+#and question forms
+class assignmentFormTest( TestCase):
     subject_pk = 1
     @classmethod
     def setUpTestData(cls):
@@ -23,18 +25,44 @@ class assignmentTest( TestCase):
         form = CreateAssignment(data= data)
         self.assertFalse(form.is_valid())
 
-class questionsTest( TestCase):
-    assignment_pk = 1
+class questionsFormTest( TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.subject = Subject.objects.create(code="TDT1000", name="test")
         Assignment.objects.create(title="test",subject=cls.subject,term="automn",year=2019)
 
     def test_createTFQ_acccept(self):
-        data = {'question':'aaa','answear':True,'assignment':self.assignment_pk}
+        data = {'question':'aaa','answear':True}
         form = CreateTrueFalseQuestion(data= data)
         self.assertTrue(form.is_valid())
-    def test_createTFQ_decline_assignment(self):
-        data = {'question':'aaa','answear':True,'assignment':'fjdsiafn'}
+
+    def test_createTFQ_decline_question_none(self):
+        data = {'question':None,'answear':True}
         form = CreateTrueFalseQuestion(data= data)
         self.assertFalse(form.is_valid())
+
+    def test_createTFQ_decline_answear_none(self):
+        data = {'question':'aaa','answear':None}
+        form = CreateTrueFalseQuestion(data= data)
+        self.assertFalse(form.is_valid())
+
+
+    def test_createOWQ_acccept(self):
+        data = {'question':'aaa?','answear':'ja'}
+        form = CreateOneWordQuestion(data= data)
+        self.assertTrue(form.is_valid())
+
+    def test_createOWQ_decline_answear_none(self):
+        data = {'question':'aaa?','answear':None}
+        form = CreateOneWordQuestion(data= data)
+        self.assertFalse(form.is_valid())
+
+    def test_createOWQ_decline_question_none(self):
+        data = {'question':None,'answear':'ja'}
+        form = CreateOneWordQuestion(data= data)
+        self.assertFalse(form.is_valid())
+
+    def test_createOWQ_decline_answear_space(self):
+        data = {'question':None,'answear':'ja da'}
+        form = CreateOneWordQuestion(data= data)
+        self.assertTrue(form.has_error('answear', code='contained space'))

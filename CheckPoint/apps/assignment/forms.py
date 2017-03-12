@@ -30,7 +30,8 @@ class CreateAssignment(forms.ModelForm):
         fields = ('title','subject','term','year')
 
 class CreateMultipleChoiseQuestion(forms.ModelForm):
-
+    #this is wmpty so we just use the fields from the model,
+    #the reason is complications with fields for multiple choises
     class Meta:
         model = MultipleChoiseQuestion
         fields = ('question','answear','choises')
@@ -38,7 +39,7 @@ class CreateMultipleChoiseQuestion(forms.ModelForm):
 class CreateTrueFalseQuestion(forms.ModelForm):
     question = forms.CharField(required=True,label="Question:",
                     widget=forms.TextInput(attrs={'placeholder': 'questin...'}))
-    answear = forms.BooleanField(required=False, initial=False, label='True?:')
+    answear = forms.BooleanField(required=True, initial=False, label='True?:')
 
     class Meta:
         model = TrueFalseQuestion
@@ -49,6 +50,12 @@ class CreateOneWordQuestion(forms.ModelForm):
                     widget=forms.TextInput(attrs={'placeholder': 'questin...'}))
     answear = forms.CharField(required=True,label="Answear:",
                     widget=forms.TextInput(attrs={'placeholder': 'answear...'}))
+    #a costum validation for checking if the answear contains spaces
+    def clean_answear(self):
+        answear = self.cleaned_data['answear']
+        if ' ' in answear:
+            raise forms.ValidationError("answear can't containg spaces", code='contained space')
+        return answear
 
     class Meta:
         model = OneWordQuestion
