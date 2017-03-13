@@ -7,66 +7,73 @@
             {% if weeks %}
                 {% for week in weeks %}
                     <button class="accordion"> Uke {{ week.week_number }} </button>
-                    {% if week.lectures.all %}
-                        <div class="panel">
-                        {% for lecture in week.lectures.all %}
+                    <div class="panel">
+                        <form action="{% url 'deleteWeek' %}" method="post">
+                            {% csrf_token %}
+                             {{ delete_week_form }}
+                            <input type="hidden" name="week_id" value="{{ week.id }}"/>
+                            <input type="submit" value="delete"
+                            onclick="return confirm('Delete this lecture?')"/>
+                        </form>
+                        {% if week.lectures.all %}
+                            {% for lecture in week.lectures.all %}
                                 <div class="lecture">
-                                <h3>{{ lecture.title }}</h3>
-                                <p> {{ lecture.comment }} </p>
-                                {% if objectives %}
-                                    <h4>Læringsmål: </h4>
-                                    {% for objective in lecture.objectives.all %}
-                                        <p> {{ objective.learning_objective }} </p>
-                                    {% endfor %}
-                                {% endif %}
-                                <button id="myEditBtn">Edit lecture</button>
-                                <div id="myEditModal" class="modal">
-                                    <div class="modal-content">
-                                    <form class="form-inline" action="{% url 'editLecture' lecture.id %}" method="post">
-                                        {% csrf_token %}
-                                        <div class="form-group">
-                                            {{ create_lecture_form.as_p }}
+                                    <h3>{{ lecture.title }}</h3>
+                                    <p> {{ lecture.comment }} </p>
+                                    {% if objectives %}
+                                        <h4>Læringsmål: </h4>
+                                        {% for objective in lecture.objectives.all %}
+                                            <p> {{ objective.learning_objective }} </p>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <button id="myEditBtn">Edit lecture</button>
+                                    <div id="myEditModal" class="modal">
+                                        <div class="modal-content">
+                                            <form class="form-inline" action="{% url 'editLecture' %}" method="post">
+                                                {% csrf_token %}
+                                            <div class="form-group">
+                                                {{ create_or_edit_lecture_form.as_p }}
+                                            </div>
+                                                <input type="hidden" name="lecture_id" value="{{ lecture.id }}" />
+                                                <input type="hidden" name="plan_id" value="{{ plan.id }}" />
+                                                <input type="hidden" name="week_id" value="{{ week.id }}" />
+                                                <input class="acceptButton" type="submit" value="create" />
+                                            </form>
+                                            <form action="{% url 'deleteLecture' %}" method="post">
+                                                {% csrf_token %}
+                                                {{ delete_lecture_form }}
+                                                <input type="hidden" name="lecture_id" value="{{ lecture.id }}"/>
+                                                <input type="submit" value="delete"
+                                                       onclick="return confirm('Delete this lecture?')"/>
+                                            </form>
+                                            <span class="close">&times;</span>
                                         </div>
-                                        <input type="hidden" name="lecture" value="{{ lecture }}"/>
-                                        <input type="hidden" name="plan_id" value="{{ plan.id }}" />
-                                        <input type="hidden" name="week_id" value="{{ week.id }}" />
-                                        <input class="acceptButton" type="submit" value="edit" />
-                                    </form>
-                                    <form action="{% url 'deleteLecture' %}" method="post">
-                                        {% csrf_token %}
-                                        {{ delete_lecture_form }}
-                                        <input type="hidden" name="lecture_id" value="{{ lecture.id }}"/>
-                                        <input type="submit" value="delete"
-                                               onclick="return confirm('Delete this lecture?')"/>
-                                    </form>
-                                    <span class="close">&times;</span>
                                     </div>
                                 </div>
+                            {% endfor %}
+                            <button id="myCreateBtn">Legg til forelesning</button>
+                            <!-- The Modal -->
+                            <div id="myCreateModal" class="modal">
+                              <!-- Modal content -->
+                                <div class="modal-content">
+                                    <form class="form-inline" action="{% url 'createLecture' %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        {{ create_or_edit_lecture_form.as_p }}
+                                    </div>
+                                    <input type="hidden" name="plan_id" value="{{ plan.id }}" />
+                                    <input type="hidden" name="week_id" value="{{ week.id }}" />
+                                    <input class="acceptButton" type="submit" value="create" />
+                                    </form>
+                                    <span class="close">&times;</span>
                                 </div>
-                        {% endfor %}
-                        <button id="myCreateBtn">Legg til forelesning</button>
-                        <!-- The Modal -->
-                        <div id="myCreateModal" class="modal">
-                          <!-- Modal content -->
-                          <div class="modal-content">
-                              <form class="form-inline" action="{% url 'createLecture' %}" method="post">
-                                  {% csrf_token %}
-                                  <div class="form-group">
-                                      {{ create_or_edit_lecture_form.as_p }}
-                                  </div>
-                                  <input type="hidden" name="plan_id" value="{{ plan.id }}" />
-                                  <input type="hidden" name="week_id" value="{{ week.id }}" />
-                                  <input class="acceptButton" type="submit" value="create" />
-                              </form>
-                            <span class="close">&times;</span>
-                          </div>
-                        </div>
+                            </div>
                         </div>
                         {% else %}
                         <div class="panel">No lectures this week</div>
                     {% endif %}
                 {% endfor %}
-                <form class="form-inline" action="{% url 'createWeek' %}" method="post">
+                <form class="form-inline" action="{% url 'createWeek' plan.id %}" method="post">
                     {% csrf_token %}
                     <div class="form-group">
                         {{ create_week_form.as_p }}

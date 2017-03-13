@@ -45,18 +45,18 @@ def create_plan(request):
         context['form'] = form
     return render(request,'plan/createplan.html',context)
 
-def create_or_edit_lecture(request, id=None):
-    if id:
-        lecture = request.POST.get('lecture', None)
-    else:
-        lecture = Lecture()
+def create_or_edit_lecture(request):
     if request.method == 'POST':
         plan_id = request.POST.get('plan_id', None)
         week_id = request.POST.get('week_id', None)
+        lecture_id = request.POST.get('lecture_id', None)
         plan = Plan.objects.get(id=plan_id)
         week = Week.objects.get(id=week_id)
-        # if we get a POST request jump into the if statemen
-        form = CreateLectureForm(request.POST or None, instance=lecture)
+        if lecture_id != None:
+            lecture_to_edit = get_object_or_404(Lecture, id=lecture_id)
+            form = CreateLectureForm(request.POST or None, instance=lecture_to_edit)
+        else:
+            form = CreateLectureForm()
         if form.is_valid():
             lecture = form.save(commit=False)
             lecture.plan = plan
@@ -83,18 +83,11 @@ def delete_lecture(request):
             lecture_to_delete.delete()
             return HttpResponseRedirect(reverse('plan', args=[plan_id]))
 
-def edit_lecture(request, id=None):
-    lecture = get_object_or_404(Lecture, pk=id)
-    form = CreateLectureForm(request.POST or None, instance=lecture)
-    if request.POST and form.is_valid():
-        form.save()
-
-def create_week(request):
+def create_week(request, plan_id):
     if request.method == 'POST':
-        plan_id = request.POST.get('plan_id', None)
         plan = Plan.objects.get(id=plan_id)
         week_number = int(request.POST.get('week_number')) + 1
-        form = CreateWeekForm()
+        form = CreateWeekForm(request.POST or None)
 
         if form.is_valid():
             week = form.save(commit=False)

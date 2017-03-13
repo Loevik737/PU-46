@@ -47,9 +47,14 @@ class DeleteLectureForm(ModelForm):
         fields = []
 
 class CreateWeekForm(ModelForm):
+    def __init__(self, *arg, **kwarg):
+        super(CreateWeekForm, self).__init__(*arg, **kwarg)
+        self.empty_permitted = True
+
     class Meta:
         model = Week
         exclude = ['plan', 'week_number']
+        fields = []
 
 class DeleteWeekForm(ModelForm):
     class Meta:
