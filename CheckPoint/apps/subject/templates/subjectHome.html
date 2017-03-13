@@ -3,12 +3,17 @@
 {% block title %}Subjects{% endblock %}
 
 {% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/subject.css" %}" />
 <p>
 List of subjects:
 </p>
-    <ul>
-        {% for subject in all_subjects %}
-            <li>{{ subject }}</li>
+        {% for subject in subjects %}
+            <button class="accordion">{{ subject.name }}</button>
+            <div class="panel">
+            <p>plan her</p>
+            </div>
         {% endfor %}
-    </ul>
+
+<script type="text/javascript" src="{% static "js/plan.js" %}"></script>
 {% endblock %}

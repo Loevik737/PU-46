@@ -6,4 +6,5 @@ from CheckPoint.apps.subject.models import Subject
 def subjectView(request):
 
     all_subjects = Subject.objects.all()
-    return render(request, 'subjectHome.html',)
+    args = { 'subjects': all_subjects}
+    return render(request, 'subjectHome.html', args)
