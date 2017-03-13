@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Plan{% endblock %}
+{% block content %}
+<h2>Create plan</h2>
+<!--form for creating a new plan-->
+<form method="post" action=".">{% csrf_token %}
+        {{ form.as_p }}
+    <input class="acceptButton" type="submit" value="create" />
+</form>
+{% endblock %}

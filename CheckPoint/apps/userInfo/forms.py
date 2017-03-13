@@ -12,7 +12,7 @@ class UpdateUser(forms.ModelForm):
     #creating a formfield for last name
     first_name = forms.CharField(required=False,label='Change first name',
                     widget=forms.TextInput(attrs={'placeholder': 'new first name'}))
-    #creating a formfield for last name
+    #creating a formdef test_role(self):field for last name
     last_name = forms.CharField(required=False,label='Change last name',
                     widget=forms.TextInput(attrs={'placeholder': 'new last name'}))
     #the model we will use will be the auth User model and the fields are named username,email

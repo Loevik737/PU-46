@@ -1,0 +1,59 @@
+- model: assignment.Assignment
+  pk: 1
+  fields:
+    title: "Our Solar System"
+    subject: 2
+    term: "Vaar"
+    year: 2016
+
+- model: assignment.Assignment
+  pk: 2
+  fields:
+    title: "Star test"
+    subject: 1
+    term: "Host"
+    year: 2016
+
+- model: assignment.MultipleChoiseQuestion
+  pk: 1
+  fields:
+    question: "How many planets are there from the Sun to Mars?"
+    choises: "hei,paa,deg"
+    answear: "1"
+    assignment: 1
+
+- model: assignment.TrueFalseQuestion
+  pk: 1
+  fields:
+    question: "Is Mars the fourth planet?"
+    answear: True
+    assignment: 1
+
+- model: assignment.OneWordQuestion
+  pk: 1
+  fields:
+    question: "Whitch planet is the fourth planet?"
+    answear: "Mars"
+    assignment: 1
+
+- model: assignment.MultipleChoiseQuestion
+  pk: 2
+  fields:
+    question: "How far is the cosest star?"
+    choises: "4.2,4.22,4.23,4.24"
+    answear: "1"
+    assignment: 2
+
+- model: assignment.TrueFalseQuestion
+  pk: 2
+  fields:
+    question: "Is Alpha Centauri a binary pair?"
+    answear: True
+    assignment: 2
+
+- model: assignment.OneWordQuestion
+  pk: 2
+  fields:
+    question: "What is the name of the closest star?:______ Centauri"
+    answear: "Proxima"
+    assignment: 2

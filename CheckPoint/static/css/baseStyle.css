@@ -61,6 +61,20 @@ input{
   margin: 5px;
 }
 
-.acceptButton:hover,.acceptButton:focus{
+.deleteButton{
+  background-color: red;
+  border-radius: 3px;
+  border: none;
+  color: lightgrey;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 15px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px;
+}
+
+.acceptButton:hover,.acceptButton:focus,.deleteButton:hover,.deleteButton:focus{
   color: white;
 }

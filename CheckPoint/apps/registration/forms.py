@@ -1,9 +1,14 @@
-import re
 from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
+ROLES = (
+    ('Teacher', _("Teacher")),
+    ('Student', _("Student"))
+)
+
 #a form for registering a new user
+
 class RegistrationForm(forms.Form):
     #field for username, can only include letters, numbers and underscores
     username = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=True, max_length=30)),
@@ -18,6 +23,13 @@ class RegistrationForm(forms.Form):
     password2 = forms.CharField(
         widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)),
         label=_("Password (again)"))
+    role = forms.ChoiceField(choices = ROLES    , widget=forms.Select(), required=True)
+
+    def clean_role(self):
+        for i,v in ROLES:
+            if self.cleaned_data['role'] == i:
+                return self.cleaned_data['role']
+        raise forms.ValidationError("Your role must be one of the pre defined roles", code='The role was not accepted')
 
     #checks if the username already exists
     def clean_username(self):

@@ -1,2 +1,4 @@
 django==1.10.5
 django-filter==1.0.1
+pip install django-multiselectfield
+pip install pyyaml
