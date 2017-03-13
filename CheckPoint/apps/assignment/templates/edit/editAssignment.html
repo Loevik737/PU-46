@@ -4,7 +4,7 @@
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/planStyle.css' %}" />
         <!--Checks if there is a userobject in user -->
-        {% if user %}
+        {% if not decline %}
         <!--Test form-->
             <h2>Edit Assignment {{assignment.title}} for {{assignment.subject.name}}({{assignment.subject.code}})</h2>
             <button class="accordion">Edit Multiple Choice Questions</button>
@@ -99,7 +99,7 @@
             </form>
             {% endif %}
         {% else %}
-            <strong>You are not logged in</strong>
+            <strong>You need to be a teacher to view this site</strong>
         {% endif %}
         </div>
 <script type="text/javascript"  src="{% static 'js/plan.js' %}"></script>
