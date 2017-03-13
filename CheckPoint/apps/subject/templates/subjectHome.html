@@ -7,12 +7,8 @@
 List of subjects:
 </p>
     <ul>
-    <li>
-        {{ all_subjects }}
-    </li>
-    <!-- {% for subject in all_subjects %}
-    <li>{{ subject }}
-    </li>
-    {% endfor %}-->
+        {% for subject in all_subjects %}
+            <li>{{ subject }}</li>
+        {% endfor %}
     </ul>
 {% endblock %}
