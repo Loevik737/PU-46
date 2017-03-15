@@ -25,6 +25,24 @@ def index(request, assignment_id):
     }
     return render(request, 'view/assignment.html', context)
 
+def answer_assignment(request,assignment_id):
+    #when we get the id of the assingement from url, we look up if there is an object in the
+    #database who has that id
+    assignment = Assignment.objects.get(id=assignment_id)
+    multipleChoiseQuestions = assignment.MultipleChoiseQuestions.all()
+    trueFalseQuestions = assignment.TrueFalseQuestions.all()
+    oneWordQuestions = assignment.OneWordQuestions.all()
+    #all the questions that are connectet to the assingement gets sent off with
+    #the dictionary to the assingement.html page
+    context = {
+        'assignment': assignment,
+        'multipleChoiseQuestions': multipleChoiseQuestions,
+        'trueFalseQuestions': trueFalseQuestions,
+        'oneWordQuestions': oneWordQuestions,
+
+    }
+    return render(request,"answer/answerAssignment.html",context)
+
 def create_assignment(request):
     user = request.user
     #the dictionary we will send to the html template
