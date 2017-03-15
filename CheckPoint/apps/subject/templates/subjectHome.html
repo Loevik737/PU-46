@@ -9,11 +9,14 @@
 List of subjects:
 </p>
         {% for subject in subjects %}
-            <button class="accordion">{{ subject.name }}</button>
-            <div class="panel">
-            <p>{{ plan.title }}</p>
-            </div>
-        {% endfor %}
+            {% for plan in plan %}
+                {% if subject.name == plan.subject.name %}
+                <button onclick="location.href='../plan/{{ plan.pk }}';">{{ subject.name }}</button>
+
+                {% else %}
+                <button>{{ subject.name }}</button>
+                {% endif %}
+        {% endfor %}{% endfor %}
 
 <script type="text/javascript" src="{% static "js/plan.js" %}"></script>
 {% endblock %}

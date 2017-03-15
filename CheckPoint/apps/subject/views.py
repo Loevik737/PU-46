@@ -7,7 +7,8 @@ from CheckPoint.apps.plan.models import Plan
 def subjectView(request):
 
     all_subjects = Subject.objects.all()
-    args = { 'subjects': all_subjects}
-    all_plans= Plan.objects.all()
-    context = {'plan' : all_plans}
-    return render(request, 'subjectHome.html', args, context)
+    plan = Plan.objects.all()
+    args = { 'subjects': all_subjects, 'plan' : plan}
+    #all_plans = Plan.objects.all()
+    #context = {'plans' : all_plans }
+    return render(request, 'subjectHome.html', args)
