@@ -2,15 +2,16 @@ from __future__ import unicode_literals
 from multiselectfield import MultiSelectField
 from CheckPoint.apps.subject.models import Subject
 from CheckPoint.apps.registration.models import CostumUser
+from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
 
 from django.db import models
 
 #choises that can be taken, (number(as an id), Text for the choice)
-MY_CHOICES = (('item_key1', 'Choice 1'),
-              ('item_key2', 'Choice 2'),
-              ('item_key3', 'Choice 3'),
-              ('item_key4', 'Choice 4'))
+MY_CHOICES = (('item_key1', 'Choice 0'),
+              ('item_key2', 'Choice 1'),
+              ('item_key3', 'Choice 2'),
+              ('item_key4', 'Choice 3'))
 
 class Assignment(models.Model):
     title = models.CharField(max_length=500)
@@ -24,7 +25,7 @@ class MultipleChoiseQuestion(models.Model):
     #importing MultiSelectField and using the choises as defined earlier
     choises = MultiSelectField(choices=MY_CHOICES,
                                  max_choices=4)
-    answear = models.CharField(max_length=500, default="")
+    answear = models.IntegerField(default= 0,validators=[MinValueValidator(0), MaxValueValidator(3)])
     assignment = models.ForeignKey(Assignment, related_name='MultipleChoiseQuestions')
 
 #the TrueFalseQuestion and OneWordQuestion classes  are normal model clases with nothing new to comment

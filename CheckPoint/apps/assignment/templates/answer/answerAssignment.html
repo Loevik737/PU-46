@@ -4,34 +4,40 @@
         <!--Checks if there is a userobject in user -->
         {% if user %}
         <!--Test form-->
+        <form method="post" action="./answer">{% csrf_token %}
             <h2>Assignment {{assignment.title}} for {{assignment.subject.name}}({{assignment.subject.code}})</h2>
             {% if multipleChoiseQuestions %}
                 <strong>Multiple Choice Questions</strong>
                 {% for mcq in multipleChoiseQuestions %}
                   <p><b>Question {{forloop.counter0}}:</b> {{mcq.question}}</p>
                   {% for choise in mcq.choises %}
-                    <p>Choice {{forloop.counter0}}: {{choise}}</p>
+                    <p>Choice {{forloop.counter0}}: {{choise}}<input type="radio" value="{{forloop.counter0}}" name="MCQ{{mcq.pk}}"></p>
                   {% endfor %}
                 {% endfor %}
             {% else %}
-                 <strong>No multiple choise questions</strong>
+                 <div><b>No multiple choise questions</b></div>
             {% endif %}
             {% if trueFalseQuestions %}
                 <strong>True/False Questions</strong>
                 {% for tfq in trueFalseQuestions %}
                   <p><b>Question {{forloop.counter0}}: </b>{{tfq.question}}</p>
+                  <p><label>Yes?: <input type="checkbox" name="TFQ{{forloop.counter0}}"></label></p>
                 {% endfor %}
             {% else %}
-                 <strong>No True/false questions</strong>
+                 <div><b>No True/false questions</b></div>
             {% endif %}
             {% if oneWordQuestions %}
-                <strong>One Word Questions</strong>
+                <div><b>One Word Questions</b></div>
                 {% for owq in oneWordQuestions %}
                   <p><b>Question {{forloop.counter0}}: </b>{{owq.question}}</p>
+                  <p><label>Answer: <input type="text" name="OWQ{{forloop.counter0}}"></label></p>
                 {% endfor %}
             {% else %}
-                 <strong>No one word questions</strong>
+                 <div><b>No one word questions</b></div>
             {% endif %}
+
+            <input class="acceptButton" type="submit" value="Submit answers" />
+        </form>
         {% else %}
             <strong>You are not logged in</strong>
         {% endif %}

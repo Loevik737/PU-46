@@ -34,6 +34,9 @@ def answer_assignment(request,assignment_id):
     oneWordQuestions = assignment.OneWordQuestions.all()
     #all the questions that are connectet to the assingement gets sent off with
     #the dictionary to the assingement.html page
+    if request.method == "POST":
+        print(request.POST)
+
     context = {
         'assignment': assignment,
         'multipleChoiseQuestions': multipleChoiseQuestions,
