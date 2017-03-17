@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from multiselectfield import MultiSelectField
 from CheckPoint.apps.subject.models import Subject
+from CheckPoint.apps.registration.models import CostumUser
 import datetime
 
 from django.db import models
@@ -36,3 +37,11 @@ class OneWordQuestion(models.Model):
     question = models.CharField(max_length=500)
     answear = models.CharField(max_length=100)
     assignment = models.ForeignKey(Assignment, related_name='OneWordQuestions')
+
+class userAnswers(models.Model):
+    user = models.ForeignKey(CostumUser)
+    assignment = models.ForeignKey(Assignment)
+    attempts = models.IntegerField(default= 0)
+    wrongTFQ = models.ManyToManyField(TrueFalseQuestion)
+    wrongOWQ = models.ManyToManyField(OneWordQuestion)
+    wrongMCQ = models.ManyToManyField(MultipleChoiseQuestion)
