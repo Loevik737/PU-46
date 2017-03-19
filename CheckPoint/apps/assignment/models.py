@@ -39,9 +39,9 @@ class OneWordQuestion(models.Model):
     answear = models.CharField(max_length=100)
     assignment = models.ForeignKey(Assignment, related_name='OneWordQuestions')
 
-class userAnswers(models.Model):
+class UserAnswers(models.Model):
     user = models.ForeignKey(CostumUser)
-    assignment = models.ForeignKey(Assignment)
+    assignment = models.ForeignKey(Assignment,related_name="UserAnswers")
     attempts = models.IntegerField(default= 0)
     wrongTFQ = models.ManyToManyField(TrueFalseQuestion)
     wrongOWQ = models.ManyToManyField(OneWordQuestion)

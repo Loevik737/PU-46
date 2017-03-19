@@ -11,7 +11,7 @@
                 {% for mcq in multipleChoiseQuestions %}
                   <p><b>Question {{forloop.counter0}}:</b> {{mcq.question}}</p>
                   {% for choise in mcq.choises %}
-                    <p>Choice {{forloop.counter0}}: {{choise}}<input type="radio" value="{{forloop.counter0}}" name="MCQ{{mcq.pk}}"></p>
+                    <p>Choice {{forloop.counter0}}: {{choise}}<input type="radio" value="{{forloop.counter0}}" required name="MCQ{{mcq.pk}}"></p>
                   {% endfor %}
                 {% endfor %}
             {% else %}
@@ -21,7 +21,10 @@
                 <strong>True/False Questions</strong>
                 {% for tfq in trueFalseQuestions %}
                   <p><b>Question {{forloop.counter0}}: </b>{{tfq.question}}</p>
-                  <p><label>Yes?: <input type="checkbox" name="TFQ{{forloop.counter0}}"></label></p>
+                  <p>
+                    <label>Yes: <input type="radio" value="True" required name="TFQ{{tfq.pk}}"></label>
+                    <label>No:  <input type="radio" value="False" name="TFQ{{tfq.pk}}"></label>
+                  </p>
                 {% endfor %}
             {% else %}
                  <div><b>No True/false questions</b></div>
@@ -30,7 +33,7 @@
                 <div><b>One Word Questions</b></div>
                 {% for owq in oneWordQuestions %}
                   <p><b>Question {{forloop.counter0}}: </b>{{owq.question}}</p>
-                  <p><label>Answer: <input type="text" name="OWQ{{forloop.counter0}}"></label></p>
+                  <p><label>Answer: <input type="text" required name="OWQ{{owq.pk}}"></label></p>
                 {% endfor %}
             {% else %}
                  <div><b>No one word questions</b></div>
