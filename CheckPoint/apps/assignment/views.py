@@ -91,6 +91,8 @@ def create_assignment(request):
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect('../'+ str(Assignment.objects.latest('id').id))
+            else:
+                context["form"] = form
         else:
             #if we dont get a POST request, send the form class with the dictionary to the template
             form = CreateAssignment()

@@ -18,6 +18,7 @@ class Assignment(models.Model):
     subject = models.ForeignKey(Subject, related_name='Assignment')
     term = models.CharField(verbose_name='Semester', max_length=10)
     year = models.IntegerField(default=datetime.datetime.now().year)
+    due = models.DateTimeField(default = datetime.datetime.now(), blank=True)
 
 #pip install django-multiselectfield
 class MultipleChoiseQuestion(models.Model):
