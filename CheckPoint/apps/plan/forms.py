@@ -13,7 +13,7 @@ class SubjectModelChoiceField(ModelChoiceField):
          return obj.name
 
 # a formclass witch we can use to create a new plan
-class CreatePlan(ModelForm):
+class CreatePlanForm(ModelForm):
     #creating a textfield for title
     title = forms.CharField(required=True,label='Title',
                     widget=forms.TextInput(attrs={'placeholder': 'title...'}))
@@ -31,6 +31,9 @@ class CreatePlan(ModelForm):
         fields = ('title','subject','term','year')
 
 
+"""
+Form for creating a lecture, excludes foreign key and many to many field and add them in the view.
+"""
 class CreateLectureForm(ModelForm):
     objectives_form_field = forms.CharField(label='Learning objectives',
                                             widget=forms.TextInput(attrs={
@@ -41,11 +44,19 @@ class CreateLectureForm(ModelForm):
         exclude = ['plan','week', 'objectives']
         fields = ['title', 'comment']
 
+
+"""
+Form for deleting a lecture.
+"""
 class DeleteLectureForm(ModelForm):
     class Meta:
         model =  Lecture
         fields = []
 
+
+"""
+Form for creating a week. Sets empty permitted to true, which allows the form to be empty.
+"""
 class CreateWeekForm(ModelForm):
     def __init__(self, *arg, **kwarg):
         super(CreateWeekForm, self).__init__(*arg, **kwarg)
@@ -56,6 +67,10 @@ class CreateWeekForm(ModelForm):
         exclude = ['plan', 'week_number']
         fields = []
 
+
+"""
+Form for deleting a week.
+"""
 class DeleteWeekForm(ModelForm):
     class Meta:
         model = Week
