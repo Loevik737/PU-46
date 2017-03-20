@@ -23,12 +23,12 @@ class CreateAssignment(forms.ModelForm):
                     widget=forms.TextInput(attrs={'placeholder': 'term...'}))
     #creating a IntegerField for the year, the default is the current year
     year = forms.IntegerField(required = True,label='Year:',initial=datetime.datetime.now().year)
-
+    tries = forms.IntegerField(required = True, label='Tries:',initial=3)
     due = forms.DateField(required = True,label="Due date:", initial=datetime.date.today)
     #the model we will use will be the auth User model and the fields are named title, subject, term, year
     class Meta:
         model = Assignment
-        fields = ('title','subject','term','year','due')
+        fields = ('title','subject','term','year','tries','due')
 
 class CreateMultipleChoiseQuestion(forms.ModelForm):
     #this is wmpty so we just use the fields from the model,
