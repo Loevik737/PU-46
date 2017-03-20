@@ -8,7 +8,10 @@ def subjectView(request):
 
     all_subjects = Subject.objects.all()
     plan = Plan.objects.all()
-    args = { 'subjects': all_subjects, 'plan' : plan}
+    plansubject = {}
+    for object in plan:
+        plansubject[object.subject.name]=object.pk
+    args = {'subjects': all_subjects, 'plan': plan, 'plansubject':plansubject, }
     #all_plans = Plan.objects.all()
     #context = {'plans' : all_plans }
     return render(request, 'subjectHome.html', args)

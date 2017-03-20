@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load subject_extras %}
 {% block title %}Subjects{% endblock %}
 
 {% block content %}
@@ -9,14 +9,14 @@
 List of subjects:
 </p>
         {% for subject in subjects %}
-            {% for plan in plan %}
-                {% if subject.name == plan.subject.name %}
-                <button onclick="location.href='../plan/{{ plan.pk }}';">{{ subject.name }}</button>
 
-                {% else %}
+            {% if subject.name in plansubject %}
+                <button onclick="location.href='../plan/{{ plansubject|cut:subject.name }}';">{{ subject.name }}</button>
+            {% else %}
                 <button>{{ subject.name }}</button>
-                {% endif %}
-        {% endfor %}{% endfor %}
+            {% endif %}
+
+        {% endfor %}
 
 <script type="text/javascript" src="{% static "js/plan.js" %}"></script>
 {% endblock %}
