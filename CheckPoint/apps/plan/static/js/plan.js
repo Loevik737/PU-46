@@ -21,7 +21,7 @@ var createModal = document.getElementById('myCreateModal');
 var createBtn = document.getElementById("myCreateBtn");
 
 // Get the <span> element that closes the modal
-var createSpan = document.getElementsByClassName("close")[0];
+var createSpan = document.getElementsByClassName("close2")[0];
 
 // When the user clicks on the button, open the modal
 createBtn.onclick = function() {
