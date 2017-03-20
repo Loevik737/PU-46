@@ -3,7 +3,7 @@
 {% block content %}
         <!--Checks if there is a userobject in user -->
         {% if user %}
-            <h2>Plan</h2>
+            <h2>Plan for {{subject.name}}({{subject.code}})</h2>
             {% if weeks %}
                 {% for week in weeks %}
                     <button class="accordion"> Uke {{ week.week_number }} </button>
@@ -88,5 +88,5 @@
         {% else %}
             <strong>You are not logged in</strong>
         {% endif %}
-
+        <script type="text/javascript"  src="{% static 'js/plan.js' %}"></script>
 {% endblock %}

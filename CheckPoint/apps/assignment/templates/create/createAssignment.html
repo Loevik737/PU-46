@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}User{% endblock %}
+{% block content %}
+<h2>Make a new Assignment</h2>
+<!--form for creating a new plan-->
+{% if not decline %}
+<form method="post" action=".">{% csrf_token %}
+        {{ form.as_p }}
+    <input class="acceptButton" type="submit" value="create" />
+</form>
+{% else %}
+<strong>You need to be a teacher to view this site</strong>
+{% endif %}
+{% endblock %}

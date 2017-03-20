@@ -3,7 +3,7 @@ from CheckPoint.apps.subject.models import Subject
 from CheckPoint.apps.plan.models import Plan, Week, Lecture, Objectives
 from .forms import CreatePlanForm, CreateLectureForm
 import datetime
-# Create your tests here.
+
 
 _test_plan_data = {
         'title': "Plan for digdat.",

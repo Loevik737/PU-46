@@ -1,3 +1,4 @@
+
 from .models import Plan, Lecture, Week
 from django import forms
 from django.forms import ModelForm
@@ -13,6 +14,7 @@ class SubjectModelChoiceField(ModelChoiceField):
          return obj.name
 
 # a formclass witch we can use to create a new plan
+
 class CreatePlanForm(ModelForm):
     #creating a textfield for title
     title = forms.CharField(required=True,label='Title',
@@ -30,7 +32,7 @@ class CreatePlanForm(ModelForm):
         model = Plan
         fields = ('title','subject','term','year')
 
-
+        
 """
 Form for creating a lecture, excludes foreign key and many to many field and add them in the view.
 """
@@ -75,3 +77,4 @@ class DeleteWeekForm(ModelForm):
     class Meta:
         model = Week
         fields = []
+        

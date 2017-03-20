@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'CheckPoint.apps.subject',
     'CheckPoint.apps.loginPortal',
     'CheckPoint.apps.registration',
+    'CheckPoint.apps.assignment',
+    'multiselectfield',
 
 ]
 

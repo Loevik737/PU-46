@@ -1,6 +1,5 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, reverse
-
 from .models import Plan, Week, Lecture, Objectives
 from .forms import CreatePlanForm, CreateLectureForm, DeleteLectureForm,\
     CreateWeekForm, DeleteWeekForm
@@ -31,6 +30,7 @@ def index(request, plan_id):
 
     }
     return render(request, 'plan/plan.html', context)
+
 
 """
 The create_plan view sends an empty context to html template and checks if we get a POST request.
@@ -140,3 +140,4 @@ def delete_week(request):
         if form.is_valid():
             week_to_delete.delete()
             return HttpResponseRedirect(reverse('plan', args=[plan_id]))
+          
