@@ -24,7 +24,7 @@ def index(request, assignment_id):
 
     }
     return render(request, 'view/assignment.html', context)
-    
+
 def result_assignment(request,assignment_id):
     user = request.user.costumuser
     context = {}
@@ -77,9 +77,9 @@ def answer_assignment(request,assignment_id):
                     else:
                         if q in user_answers.wrongOWQ.all():
                             user_answers.wrongOWQ.remove(q)
-                user_answers.save()
                 user_answers.attempts +=1
-                return HttpResponseRedirect('../'+assignment_id + '/answer')
+                user_answers.save()
+                return HttpResponseRedirect('../'+assignment_id + '/result')
 
             context = {
                 'assignment': assignment,
