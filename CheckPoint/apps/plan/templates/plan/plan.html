@@ -1,31 +1,87 @@
 {% extends 'base.html' %}
 {% block title %}Plan{% endblock %}
 {% block content %}
-        {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/planStyle.css' %}" />
         <!--Checks if there is a userobject in user -->
         {% if user %}
             <h2>Plan for {{subject.name}}({{subject.code}})</h2>
             {% if weeks %}
                 {% for week in weeks %}
                     <button class="accordion"> Uke {{ week.week_number }} </button>
-                    {% if week.lectures.all %}
-                        {% for lecture in week.lectures.all %}
-                            <div class="panel">
-                                <h3>Kommentar:</h3>
-                                <p> {{ lecture.comment }} </p>
-                                {% if objectives %}
-                                    <h3>Læringsmål: </h3>
-                                    {% for objective in lecture.objectives.all %}
-                                        <p> {{ objective.learning_objective }} </p>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                        {% endfor %}
+                    <div class="panel">
+                        <form action="{% url 'deleteWeek' %}" method="post">
+                            {% csrf_token %}
+                             {{ delete_week_form }}
+                            <input type="hidden" name="week_id" value="{{ week.id }}"/>
+                            <input type="submit" value="delete"
+                            onclick="return confirm('Delete this week and all lectures in it?')"/>
+                        </form>
+                        {% if week.lectures.all %}
+                            {% for lecture in week.lectures.all %}
+                                <div class="lecture">
+                                    <h3>{{ lecture.title }}</h3>
+                                    <p> {{ lecture.comment }} </p>
+                                    {% if objectives %}
+                                        <h4>Læringsmål: </h4>
+                                        {% for objective in lecture.objectives.all %}
+                                            <li> {{ objective.learning_objective }} </li>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <button id="myEditBtn">Edit lecture</button>
+                                    <div id="myEditModal" class="modal">
+                                        <div class="modal-content">
+                                            <form class="form-inline" action="{% url 'editLecture' %}" method="post">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    {{ create_or_edit_lecture_form.as_p }}
+                                                </div>
+                                                <input type="hidden" name="lecture_id" value="{{ lecture.id }}" />
+                                                <input type="hidden" name="plan_id" value="{{ plan.id }}" />
+                                                <input type="hidden" name="week_id" value="{{ week.id }}" />
+                                                <input class="acceptButton" type="submit" value="Lagre forelesning" />
+                                            </form>
+                                            <form action="{% url 'deleteLecture' %}" method="post">
+                                                {% csrf_token %}
+                                                {{ delete_lecture_form }}
+                                                <input type="hidden" name="lecture_id" value="{{ lecture.id }}"/>
+                                                <input type="submit" value="delete"
+                                                       onclick="return confirm('Delete this lecture?')"/>
+                                            </form>
+                                            <span class="close">&times;</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         {% else %}
                         <div class="panel">No lectures this week</div>
                     {% endif %}
+                    <button id="myCreateBtn">Legg til forelesning</button>
+                    <!-- The Modal -->
+                    <div id="myCreateModal" class="modal">
+                      <!-- Modal content -->
+                        <div class="modal-content">
+                            <form class="form-inline" action="{% url 'createLecture' %}" method="post">
+                            {% csrf_token %}
+                                <div class="form-group">
+                                    {{ create_or_edit_lecture_form.as_p }}
+                                </div>
+                                <input type="hidden" name="plan_id" value="{{ plan.id }}" />
+                                <input type="hidden" name="week_id" value="{{ week.id }}" />
+                                <input class="acceptButton" type="submit" value="Lagre forelesning" />
+                            </form>
+                            <span class="close">&times;</span>
+                        </div>
+                    </div>
+                    </div>
                 {% endfor %}
+                <form class="form-inline" action="{% url 'createWeek' plan.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ create_week_form }}
+                    </div>
+                    <input type="hidden" name="week_number" value="{{ weeks|length }}">
+                    <input type="hidden" name="plan_id" value="{{ plan.id }}"/>
+                    <input class="acceptButton" type="submit" value="Legg til uke" />
+                </form>
             {% else %}
                  <strong>No weeks in plan</strong>
             {% endif %}

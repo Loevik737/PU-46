@@ -9,7 +9,7 @@
 - model: plan.Plan
   pk: 2
   fields:
-    title: "Plan for digdat."
+    title: "Plan for software engineering."
     subject: 2
     term: "Vaar"
     year: 2016
@@ -60,7 +60,7 @@
   pk: 2
   fields:
     code: "TDT4140"
-    name: "Software Engenering"
+    name: "Software Engineering"
 
 - model: plan.Lecture
   pk: 1
