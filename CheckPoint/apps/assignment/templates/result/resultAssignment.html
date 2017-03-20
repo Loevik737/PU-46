@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}User{% endblock %}
+{% block content %}
+<h2>Make a new Assignment</h2>
+<!--form for creating a new plan-->
+{% if not decline and user.costumuser %}
+  {% if user_attempts %}
+      <strong>Attempts: {{user_attempts}}</strong>
+  {% endif %}
+  {% if user_wrongMCQ %}
+    {% for wrong in user_wrongMCQ.all %}
+      <div><b>Your answer was wrong on this Multiple Choice Questions: </b>{{wrong.question}}</div>
+    {% endfor %}
+  {% else %}
+    <div>all answers were correct</div>
+  {% endif %}
+
+  {% if user_wrongTFQ %}
+    {% for wrong in user_wrongTFQ.all %}
+      <div><b>Your answer was wrong on this Multiple Choice Questions: </b>{{wrong.question}}</div>
+    {% endfor %}
+  {% else %}
+    <div>all answers were correct</div>
+  {% endif %}
+
+  {% if user_wrongOWQ %}
+    {% for wrong in user_wrongOWQ.all %}
+      <div><b>Your answer was wrong on this Multiple Choice Questions: </b>{{wrong.question}}</div>
+    {% endfor %}
+  {% else %}
+      <div>all answers were correct</div>
+  {% endif %}
+
+{% else %}
+<strong>You did not have permission to view this site</strong>
+{% endif %}
+{% endblock %}

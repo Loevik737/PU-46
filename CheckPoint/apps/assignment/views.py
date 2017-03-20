@@ -24,6 +24,20 @@ def index(request, assignment_id):
 
     }
     return render(request, 'view/assignment.html', context)
+    
+def result_assignment(request,assignment_id):
+    user = request.user.costumuser
+    context = {}
+    if user.role == "Student":
+        assignment = Assignment.objects.get(id=assignment_id)
+        user_answers,created = assignment.UserAnswers.get_or_create(user = user,assignment=assignment)
+        context['user_attempts'] = user_answers.attempts
+        context['user_wrongMCQ'] =user_answers.wrongMCQ
+        context['user_wrongTFQ'] =user_answers.wrongTFQ
+        context['user_wrongOWQ'] =user_answers.wrongOWQ
+    else:
+        context['decline'] = 1
+    return render(request, 'result/resultAssignment.html', context)
 
 def answer_assignment(request,assignment_id):
 
