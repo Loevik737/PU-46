@@ -1,5 +1,7 @@
 from django.test import TestCase
+
 from CheckPoint.apps.registration.forms import RegistrationForm
+
 
 class registrationForm(TestCase):
 

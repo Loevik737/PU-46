@@ -1,8 +1,8 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, ButtonHolder, Submit
+from crispy_forms.layout import ButtonHolder, Layout, Submit
+
 
 class RegistrationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):

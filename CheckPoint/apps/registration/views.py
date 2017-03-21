@@ -1,12 +1,12 @@
-from django.shortcuts import render
-
-# Create your views here.
-from CheckPoint.apps.registration.forms import *
-from django.views.decorators.csrf import csrf_protect
-from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
+from django.shortcuts import render, render_to_response
 from django.template import RequestContext
-from models import CostumUser
+from django.views.decorators.csrf import csrf_protect
+
+from CheckPoint.apps.registration.forms import *
+
+from .models import CostumUser
+
 
 #Cross Site Request Forgery protection
 @csrf_protect

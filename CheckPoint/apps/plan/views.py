@@ -1,9 +1,9 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, reverse
-from .models import Plan, Week, Lecture, Objectives
-from .forms import CreatePlanForm, CreateLectureForm, DeleteLectureForm,\
-    CreateWeekForm, DeleteWeekForm
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, reverse
+
+from .forms import (CreateLectureForm, CreatePlanForm, CreateWeekForm,
+                    DeleteLectureForm, DeleteWeekForm)
+from .models import Lecture, Objectives, Plan, Week
 
 
 """
@@ -140,4 +140,3 @@ def delete_week(request):
         if form.is_valid():
             week_to_delete.delete()
             return HttpResponseRedirect(reverse('plan', args=[plan_id]))
-          
