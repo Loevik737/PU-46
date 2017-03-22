@@ -1,4 +1,4 @@
-from models import Assignment, MultipleChoiseQuestion,TrueFalseQuestion,OneWordQuestion
+from CheckPoint.apps.assignment.models import Assignment, MultipleChoiseQuestion,TrueFalseQuestion,OneWordQuestion
 from django import forms
 from CheckPoint.apps.subject.models import Subject
 from django.forms import ModelChoiceField

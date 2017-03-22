@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import CostumUser
+from CheckPoint.apps.registration.models import CostumUser
 from CheckPoint.apps.subject.models import Subject
 
 class TeachSubjectInline(admin.TabularInline):
