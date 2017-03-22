@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'CheckPoint.apps.subject',
     'CheckPoint.apps.loginPortal',
     'CheckPoint.apps.registration',
+    'CheckPoint.apps.home',
     'CheckPoint.apps.assignment',
     'multiselectfield',
 
@@ -92,11 +93,11 @@ WSGI_APPLICATION = 'CheckPoint.wsgi.application'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+   'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+   }
     }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators

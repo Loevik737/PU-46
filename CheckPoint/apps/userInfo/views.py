@@ -2,7 +2,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.shortcuts import render_to_response,render
-from .forms import UpdateUser
+from CheckPoint.apps.userInfo.forms import UpdateUser
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
@@ -72,5 +72,5 @@ def user_info(request):
         return render(request, 'user/user.html', args)
 
     else:
-        args['user'] = '';
+        args['user'] = ''
         return render(request, 'user/user.html', args)
