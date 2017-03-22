@@ -1,10 +1,6 @@
 from django.contrib import admin
-<<<<<<< HEAD
 from CheckPoint.apps.registration.models import CostumUser
 from CheckPoint.apps.subject.models import Subject
-=======
-from .models import CostumUser
->>>>>>> origin
 
 class TeachSubjectInline(admin.TabularInline):
     model = CostumUser.attendingSubject.through
