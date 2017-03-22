@@ -5,8 +5,8 @@ from CheckPoint.apps.plan.models import Plan
 # Create your views here.
 
 def subjectView(request):
-
-    all_subjects = Subject.objects.all()
+    user = request.user.costumuser
+    all_subjects = user.attendingSubject.all
     plan = Plan.objects.all()
     plansubject = {}
     for object in plan:

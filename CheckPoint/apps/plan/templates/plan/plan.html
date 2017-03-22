@@ -82,11 +82,12 @@
                     <input type="hidden" name="plan_id" value="{{ plan.id }}"/>
                     <input class="acceptButton" type="submit" value="Legg til uke" />
                 </form>
-            {% else %}
+            {% else %}Digdat
                  <strong>No weeks in plan</strong>
             {% endif %}
         {% else %}
             <strong>You are not logged in</strong>
         {% endif %}
+          {% load static %}
         <script type="text/javascript"  src="{% static 'js/plan.js' %}"></script>
 {% endblock %}

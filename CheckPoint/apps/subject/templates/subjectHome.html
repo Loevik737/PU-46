@@ -9,7 +9,7 @@
 List of subjects:
 </p>
         {% for subject in subjects %}
-          <!--Hei-->
+
             {% if subject.name in plansubject %}
                 <button onclick="location.href='../plan/{{ plansubject|cut:subject.name }}';">{{ subject.name }}</button>
             {% else %}
