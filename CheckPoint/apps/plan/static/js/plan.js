@@ -13,3 +13,55 @@ for (var i = 0; i < acc.length; i++) {
         }
     }
 }
+
+// Get the modal
+var createModal = document.getElementById('myCreateModal');
+
+// Get the button that opens the modal
+var createBtn = document.getElementById("myCreateBtn");
+
+// Get the <span> element that closes the modal
+var createSpan = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+createBtn.onclick = function() {
+    createModal.style.display = "block";
+};
+
+// When the user clicks on <span> (x), close the modal
+createSpan.onclick = function() {
+    createModal.style.display = "none";
+};
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == createModal) {
+        createModal.style.display = "none";
+    }
+};
+
+// Get the modal
+var editModal = document.getElementById('myEditModal');
+
+// Get the button that opens the modal
+var editBtn = document.getElementById("myEditBtn");
+
+// Get the <span> element that closes the modal
+var editSpan = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+editBtn.onclick = function() {
+    editModal.style.display = "block";
+};
+
+// When the user clicks on <span> (x), close the modal
+editSpan.onclick = function() {
+    editModal.style.display = "none";
+};
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == editModal) {
+        editModal.style.display = "none";
+    }
+};
