@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles%}
 {% block title %}Plan{% endblock %}
 {% block content %}
         <!--Checks if there is a userobject in user -->
@@ -22,33 +23,14 @@
                                     <p> {{ lecture.comment }} </p>
                                     {% if objectives %}
                                         <h4>Læringsmål: </h4>
-                                        {% for objective in lecture.objectives.all %}
-                                            <li> {{ objective.learning_objective }} </li>
-                                        {% endfor %}
+                                        <ul>
+                                            {% for objective in lecture.objectives.all %}
+                                                <li> {{ objective.learning_objective }} </li>
+                                            {% endfor %}
+                                        </ul>
                                     {% endif %}
-                                    <button id="myEditBtn">Edit lecture</button>
-                                    <div id="myEditModal" class="modal">
-                                        <div class="modal-content">
-                                            <form class="form-inline" action="{% url 'editLecture' %}" method="post">
-                                                {% csrf_token %}
-                                                <div class="form-group">
-                                                    {{ create_or_edit_lecture_form.as_p }}
-                                                </div>
-                                                <input type="hidden" name="lecture_id" value="{{ lecture.id }}" />
-                                                <input type="hidden" name="plan_id" value="{{ plan.id }}" />
-                                                <input type="hidden" name="week_id" value="{{ week.id }}" />
-                                                <input class="acceptButton" type="submit" value="Lagre forelesning" />
-                                            </form>
-                                            <form action="{% url 'deleteLecture' %}" method="post">
-                                                {% csrf_token %}
-                                                {{ delete_lecture_form }}
-                                                <input type="hidden" name="lecture_id" value="{{ lecture.id }}"/>
-                                                <input type="submit" value="delete"
-                                                       onclick="return confirm('Delete this lecture?')"/>
-                                            </form>
-                                            <span class="close">&times;</span>
-                                        </div>
-                                    </div>
+
+                                    <a href="{% url 'edit' lecture.id %}"><button id="myEditBtn">Edit lecture</button></a>
                                 </div>
                             {% endfor %}
                         {% else %}
@@ -62,13 +44,13 @@
                             <form class="form-inline" action="{% url 'createLecture' %}" method="post">
                             {% csrf_token %}
                                 <div class="form-group">
-                                    {{ create_or_edit_lecture_form.as_p }}
+                                    {{ create_lecture_form.as_p }}
                                 </div>
                                 <input type="hidden" name="plan_id" value="{{ plan.id }}" />
                                 <input type="hidden" name="week_id" value="{{ week.id }}" />
                                 <input class="acceptButton" type="submit" value="Lagre forelesning" />
                             </form>
-                            <span class="close">&times;</span>
+                            <span class="close2">&times;</span>
                         </div>
                     </div>
                     </div>

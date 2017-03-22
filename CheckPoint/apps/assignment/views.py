@@ -2,9 +2,12 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
-from .models import Assignment, MultipleChoiseQuestion, TrueFalseQuestion, OneWordQuestion, UserAnswers
 from CheckPoint.apps.subject.models import Subject
-from CheckPoint.apps.assignment.forms import CreateAssignment,CreateMultipleChoiseQuestion,CreateTrueFalseQuestion,CreateOneWordQuestion
+
+from CheckPoint.apps.assignment.forms import (CreateAssignment, CreateMultipleChoiseQuestion,
+                    CreateOneWordQuestion, CreateTrueFalseQuestion)
+from CheckPoint.apps.assignment.models import (Assignment, MultipleChoiseQuestion, OneWordQuestion,
+                     TrueFalseQuestion, UserAnswers)
 
 def index(request, assignment_id):
     #when we get the id of the assingement from url, we look up if there is an object in the

@@ -1,11 +1,13 @@
 from __future__ import unicode_literals
-from multiselectfield import MultiSelectField
-from CheckPoint.apps.subject.models import Subject
-from CheckPoint.apps.registration.models import CostumUser
-from django.core.validators import MaxValueValidator, MinValueValidator
+
 import datetime
 
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from multiselectfield import MultiSelectField
+
+from CheckPoint.apps.registration.models import CostumUser
+from CheckPoint.apps.subject.models import Subject
 
 #choises that can be taken, (number(as an id), Text for the choice)
 MY_CHOICES = (('item_key1', 'Choice 0'),

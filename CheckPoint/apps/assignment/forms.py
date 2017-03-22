@@ -1,8 +1,8 @@
 from CheckPoint.apps.assignment.models import Assignment, MultipleChoiseQuestion,TrueFalseQuestion,OneWordQuestion
-from django import forms
-from CheckPoint.apps.subject.models import Subject
-from django.forms import ModelChoiceField
 import datetime
+from django import forms
+from django.forms import ModelChoiceField
+from CheckPoint.apps.subject.models import Subject
 
 
 #a costum ModelChoiceField class so we can get the name of the
