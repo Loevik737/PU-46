@@ -1,9 +1,11 @@
-from django.test import TestCase
-from CheckPoint.apps.subject.models import Subject
-from CheckPoint.apps.plan.models import Plan, Week, Lecture, Objectives
-from .forms import CreatePlanForm, CreateLectureForm
 import datetime
 
+from django.test import TestCase
+
+from CheckPoint.apps.plan.models import Lecture, Objectives, Plan, Week
+from CheckPoint.apps.subject.models import Subject
+
+from .forms import CreateLectureForm, CreatePlanForm
 
 _test_plan_data = {
         'title': "Plan for digdat.",
@@ -62,7 +64,3 @@ class CreateTestCase(TestCase):
 
     def test_createLecture(self):
         pass
-
-
-
-

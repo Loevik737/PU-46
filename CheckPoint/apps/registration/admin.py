@@ -1,6 +1,5 @@
 from django.contrib import admin
-from models import CostumUser
-from CheckPoint.apps.subject.models import Subject
+from .models import CostumUser
 
 class TeachSubjectInline(admin.TabularInline):
     model = CostumUser.attendingSubject.through
