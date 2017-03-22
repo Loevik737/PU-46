@@ -1,6 +1,7 @@
 {% load staticfiles %}
 <html>
     <head>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
         <title>Users</title>
         <!-- loads the base css form the static folder-->
         {% load static %}
@@ -9,7 +10,14 @@
     </head>
 
     <header>
-          <h1>Checkpoint</h1>
+          {% load static %}
+          {% if user.costumuser %}
+          <a id="logout" href="{% url 'logout' %}"> Log out</a>
+          <a id="editinfo" href="{% url 'editUser' %}">{{user.username}}</a>
+          {% else %}
+          <a id="login" href="{%url 'login' %}">Log in</a>
+          {% endif %}
+          <a href="{% url 'home' %}"><img id="logoimage" src="{% static 'images/Logo2.png' %}"/></a>
     </header>
 
     <body>

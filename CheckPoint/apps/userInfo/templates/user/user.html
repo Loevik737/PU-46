@@ -6,12 +6,13 @@
         <!--Checks if there is a userobject in user -->
         {% if user %}
             <h2>{{user.username}}'s information </h2>
-            <ul id="userInfoDisplay">
+            <div id="userInfoDisplay">
               <!--If there is, show the information-->
-                <li>Username: {{user.username}}</li>
-                <li>Email: {{user.email}} </li>
-                <li>Name: {{user.first_name}} {{user.last_name}} </li>
-            </ul>
+                <p><b>Username:</b> {{user.username}}</p>
+                <p><b>Email:</b> {{user.email}} </p>
+                <p><b>Name:</b> {{user.first_name}} {{user.last_name}} </p>
+                <p><b>Role:</b> {{user.costumuser.role}} </p>
+            </div>
             {{info_message}}
             <form method="POST" action="/user/edit/" name="update_info_form" class="updateInfoClass" />
               <!--csrf token to stop csrf attacks-->
@@ -27,7 +28,6 @@
               <!--Giving the post request the name change_password so we can differ the forms-->
               <button class="acceptButton" type="submit" name="change_password">Change Password</button>
             </form>
-            <p><a href="{% url 'home' %}">Home</a></p>
         <!--If there is no object, tell the user-->
         {% else %}
             <strong>You are not loged in</strong>
