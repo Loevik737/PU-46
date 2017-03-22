@@ -8,11 +8,14 @@
 <p>
 List of subjects:
 </p>
+    <!-- for each subject in users subjects -->
         {% for subject in subjects %}
-
+            <!-- if the subject is in plansubject(aka it has a plan) -->
             {% if subject.name in plansubject %}
+                <!-- make a subject button with a link to the subjects plan -->
                 <button onclick="location.href='../plan/{{ plansubject|cut:subject.name }}';">{{ subject.name }}</button>
             {% else %}
+                <!-- else, make an unclickable subject button(because there is no subject plan) -->
                 <button>{{ subject.name }}</button>
             {% endif %}
 
