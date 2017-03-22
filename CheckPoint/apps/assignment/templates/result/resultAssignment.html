@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}User{% endblock %}
+{% block content %}
+<h2>Make a new Assignment</h2>
+<!--form for creating a new plan-->
+{% if not decline and user.costumuser %}
+  {% if user_attempts %}
+      <strong>Attempt: {{user_attempts}} of {{max_attempts}}</strong>
+  {% endif %}
+  {% if user_wrongMCQ.all %}
+    {% for wrong in user_wrongMCQ.all %}
+      <div><b>Your answer was wrong on this Multiple Choice Question: </b>{{wrong.question}}</div>
+    {% endfor %}
+  {% else %}
+    <div>All Multiple Choise Question answers were correct</div>
+  {% endif %}
+
+  {% if user_wrongTFQ.all %}
+    {% for wrong in user_wrongTFQ.all %}
+      <div><b>Your answer was wrong on this True False Question: </b>{{wrong.question}}</div>
+    {% endfor %}
+  {% else %}
+    <div>All True False Question answers were correct</div>
+  {% endif %}
+
+  {% if user_wrongOWQ.all %}
+    {% for wrong in user_wrongOWQ.all %}
+      <div><b>Your answer was wrong on this One Word Question : </b>{{wrong.question}}</div>
+    {% endfor %}
+  {% else %}
+      <div>All One Word Question answers were correct</div>
+  {% endif %}
+  {% if retry and user_wrongMCQ.all or user_wrongTFQ.all or user_wrongOWQ.all %}
+    <button onclick="location.href='../{{as_id}}/answer';">Retry</button>
+  {% endif %}
+
+{% else %}
+<strong>You did not have permission to view this site</strong>
+{% endif %}
+{% endblock %}

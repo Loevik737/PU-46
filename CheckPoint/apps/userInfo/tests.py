@@ -1,5 +1,8 @@
 from django.test import TestCase
+
 from .forms import UpdateUser
+
+
 # Create your tests here.
 class formTests(TestCase):
 

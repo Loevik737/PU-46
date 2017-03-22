@@ -1,7 +1,12 @@
 from __future__ import unicode_literals
-from CheckPoint.apps.subject.models import Subject
-from django.db import models
+
 import datetime
+
+from django.db import models
+
+from CheckPoint.apps.subject.models import Subject
+
+
 #Plan model
 class Plan(models.Model):
     title = models.CharField(max_length=100)
@@ -16,7 +21,7 @@ class Week(models.Model):
 
 #Objectives model
 class Objectives(models.Model):
-    learning_objective = models.CharField(blank=False, max_length=200)
+    learning_objective = models.TextField(blank=True, max_length=200)
     subject = models.ForeignKey(Subject, related_name='learning_objectives')
 
 #Lecture model

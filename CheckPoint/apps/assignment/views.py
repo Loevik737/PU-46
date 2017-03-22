@@ -2,10 +2,13 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
-from .models import Assignment, MultipleChoiseQuestion, TrueFalseQuestion, OneWordQuestion, UserAnswers
 from CheckPoint.apps.subject.models import Subject
-from forms import CreateAssignment,CreateMultipleChoiseQuestion,CreateTrueFalseQuestion,CreateOneWordQuestion
-import six
+
+from .forms import (CreateAssignment, CreateMultipleChoiseQuestion,
+                    CreateOneWordQuestion, CreateTrueFalseQuestion)
+from .models import (Assignment, MultipleChoiseQuestion, OneWordQuestion,
+                     TrueFalseQuestion, UserAnswers)
+
 
 def index(request, assignment_id):
     #when we get the id of the assingement from url, we look up if there is an object in the
@@ -25,57 +28,76 @@ def index(request, assignment_id):
     }
     return render(request, 'view/assignment.html', context)
 
-def answer_assignment(request,assignment_id):
+def result_assignment(request,assignment_id):
     user = request.user.costumuser
-    #when we get the id of the assingement from url, we look up if there is an object in the
-    #database who has that id
-    assignment = Assignment.objects.get(id=assignment_id)
-    multipleChoiseQuestions = assignment.MultipleChoiseQuestions.all()
-    trueFalseQuestions = assignment.TrueFalseQuestions.all()
-    oneWordQuestions = assignment.OneWordQuestions.all()
-    #all the questions that are connectet to the assingement gets sent off with
-    #the dictionary to the assingement.html page
+    context = {}
     if user.role == "Student":
-        if request.method == "POST":
-            user_answers,created = assignment.UserAnswers.get_or_create(user = user,assignment=assignment)
-            user_answers.attempts +=1
+        assignment = Assignment.objects.get(id=assignment_id)
+        user_answers,created = assignment.UserAnswers.get_or_create(user = user,assignment=assignment)
+        context['user_attempts'] = user_answers.attempts
+        context['max_attempts'] = assignment.tries
+        context['user_wrongMCQ'] =user_answers.wrongMCQ
+        context['user_wrongTFQ'] =user_answers.wrongTFQ
+        context['user_wrongOWQ'] =user_answers.wrongOWQ
+    else:
+        context['decline'] = 1
+    if user_answers.attempts < assignment.tries:
+        context['retry'] = 1
+        context['as_id'] = assignment_id
+    return render(request, 'result/resultAssignment.html', context)
 
-            answers = {
-                'MCQ' : {},
-                'TFQ' : {},
-                'OWQ' : {}
-                }
-            for elem in request.POST:
-                if 'MCQ' in  elem or 'TFQ' in elem or 'OWQ' in elem:
-                    answers[elem[0:3]][str(elem[3:len(elem)])] = request.POST.get(elem)
-            for q in multipleChoiseQuestions:
-                if str(q.answear) != answers['MCQ'][str(q.pk)]:
-                    user_answers.wrongMCQ.add(q)
-                else:
-                    if q in user_answers.wrongMCQ.all():
-                        user_answers.wrongMCQ.remove(q)
-            for q in trueFalseQuestions:
-                if str(q.answear) != answers['TFQ'][str(q.pk)]:
-                    user_answers.wrongTFQ.add(q)
-                else:
-                    if q in user_answers.wrongTFQ.all():
-                        user_answers.wrongTFQ.remove(q)
-            for q in oneWordQuestions:
-                if str(q.answear) != answers['OWQ'][str(q.pk)]:
-                    user_answers.wrongOWQ.add(q)
-                else:
-                    if q in user_answers.wrongOWQ.all():
-                        user_answers.wrongOWQ.remove(q)
-            user_answers.save()
-            return HttpResponseRedirect('../'+assignment_id + '/answer')
+def answer_assignment(request,assignment_id):
 
-    context = {
-        'assignment': assignment,
-        'multipleChoiseQuestions': multipleChoiseQuestions,
-        'trueFalseQuestions': trueFalseQuestions,
-        'oneWordQuestions': oneWordQuestions,
+    user = request.user.costumuser
+    context = {}
+    if user.role == "Student":
+        assignment = Assignment.objects.get(id=assignment_id)
+        user_answers,created = assignment.UserAnswers.get_or_create(user = user,assignment=assignment)
+        if user_answers.attempts <= assignment.tries:
+            multipleChoiseQuestions = assignment.MultipleChoiseQuestions.all()
+            trueFalseQuestions = assignment.TrueFalseQuestions.all()
+            oneWordQuestions = assignment.OneWordQuestions.all()
+            if request.method == "POST":
+                answers = {
+                    'MCQ' : {},
+                    'TFQ' : {},
+                    'OWQ' : {}
+                    }
+                for elem in request.POST:
+                    if 'MCQ' in  elem or 'TFQ' in elem or 'OWQ' in elem:
+                        answers[elem[0:3]][str(elem[3:len(elem)])] = request.POST.get(elem)
+                for q in multipleChoiseQuestions:
+                    if str(q.answear) != answers['MCQ'][str(q.pk)]:
+                        user_answers.wrongMCQ.add(q)
+                    else:
+                        if q in user_answers.wrongMCQ.all():
+                            user_answers.wrongMCQ.remove(q)
+                for q in trueFalseQuestions:
+                    if str(q.answear) != answers['TFQ'][str(q.pk)]:
+                        user_answers.wrongTFQ.add(q)
+                    else:
+                        if q in user_answers.wrongTFQ.all():
+                            user_answers.wrongTFQ.remove(q)
+                for q in oneWordQuestions:
+                    if str(q.answear) != answers['OWQ'][str(q.pk)]:
+                        user_answers.wrongOWQ.add(q)
+                    else:
+                        if q in user_answers.wrongOWQ.all():
+                            user_answers.wrongOWQ.remove(q)
+                user_answers.attempts +=1
+                user_answers.save()
+                return HttpResponseRedirect('../'+assignment_id + '/result')
 
-    }
+            context = {
+                'assignment': assignment,
+                'multipleChoiseQuestions': multipleChoiseQuestions,
+                'trueFalseQuestions': trueFalseQuestions,
+                'oneWordQuestions': oneWordQuestions,
+            }
+        else:
+            context['decline'] = 1
+    else:
+        context['decline'] = 1
     return render(request,"answer/answerAssignment.html",context)
 
 def create_assignment(request):

@@ -1,9 +1,12 @@
 
 from django.test import TestCase
-# Create your tests here.
-from forms import CreateAssignment,CreateMultipleChoiseQuestion,CreateTrueFalseQuestion,CreateOneWordQuestion
-from models import Assignment
+
 from CheckPoint.apps.subject.models import Subject
+# Create your tests here.
+from .forms import (CreateAssignment, CreateMultipleChoiseQuestion,
+                   CreateOneWordQuestion, CreateTrueFalseQuestion)
+from .models import Assignment
+
 
 #the tests below should be easy to understand, and contains nothing only tests for assignment
 #and question forms
