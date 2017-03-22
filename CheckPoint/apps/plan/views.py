@@ -23,7 +23,7 @@ def index(request, plan_id):
         'lectures': lectures,
         'subject': subject,
         'objectives': objectives,
-        'create_or_edit_lecture_form': CreateLectureForm(),
+        'create_lecture_form': CreateLectureForm(),
         'delete_lecture_form': DeleteLectureForm(),
         'create_week_form': CreateWeekForm(),
         'delete_week_form': DeleteWeekForm(),
@@ -55,29 +55,35 @@ def create_plan(request):
         context['form'] = form
     return render(request,'plan/createplan.html',context)
 
+
+def edit(request, lecture_id):
+    lecture = Lecture.objects.get(pk=lecture_id)
+    print(lecture_id)
+    form = CreateLectureForm(instance=lecture)
+
+    context = {
+        'lecture': lecture,
+        'edit_form': form
+    }
+    return render(request, 'plan/editlecture.html', context)
+
+
 """
-The create_or_edit_lecture view is used to create or edit an lecture. It checks if there is a POST request.
-If there is, the hidden fields is saved. If the lecture_id does not exist it creates an empty CreateLectureForm
-if it does an CreateLectureForm with the lecture as an instance is created.
+The create_or_edit_lecture view is used to create a lecture. It checks if there is a POST request.
+If there is, the hidden fields is saved. It creates an empty CreateLectureForm.
 The form, if valid, is used to create a lecture, foreign keys/excluded keys is found and added to the lecture, then
 the lecture is saved. Many to many field Objectives is added afterwords.
 
 Then the page get reloaded.
 """
-def create_or_edit_lecture(request):
+def create_lecture(request):
     if request.method == 'POST':
         plan_id = request.POST.get('plan_id', None)
         week_id = request.POST.get('week_id', None)
-        #Try to get lecture_id from template, if there are none lecture_id will be None
-        lecture_id = request.POST.get('lecture_id', None)
-        plan = Plan.objects.get(id=plan_id)
-        week = Week.objects.get(id=week_id)
-        if lecture_id != None:
-            lecture_to_edit = get_object_or_404(Lecture, id=lecture_id)
-            form = CreateLectureForm(request.POST or None, instance=lecture_to_edit)
-        else:
-            form = CreateLectureForm(request.POST or None)
+        form = CreateLectureForm(request.POST or None)
         if form.is_valid():
+            plan = Plan.objects.get(id=plan_id)
+            week = Week.objects.get(id=week_id)
             lecture = form.save(commit=False)
             lecture.plan = plan
             lecture.week = week
@@ -91,6 +97,27 @@ def create_or_edit_lecture(request):
             lecture.objectives = lecture_objectives
             lecture.save()
         return HttpResponseRedirect(reverse('plan', args=[plan_id]))
+
+"""
+The edit_lecture view, for editing a lecture.
+"""
+def edit_lecture(request, lecture_id=None):
+    if lecture_id and request.method == 'POST':
+        lecture = get_object_or_404(Lecture, id=lecture_id)
+        form = CreateLectureForm(request.POST, instance=lecture)
+        if form.is_valid():
+            objectives = form.cleaned_data.pop('objectives_form_field').split(';')
+            lecture_objectives = []
+            for objective in objectives:
+                lecture_objective, exists = Objectives.objects.get_or_create(learning_objective=objective,
+                                                                             subject=lecture.plan.subject)
+                lecture_objectives.append(lecture_objective)
+            lecture.objectives = lecture_objectives
+            lecture.save()
+            return HttpResponseRedirect(reverse('plan', args=[lecture.plan.id]))
+        else:
+            return HttpResponseRedirect(reverse('edit', args=[lecture.id]))
+
 
 """
 The delete_lecture view is used to delete a lecture. When the deletebutton is clicked a POST request is sent.

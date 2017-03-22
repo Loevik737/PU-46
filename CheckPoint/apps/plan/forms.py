@@ -41,13 +41,13 @@ Form for creating a lecture, excludes foreign key and many to many field and add
 """
 class CreateLectureForm(ModelForm):
     objectives_form_field = forms.CharField(label='Learning objectives',
-                                            widget=forms.TextInput(attrs={
-                                                'placeholder': "Learningobjectives seperated by ';'"}
-                                            ))
+                                            widget=forms.Textarea(attrs={
+                                                'placeholder': "Learningobjectives seperated by ';'",
+                                            }))
     class Meta:
         model = Lecture
         exclude = ['plan','week', 'objectives']
-        fields = ['title', 'comment']
+        fields = ['id', 'title', 'comment']
 
 
 """

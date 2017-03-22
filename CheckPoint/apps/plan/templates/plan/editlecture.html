@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Plan{% endblock %}
+{% block content %}
+<h2>Edit plan</h2>
+<!--form for creating a new plan-->
+<form class="form-inline" action="{% url 'editLecture' lecture.id %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ edit_form.as_p }}
+    </div>
+    <input type="hidden" name="lecture_id" value="{{ lecture.id }}" />
+    <input type="hidden" name="plan_id" value="{{ lecture.plan.id }}" />
+    <input type="hidden" name="week_id" value="{{ lecture.week.id }}" />
+    <input class="acceptButton" type="submit" value="Lagre forelesning" />
+</form>
+<form action="{% url 'deleteLecture' %}" method="post">
+    {% csrf_token %}
+    {{ delete_lecture_form }}
+    <input type="hidden" name="lecture_id" value="{{ lecture.id }}"/>
+    <input type="submit" value="delete"
+           onclick="return confirm('Delete this lecture?')"/>
+</form>
+<a href="{% url 'plan' lecture.plan.id %}"><span class="close">&times</span></a>
+
+{% endblock %}

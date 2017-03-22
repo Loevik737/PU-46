@@ -21,7 +21,7 @@ class Week(models.Model):
 
 #Objectives model
 class Objectives(models.Model):
-    learning_objective = models.CharField(blank=False, max_length=200)
+    learning_objective = models.TextField(blank=True, max_length=200)
     subject = models.ForeignKey(Subject, related_name='learning_objectives')
 
 #Lecture model

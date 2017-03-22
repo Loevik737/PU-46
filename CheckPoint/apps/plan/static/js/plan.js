@@ -50,9 +50,13 @@ var editBtn = document.getElementById("myEditBtn");
 var editSpan = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
-editBtn.onclick = function() {
-    editModal.style.display = "block";
-};
+
+function openModal(id) {
+    console.log('123', id);
+    var modal = document.getElementById('myEditModal');
+    //$('#myEditModal-'+id).find('#id_title').val('title');
+    modal.style.display = "block";
+}
 
 // When the user clicks on <span> (x), close the modal
 editSpan.onclick = function() {
