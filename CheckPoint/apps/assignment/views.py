@@ -4,11 +4,10 @@ from django.shortcuts import render
 
 from CheckPoint.apps.subject.models import Subject
 
-from .forms import (CreateAssignment, CreateMultipleChoiseQuestion,
+from CheckPoint.apps.assignment.forms import (CreateAssignment, CreateMultipleChoiseQuestion,
                     CreateOneWordQuestion, CreateTrueFalseQuestion)
-from .models import (Assignment, MultipleChoiseQuestion, OneWordQuestion,
+from CheckPoint.apps.assignment.models import (Assignment, MultipleChoiseQuestion, OneWordQuestion,
                      TrueFalseQuestion, UserAnswers)
-
 
 def index(request, assignment_id):
     #when we get the id of the assingement from url, we look up if there is an object in the
