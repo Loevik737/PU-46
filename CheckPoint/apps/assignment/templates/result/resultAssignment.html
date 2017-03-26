@@ -3,7 +3,7 @@
 {% block content %}
 <h2>Make a new Assignment</h2>
 <!--form for creating a new plan-->
-{% if not decline and user.costumuser %}
+{% if not decline and user.customuser %}
   {% if user_attempts %}
       <strong>Attempt: {{user_attempts}} of {{max_attempts}}</strong>
   {% endif %}

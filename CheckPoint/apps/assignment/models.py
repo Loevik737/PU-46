@@ -6,7 +6,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from multiselectfield import MultiSelectField
 
-from CheckPoint.apps.registration.models import CostumUser
+from CheckPoint.apps.registration.models import CustomUser
 from CheckPoint.apps.subject.models import Subject
 
 #choises that can be taken, (number(as an id), Text for the choice)
@@ -44,7 +44,7 @@ class OneWordQuestion(models.Model):
     assignment = models.ForeignKey(Assignment, related_name='OneWordQuestions')
 
 class UserAnswers(models.Model):
-    user = models.ForeignKey(CostumUser)
+    user = models.ForeignKey(CustomUser)
     assignment = models.ForeignKey(Assignment,related_name="UserAnswers")
     attempts = models.IntegerField(default= 0)
     wrongTFQ = models.ManyToManyField(TrueFalseQuestion)

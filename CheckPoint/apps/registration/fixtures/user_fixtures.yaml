@@ -1,0 +1,5 @@
+- model: registration.CustomUser
+  pk: 1
+  fields:
+    user: 1
+    role: Test

@@ -1,13 +1,13 @@
 from django.contrib import admin
-from CheckPoint.apps.registration.models import CostumUser
+from CheckPoint.apps.registration.models import CustomUser
 from CheckPoint.apps.subject.models import Subject
 
 class TeachSubjectInline(admin.TabularInline):
-    model = CostumUser.attendingSubject.through
+    model = CustomUser.attendingSubject.through
     extra = 1 # how many rows to show
 
-class CostumUserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(admin.ModelAdmin):
     inlines = (TeachSubjectInline,)
     exclude = ('attendingSubject',)
 
-admin.site.register(CostumUser,CostumUserAdmin)
+admin.site.register(CustomUser, CustomUserAdmin)
