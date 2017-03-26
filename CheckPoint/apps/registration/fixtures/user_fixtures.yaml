@@ -1,0 +1,10 @@
+- model: auth.User
+  pk: 1
+  fields:
+    username: asd
+
+- model: registration.CustomUser
+  pk: 1
+  fields:
+    user: 1
+    role: Test

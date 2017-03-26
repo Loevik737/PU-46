@@ -28,7 +28,7 @@ def index(request, assignment_id):
     return render(request, 'view/assignment.html', context)
 
 def result_assignment(request,assignment_id):
-    user = request.user.costumuser
+    user = request.user.customuser
     context = {}
     if user.role == "Student":
         assignment = Assignment.objects.get(id=assignment_id)
@@ -47,7 +47,7 @@ def result_assignment(request,assignment_id):
 
 def answer_assignment(request,assignment_id):
 
-    user = request.user.costumuser
+    user = request.user.customuser
     context = {}
     if user.role == "Student":
         assignment = Assignment.objects.get(id=assignment_id)
@@ -103,7 +103,7 @@ def create_assignment(request):
     user = request.user
     #the dictionary we will send to the html template
     context={}
-    if user.costumuser.role == 'Teacher':
+    if user.customuser.role == 'Teacher':
         #if we get a POST request jump into the if statement
         if request.method == 'POST':
             #set for to the POST request we got
@@ -125,7 +125,7 @@ def create_assignment(request):
 def edit_assignment(request, assignment_id):
     context={}
     user = request.user
-    if user.costumuser.role == 'Teacher':
+    if user.customuser.role == 'Teacher':
 
         #when we get the id of the assingement from url, we look up if there is an object in the
         #database who has that id

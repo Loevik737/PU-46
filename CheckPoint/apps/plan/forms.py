@@ -30,6 +30,9 @@ class CreatePlanForm(ModelForm):
     #creating a IntegerField for the year, the default is the current year
     year = forms.IntegerField(required=True,label='Year:',initial=datetime.datetime.now().year)
 
+    beginning_week =forms.IntegerField(required=False, label='Beginning week:',
+                    widget=forms.TextInput(attrs={'placeholder': 'week number'}))
+
     #the model we will use will be the auth User model and the fields are named title, subject, term, year
     class Meta:
         model = Plan

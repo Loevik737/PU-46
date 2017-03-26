@@ -11,7 +11,7 @@
 
     <header>
           {% load static %}
-          {% if user.costumuser %}
+          {% if user.customuser %}
           <a id="logout" href="{% url 'logout' %}"> Log out</a>
           <a id="editinfo" href="{% url 'editUser' %}">{{user.username}}</a>
           {% else %}

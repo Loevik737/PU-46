@@ -2,7 +2,7 @@
 {% block title %}Assignment{% endblock %}
 {% block content %}
         <!--Checks if there is a userobject in user -->
-        {% if user.costumuser and not decline %}
+        {% if user.customuser and not decline %}
         <!--Test form-->
         <form method="post" action="./answer">{% csrf_token %}
             <h2>Assignment {{assignment.title}} for {{assignment.subject.name}}({{assignment.subject.code}})</h2>

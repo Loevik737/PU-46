@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
-from CheckPoint.apps.registration.models import CostumUser
+from CheckPoint.apps.registration.models import CustomUser
 from django.views.decorators.csrf import csrf_protect
 from CheckPoint.apps.registration.forms import *
 
@@ -21,7 +21,7 @@ def register(request):
                 password=form.cleaned_data['password1'],
                 email=form.cleaned_data['email']
             )
-            CostumUser.objects.create(
+            CustomUser.objects.create(
             user = user,
             role = form.cleaned_data['role']
             )

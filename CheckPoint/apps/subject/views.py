@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from CheckPoint.apps.subject.models import Subject
-from CheckPoint.apps.registration.models import CostumUser
+from CheckPoint.apps.registration.models import CustomUser
 from CheckPoint.apps.plan.models import Plan
 
 # Create your views here.
 
 def subjectView(request):
     #get costumuser
-    user =request.user.costumuser
+    user =request.user.customuser
     #get subjects the user attends
     all_subjects = user.attendingSubject.all
     #get all plan objects
