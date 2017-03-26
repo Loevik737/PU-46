@@ -40,13 +40,11 @@
                     <div id="myCreateModal-{{ forloop.counter }}" class="modal">
                       <!-- Modal content -->
                         <div class="modal-content">
-                            <form class="form-inline" action="{% url 'createLecture' %}" method="post">
+                            <form class="form-inline" action="{% url 'createLecture' plan.id week.id %}" method="post">
                             {% csrf_token %}
                                 <div class="form-group">
                                     {{ create_lecture_form.as_p }}
                                 </div>
-                                <input type="hidden" name="plan_id" value="{{ plan.id }}" />
-                                <input type="hidden" name="week_id" value="{{ week.id }}" />
                                 <input class="acceptButton" type="submit" value="Lagre forelesning" />
                             </form>
                             <span class="close" onclick="closeModal({{ forloop.counter }})">&times;</span>

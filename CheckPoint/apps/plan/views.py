@@ -79,10 +79,8 @@ the lecture is saved. Many to many field Objectives is added afterwords.
 
 Then the page get reloaded.
 """
-def create_lecture(request):
+def create_lecture(request, plan_id, week_id):
     if request.method == 'POST':
-        plan_id = request.POST.get('plan_id', None)
-        week_id = request.POST.get('week_id', None)
         form = CreateLectureForm(request.POST or None)
         if form.is_valid():
             plan = Plan.objects.get(id=plan_id)
