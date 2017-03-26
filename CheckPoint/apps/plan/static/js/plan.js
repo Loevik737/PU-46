@@ -14,58 +14,24 @@ for (var i = 0; i < acc.length; i++) {
     }
 }
 
-// Get the modal
-var createModal = document.getElementById('myCreateModal');
-
-// Get the button that opens the modal
-var createBtn = document.getElementById("myCreateBtn");
-
-// Get the <span> element that closes the modal
-var createSpan = document.getElementsByClassName("close2")[0];
-
-// When the user clicks on the button, open the modal
-createBtn.onclick = function() {
-    createModal.style.display = "block";
-};
-
-// When the user clicks on <span> (x), close the modal
-createSpan.onclick = function() {
-    createModal.style.display = "none";
-};
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == createModal) {
-        createModal.style.display = "none";
-    }
-};
-
-// Get the modal
-var editModal = document.getElementById('myEditModal');
-
-// Get the button that opens the modal
-var editBtn = document.getElementById("myEditBtn");
-
-// Get the <span> element that closes the modal
-var editSpan = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-
-function openModal(id) {
-    console.log('123', id);
-    var modal = document.getElementById('myEditModal');
-    //$('#myEditModal-'+id).find('#id_title').val('title');
+//Function for opening modal and closing if click outside of modal
+function openModal(counter) {
+    // Get the modal
+    var modal = document.getElementById('myCreateModal-'+counter);
+    // Show the modal
     modal.style.display = "block";
+    // Close if click outside of modal
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
 }
 
-// When the user clicks on <span> (x), close the modal
-editSpan.onclick = function() {
-    editModal.style.display = "none";
-};
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == editModal) {
-        editModal.style.display = "none";
-    }
-};
+//Function for closeing modal through close button
+function closeModal(counter){
+    //Get modal to close
+    var modal = document.getElementById('myCreateModal-'+counter);
+    //Close modal
+    modal.style.display = "none";
+}

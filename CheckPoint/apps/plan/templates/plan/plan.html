@@ -29,16 +29,15 @@
                                             {% endfor %}
                                         </ul>
                                     {% endif %}
-
                                     <a href="{% url 'edit' lecture.id %}"><button id="myEditBtn">Edit lecture</button></a>
                                 </div>
                             {% endfor %}
                         {% else %}
                         <div class="panel">No lectures this week</div>
                     {% endif %}
-                    <button id="myCreateBtn">Legg til forelesning</button>
+                    <button id="myCreateBtn" onclick="openModal({{ forloop.counter }})"> Legg til forelesnin g</button>
                     <!-- The Modal -->
-                    <div id="myCreateModal" class="modal">
+                    <div id="myCreateModal-{{ forloop.counter }}" class="modal">
                       <!-- Modal content -->
                         <div class="modal-content">
                             <form class="form-inline" action="{% url 'createLecture' %}" method="post">
@@ -50,7 +49,7 @@
                                 <input type="hidden" name="week_id" value="{{ week.id }}" />
                                 <input class="acceptButton" type="submit" value="Lagre forelesning" />
                             </form>
-                            <span class="close2">&times;</span>
+                            <span class="close" onclick="closeModal({{ forloop.counter }})">&times;</span>
                         </div>
                     </div>
                     </div>
@@ -60,8 +59,6 @@
                     <div class="form-group">
                         {{ create_week_form }}
                     </div>
-                    <input type="hidden" name="week_number" value="{{ weeks|length }}">
-                    <input type="hidden" name="plan_id" value="{{ plan.id }}"/>
                     <input class="acceptButton" type="submit" value="Legg til uke" />
                 </form>
             {% else %}

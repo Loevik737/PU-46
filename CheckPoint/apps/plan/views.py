@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
+from django.forms.models import inlineformset_factory
 
 from .forms import (CreateLectureForm, CreatePlanForm, CreateWeekForm,
                     DeleteLectureForm, DeleteWeekForm)
@@ -47,8 +48,10 @@ def create_plan(request):
         form = CreatePlanForm(request.POST)
         #if the form was valid,save it and redirect us to the site for the new plan
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('../'+ str(Plan.objects.latest('id').id))
+            start_week_number = form.cleaned_data['beginning_week']
+            plan = form.save()
+            week = Week.objects.create(plan=plan,week_number=start_week_number)
+            return HttpResponseRedirect(reverse('plan', args=[plan.id]))
     else:
         #if we dont get a POST request, send the form class with the dictionary to the template
         form = CreatePlanForm()
@@ -143,15 +146,14 @@ redirected to plan.
 def create_week(request, plan_id):
     if request.method == 'POST':
         plan = Plan.objects.get(id=plan_id)
-        week_number = int(request.POST.get('week_number')) + 1
+        week_number = list(plan.weeks.all().order_by('id'))[-1].week_number + 1
         form = CreateWeekForm(request.POST or None)
-
         if form.is_valid():
             week = form.save(commit=False)
             week.plan = plan
             week.week_number = week_number
-            week.save()
-            return HttpResponseRedirect(reverse('plan', args=[plan_id]))
+            form.save()
+        return HttpResponseRedirect(reverse('plan', args=[plan_id]))
 
 """
 The delete_week view is used to delete a week. When the deletebutton is clicked a POST request is sent.
@@ -166,4 +168,4 @@ def delete_week(request):
         form = DeleteWeekForm(request.POST, instance=week_to_delete)
         if form.is_valid():
             week_to_delete.delete()
-            return HttpResponseRedirect(reverse('plan', args=[plan_id]))
+    return HttpResponseRedirect(reverse('plan', args=[plan_id]))
