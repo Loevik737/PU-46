@@ -9,7 +9,8 @@ def subjectView(request):
     #get costumuser
     user =request.user.customuser
     #get subjects the user attends
-    all_subjects = user.attendingSubject.all
+    all_attending_subjects = user.attendingSubject.all
+
     #get all plan objects
     plan = Plan.objects.all()
     #make dictionary where key is subjectname in plan and value is planID
@@ -17,6 +18,8 @@ def subjectView(request):
     for object in plan:
         plansubject[object.subject.name]=object.pk
     #make user subjects, plan objects and plansubject dictionary usable from template
-    args = {'subjects': all_subjects, 'plan': plan, 'plansubject':plansubject, }
+    args = {'subjects': all_attending_subjects,'plan': plan, 'plansubject':plansubject, }
+    if user.role == 'Teacher':
+        args['teaching_subjects'] =  user.teachingSubject.all
     #render subjectHome.html
     return render(request, 'subjectHome.html', args)

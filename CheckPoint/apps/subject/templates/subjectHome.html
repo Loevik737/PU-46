@@ -6,7 +6,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static "css/subject.css" %}" />
 <p>
-List of subjects:
+List of subjects you attend:
 </p>
     <!-- for each subject in users subjects -->
         {% for subject in subjects %}
@@ -19,6 +19,13 @@ List of subjects:
                 <button>{{ subject.name }}</button>
             {% endif %}
 
+        {% endfor %}
+        <label>Add subject: <input type="" name="" value=""> <input type="submit" method="POST"></label>
+        <p>List of subjects you are teaching: </p>
+        {% for subject in teaching_subjects %}
+            <!-- if the subject is in plansubject(aka it has a plan) -->
+                <!-- make a subject button with a link to the subjects plan -->
+                <button onclick="location.href='../plan/{{ plansubject|cut:subject.name }}';">{{ subject.name }}</button>
         {% endfor %}
 
 <script type="text/javascript" src="{% static "js/plan.js" %}"></script>
