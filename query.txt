@@ -1,0 +1,1 @@
+./rest/v/public/emne/query?limit=-1&fields=emne.entityKeys.entityKeyId,emne.hasName.value
