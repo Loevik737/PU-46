@@ -20,13 +20,25 @@ List of subjects you attend:
             {% endif %}
 
         {% endfor %}
-        <label>Add subject: <input type="" name="" value=""> <input type="submit" method="POST"></label>
         <p>List of subjects you are teaching: </p>
         {% for subject in teaching_subjects %}
             <!-- if the subject is in plansubject(aka it has a plan) -->
                 <!-- make a subject button with a link to the subjects plan -->
                 <button onclick="location.href='../plan/{{ plansubject|cut:subject.name }}';">{{ subject.name }}</button>
         {% endfor %}
+        <form action="" method="POST">{% csrf_token %}
+          <label>
+            <input list="subjects" name="subjectInfo" value="">
+              <datalist id="subjects">
+                {% for key,value in subjectDict.iteritems %}
+                    <option value="{{key}} {{value}}">
+                {% endfor %}
+              </datalist>
+            <input class="acceptButton" type="submit" value="addSubject" />
+          </label>
+        <form>
+
+
 
 <script type="text/javascript" src="{% static "js/plan.js" %}"></script>
 {% endblock %}

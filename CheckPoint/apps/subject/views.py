@@ -1,9 +1,21 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render
 from CheckPoint.apps.subject.models import Subject
 from CheckPoint.apps.registration.models import CustomUser
 from CheckPoint.apps.plan.models import Plan
+import json
+import os
 
-# Create your views here.
+module_dir = os.path.dirname(__file__)  # get current directory
+file_path = os.path.join(module_dir, './static/json/subjects.json')
+subjectDict = {}
+with open(file_path) as json_data:
+    d = json.load(json_data)
+    for sub in d['emne']:
+        temp = sub[0]['entityKeys'][0]['entityKeyId']
+        temp = temp[13:len(temp)-2]
+        subjectDict[temp] = ''.join(sub[0]['hasName'][0]['value']).encode('utf-8').strip()
 
 def subjectView(request):
     #get costumuser
@@ -21,5 +33,9 @@ def subjectView(request):
     args = {'subjects': all_attending_subjects,'plan': plan, 'plansubject':plansubject, }
     if user.role == 'Teacher':
         args['teaching_subjects'] =  user.teachingSubject.all
+    args["subjectDict"] = subjectDict
+    if request.method == 'POST':
+        if 'subjectInfo' in request.POST:
+            print("hei  ")
     #render subjectHome.html
     return render(request, 'subjectHome.html', args)
