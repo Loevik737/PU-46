@@ -6,5 +6,5 @@ from CheckPoint.apps.home.views import homeView
 
 urlpatterns = [
     url(r'^$', auth_views.login, {'template_name': 'myApp/login.html'}, name='login'),
-    url(r'^logout/$', auth_views.logout, {'template_name': 'myApp/logged_out.html'}, name='logout'),
+    url(r'^logout/$', auth_views.logout, {'next_page': 'login' }, name='logout'),
 ]
