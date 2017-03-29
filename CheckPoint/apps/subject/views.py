@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from CheckPoint.apps.subject.models import Subject
 from CheckPoint.apps.registration.models import CustomUser
@@ -36,6 +36,11 @@ def subjectView(request):
     args["subjectDict"] = subjectDict
     if request.method == 'POST':
         if 'subjectInfo' in request.POST:
-            print("hei  ")
+            subject_info = request.POST['subjectInfo'].split(' ')
+            subject = Subject.objects.get_or_create(code = subject_info[0],name=subject_info[1])
+            user.attendingSubject.add(subject[0].pk)
+            return HttpResponseRedirect('../subjects/')
+
+
     #render subjectHome.html
     return render(request, 'subjectHome.html', args)
