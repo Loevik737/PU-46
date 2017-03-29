@@ -21,7 +21,6 @@ class Assignment(models.Model):
     term = models.CharField(verbose_name='Semester', max_length=10)
     year = models.IntegerField(default=datetime.datetime.now().year)
     tries = models.IntegerField(default=3)
-    due = models.DateField(default =datetime.datetime.now(), blank=True)
 
 #pip install django-multiselectfield
 class MultipleChoiseQuestion(models.Model):

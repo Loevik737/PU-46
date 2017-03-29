@@ -8,33 +8,49 @@
 <p>
 List of subjects you attend:
 </p>
+    <form action="" method="POST">{% csrf_token %}
     <!-- for each subject in users subjects -->
         {% for subject in subjects %}
+
             <!-- if the subject is in plansubject(aka it has a plan) -->
             {% if subject.name in plansubject %}
+            <p>{{subject.name}} </hei>
                 <!-- make a subject button with a link to the subjects plan -->
-                <button onclick="location.href='../plan/{{ plansubject|cut:subject.name }}';">{{ subject.name }}</button>
+                <button onclick="location.href='../plan/{{ plansubject|cut:subject.name  }}'; return false;">{{ subject.name }}</button>
             {% else %}
                 <!-- else, make an unclickable subject button(because there is no subject plan) -->
                 <button>{{ subject.name }}</button>
             {% endif %}
-
+            <input  name="delete_attending_pk" type="hidden" value="{{subject.pk}}" />
+              <input class="deleteButton" name="delete_attending_subject" type="submit" value="X" />
         {% endfor %}
+      </form>
         <p>List of subjects you are teaching: </p>
+      <form action="" method="POST">{% csrf_token %}
         {% for subject in teaching_subjects %}
-            <!-- if the subject is in plansubject(aka it has a plan) -->
-                <!-- make a subject button with a link to the subjects plan -->
-                <button onclick="location.href='../plan/{{ plansubject|cut:subject.name }}';">{{ subject.name }}</button>
+          {% if subject.name in plansubject %}
+              <!-- make a subject button with a link to the subjects plan -->
+              <button onclick="location.href='../plan/{{ plansubject|cut:subject.name  }}';return false;">{{ subject.name }}</button>
+          {% else %}
+              <!-- else, make an unclickable subject button(because there is no subject plan) -->
+              <button>{{ subject.name }}</button>
+          {% endif %}
+          <input  name="delete_teaching_pk" type="hidden" value="{{subject.pk}}" />
+          <input class="deleteButton" name="delete_teaching_subject" type="submit" value="X" />
         {% endfor %}
+      </form>
         <form action="" method="POST">{% csrf_token %}
           <label>
+            {% if invalid_subject%}
+              <p class="errorlist">Subject can not be added </p>
+            {% endif %}
             <input list="subjects" name="subjectInfo" value="">
               <datalist id="subjects">
                 {% for key,value in subjectDict.iteritems %}
                     <option value="{{key}} {{value}}">
                 {% endfor %}
               </datalist>
-            <input class="acceptButton" type="submit" value="addSubject" />
+            <input class="acceptButton" type="submit" value="Add subject to attending" />
           </label>
         <form>
 

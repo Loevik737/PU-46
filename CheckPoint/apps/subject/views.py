@@ -35,12 +35,21 @@ def subjectView(request):
         args['teaching_subjects'] =  user.teachingSubject.all
     args["subjectDict"] = subjectDict
     if request.method == 'POST':
+        if 'delete_attending_subject' in request.POST:
+            user.attendingSubject.remove(int(request.POST['delete_attending_pk']))
+        if 'delete_teaching_subject' in request.POST:
+            user.teachingSubject.remove(int(request.POST['delete_teaching_pk']))
         if 'subjectInfo' in request.POST:
-            subject_info = request.POST['subjectInfo'].split(' ')
-            subject = Subject.objects.get_or_create(code = subject_info[0],name=subject_info[1])
-            user.attendingSubject.add(subject[0].pk)
-            return HttpResponseRedirect('../subjects/')
-
+            if ' ' in request.POST['subjectInfo']:
+                subject_info = request.POST['subjectInfo'].split(' ',1)
+                if subject_info[0] in subjectDict.keys():
+                    subject = Subject.objects.get_or_create(code = subject_info[0],name=subject_info[1])
+                    user.attendingSubject.add(subject[0].pk)
+                    return HttpResponseRedirect('../subjects/')
+                else:
+                    args['invalid_subject'] = 1
+            else:
+                args['invalid_subject'] = 1
 
     #render subjectHome.html
     return render(request, 'subjectHome.html', args)
