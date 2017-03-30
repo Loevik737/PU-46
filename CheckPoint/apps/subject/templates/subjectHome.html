@@ -14,12 +14,11 @@ List of subjects you attend:
 
             <!-- if the subject is in plansubject(aka it has a plan) -->
             {% if subject.name in plansubject %}
-            <p>{{subject.name}} </hei>
                 <!-- make a subject button with a link to the subjects plan -->
-                <button onclick="location.href='../plan/{{ plansubject|cut:subject.name  }}'; return false;">{{ subject.name }}</button>
+                <button onclick="location.href='../plan/{{ plansubject|cut:subject.name  }}'; return false;">{{ subject.name }} {{subject.code}}</button>
             {% else %}
                 <!-- else, make an unclickable subject button(because there is no subject plan) -->
-                <button>{{ subject.name }}</button>
+                <button>{{ subject.name }} {{subject.code}}(no plan)</button>
             {% endif %}
             <input  name="delete_attending_pk" type="hidden" value="{{subject.pk}}" />
               <input class="deleteButton" name="delete_attending_subject" type="submit" value="X" />
@@ -30,10 +29,10 @@ List of subjects you attend:
         {% for subject in teaching_subjects %}
           {% if subject.name in plansubject %}
               <!-- make a subject button with a link to the subjects plan -->
-              <button onclick="location.href='../plan/{{ plansubject|cut:subject.name  }}';return false;">{{ subject.name }}</button>
+              <button onclick="location.href='../plan/{{ plansubject|cut:subject.name  }}';return false;">{{ subject.name }} {{subject.code}}</button>
           {% else %}
               <!-- else, make an unclickable subject button(because there is no subject plan) -->
-              <button>{{ subject.name }}</button>
+              <button>{{ subject.name }} {{subject.code}}(no plan)</button>
           {% endif %}
           <input  name="delete_teaching_pk" type="hidden" value="{{subject.pk}}" />
           <input class="deleteButton" name="delete_teaching_subject" type="submit" value="X" />
