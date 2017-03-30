@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Stats{% endblock %}
+{% block content %}
+<h2>Stats</h2>
+{% load static %}
+<script type="text/javascript"  src="{% static 'js/graphs.js' %}"></script>
+<!--form for creating a new plan-->
+{% for assignment in drawData %}
+  <div  id="chart{{forloop.counter0}}" style="width: 900px; height: 500px"> </div>
+  <script>
+    drawChart({{assignment}});
+  </script>
+{% endfor %}
+
+{% endblock %}

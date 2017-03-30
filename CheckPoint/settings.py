@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'CheckPoint.apps.registration',
     'CheckPoint.apps.home',
     'CheckPoint.apps.assignment',
+    'CheckPoint.apps.stats',
     'multiselectfield',
 
 ]
@@ -99,7 +100,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'root',
     }
-}   
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
