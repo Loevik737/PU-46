@@ -9,10 +9,10 @@
 ['corechart']}]}"></script>
 <!--form for creating a new plan-->
 {% for key,value in drawData.items %}
-  <div  id="chart{{forloop.counter0}}" style="width: 650px; height: 500px"> </div>
+  <div  id="chart{{forloop.counter0}}" style="width: 400px; height: 300px"> </div>
   <script>
   {% autoescape off %}
-    drawChart({{value}},{{forloop.counter0}});
+    drawChart({{value}},{{forloop.counter0}},'{{key}}');
   {% endautoescape %}
   </script>
 {% endfor %}

@@ -1,23 +1,32 @@
 
 google.charts.load('current', {'packages':['bar']});
 
-function drawChart(inData,id) {
-  console.log(inData,parseInt(id))
-  var data = google.visualization.arrayToDataTable([
-        ['Assignment', 'Correct answers in %',],
-        [inData[0], ((inData[1]-inData[2])/inData[1])*100],
-
-      ]);
+function drawChart(inData,id,subject) {
+  var dataArray = [['Assignment', 'Correct answers in %']];
+  var tempArray = [];
+  for(var i = 0; i <inData.length; i++){
+      if(i % 2 == 1 && i != 0){
+        tempArray.push(inData[i]);
+        dataArray.push(tempArray);
+        tempArray = []
+      }
+      else{
+        tempArray.push(inData[i]);
+      }
+  }
+  var data = google.visualization.arrayToDataTable(dataArray);
 
       var options = {
-        title: 'Population of Largest U.S. Cities',
+        title: subject,
         chartArea: {width: '50%'},
         hAxis: {
-          title: 'Total Population',
-          minValue: 0
+          title: 'Total Correct of 100%',
+          minValue: 0,
+          maxValue:100
+
         },
         vAxis: {
-          title: 'City'
+          title: 'Assignment'
         }
       };
 
