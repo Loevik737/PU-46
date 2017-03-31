@@ -1,26 +1,26 @@
 
-google.charts.load('current', {'packages':['corechart']});
-//google.charts.setOnLoadCallback(drawChart);
+google.charts.load('current', {'packages':['bar']});
 
-
-function drawChart(input) {
-  console.log("bdsjf",input)
-  var inputData = document.getElementById("data").value;
+function drawChart(inData,id) {
+  console.log(inData,parseInt(id))
   var data = google.visualization.arrayToDataTable([
-    ['Year', 'Sales', 'Expenses'],
-    ['2004',  200,       400],
-    ['2005',  1170,      460],
-    ['2006',  660,       1120],
-    ['2007',  1030,      540]
-  ]);
+        ['Assignment', 'Correct answers in %',],
+        [inData[0], ((inData[1]-inData[2])/inData[1])*100],
 
-  var options = {
-    title:"hei paa deg",
-    curveType: 'function',
-    legend: { position: 'bottom' }
-  };
+      ]);
 
-  var chart = new google.visualization.LineChart(document.getElementById('chart1'));
+      var options = {
+        title: 'Population of Largest U.S. Cities',
+        chartArea: {width: '50%'},
+        hAxis: {
+          title: 'Total Population',
+          minValue: 0
+        },
+        vAxis: {
+          title: 'City'
+        }
+      };
 
-  chart.draw(data, options);
+      var chart = new google.visualization.BarChart(document.getElementById('chart'+id));
+      chart.draw(data, options);
 }

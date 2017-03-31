@@ -4,11 +4,16 @@
 <h2>Stats</h2>
 {% load static %}
 <script type="text/javascript"  src="{% static 'js/graphs.js' %}"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload=
+{'modules':[{'name':'visualization','version':'1.1','packages':
+['corechart']}]}"></script>
 <!--form for creating a new plan-->
-{% for assignment in drawData %}
-  <div  id="chart{{forloop.counter0}}" style="width: 900px; height: 500px"> </div>
+{% for key,value in drawData.items %}
+  <div  id="chart{{forloop.counter0}}" style="width: 650px; height: 500px"> </div>
   <script>
-    drawChart({{assignment}});
+  {% autoescape off %}
+    drawChart({{value}},{{forloop.counter0}});
+  {% endautoescape %}
   </script>
 {% endfor %}
 

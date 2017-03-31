@@ -11,11 +11,9 @@ def stats_view(request):
     for ans in user_answers:
         title = Assignment.objects.get(id=ans.assignment_id).title
         subject = Subject.objects.get(id =Assignment.objects.get(id=ans.assignment_id).subject_id).code
-        args['drawData'][subject] = {}
-        args['drawData'][subject][title] = {}
-        args['drawData'][subject][title]['qCount'] = MultipleChoiseQuestion.objects.filter(assignment_id=ans.assignment_id).count()+TrueFalseQuestion.objects.filter(assignment_id=ans.assignment_id).count()+OneWordQuestion.objects.filter(assignment_id=ans.assignment_id).count()
-        args['drawData'][subject][title]['wCount'] = ans.wrongTFQ.count()+ans.wrongOWQ.count()+ans.wrongMCQ.count()
-    print(args['drawData']["TFE4570"]['First']['qCount'])
-    #print(args['drawData']["TFE4570"]['First']['wCount'])
+        args['drawData'][subject] = []
+        args['drawData'][subject].append(str(title))
+        args['drawData'][subject].append(MultipleChoiseQuestion.objects.filter(assignment_id=ans.assignment_id).count()+TrueFalseQuestion.objects.filter(assignment_id=ans.assignment_id).count()+OneWordQuestion.objects.filter(assignment_id=ans.assignment_id).count())
+        args['drawData'][subject].append(ans.wrongTFQ.count()+ans.wrongOWQ.count()+ans.wrongMCQ.count())
 
     return render(request, 'stats.html', args)
