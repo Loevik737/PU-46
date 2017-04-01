@@ -17,10 +17,14 @@ function drawChart(inData,id,subject) {
       }
   }
   var data = google.visualization.arrayToDataTable(dataArray);
-
       var options = {
         title: subject+ ' Overall: '+Math.round(average/(inData.length/2)*100 )/100+'%',
         chartArea: {width: '50%'},
+        animation:{
+        duration: 1000,
+        easing: 'out',
+        startup: true
+      },
         hAxis: {
           title: 'Correct answers in %',
           minValue: 0,

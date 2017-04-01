@@ -39,7 +39,7 @@ class CreateMultipleChoiseQuestion(forms.ModelForm):
 class CreateTrueFalseQuestion(forms.ModelForm):
     question = forms.CharField(required=True,label="Question:",
                     widget=forms.TextInput(attrs={'placeholder': 'questin...'}))
-    answear = forms.BooleanField(required=True, initial=False, label='True?:')
+    answear = forms.BooleanField(required=False, initial=False, label='True?:')
 
     class Meta:
         model = TrueFalseQuestion

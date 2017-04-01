@@ -125,12 +125,12 @@ def create_assignment(request):
 
 def edit_assignment(request, assignment_id):
     context={}
-    user = request.user
-    if user.customuser.role == 'Teacher':
+    user = request.user.customuser
+    assignment = Assignment.objects.get(id=assignment_id)
+    if user.role == 'Teacher' and user.teachingSubject.all().filter(id=assignment.subject_id).exists():
 
         #when we get the id of the assingement from url, we look up if there is an object in the
         #database who has that id
-        assignment = Assignment.objects.get(id=assignment_id)
         multipleChoiseQuestions = assignment.MultipleChoiseQuestions.all()
         trueFalseQuestions = assignment.TrueFalseQuestions.all()
         oneWordQuestions = assignment.OneWordQuestions.all()

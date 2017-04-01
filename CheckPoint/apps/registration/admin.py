@@ -16,5 +16,4 @@ class CustomUserAdmin(admin.ModelAdmin):
     exclude = ('attendingSubject','teachingSubject',)
 
 
-
 admin.site.register(CustomUser, CustomUserAdmin)
