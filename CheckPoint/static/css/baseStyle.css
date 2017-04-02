@@ -6,3 +6,8 @@
   padding: 15px !important;
   width: auto !important;
 }
+
+.navbar {
+  z-index: 1000;
+  padding-bottom: 0px;
+}

@@ -1,0 +1,103 @@
+form {
+    border: 3px solid #f1f1f1;
+}
+
+.background-image {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: -1;
+
+  display: block;
+  background-image: url('../images/back.jpg');
+  width: 100%;
+  height: 100%;
+
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
+}
+
+.login {
+  z-index: 0;
+}
+
+form {
+  border: none;
+}
+
+input[type=text], input[type=password] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+   	margin-left: 25%;
+    margin-right: 25%;
+    font-family: "Open Sans", sans-serif;
+}
+
+label {
+  font-family: "Open Sans", sans-serif;
+  font-size: 20;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+.acceptButton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    font-family: "Open Sans", sans-serif;
+    font-size: 15;
+    color:black
+}
+
+p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.acceptButton:hover {
+    opacity: 0.8;
+}
+
+.container {
+    padding: 16px;
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+label {
+  display: none;
+}
+
+.errorlist {
+  color:orangered;
+  list-style-type: none;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18;
+  margin-left: 25%;
+  margin-right: 25%
+
+  z-index: 2;
+}
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+       float: none;
+    }
+}
