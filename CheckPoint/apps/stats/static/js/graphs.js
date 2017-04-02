@@ -41,7 +41,7 @@ function drawChart(inData,id,subject) {
         hAxis: {
           title: 'Correct answers in %',
           minValue: 0,
-          maxValue:200
+          maxValue: 100
 
         },
         vAxis: {
@@ -54,7 +54,7 @@ function drawChart(inData,id,subject) {
         // key columns (columns to group by)
         [0],
         // third column (index 2) will be summed
-        [{'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number'}]
+        [{'column': 1, 'aggregation': google.visualization.data.avg, 'type': 'number'}]
       );
 
       var chart = new google.visualization.BarChart(document.getElementById('chart'+id));

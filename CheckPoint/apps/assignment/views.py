@@ -31,7 +31,7 @@ def index(request, assignment_id):
 def result_assignment(request,assignment_id):
     user = request.user.customuser
     context = {}
-    if user.role == "Student":
+    if user.role == "Student" or user.role =="Teacher":
         assignment = Assignment.objects.get(id=assignment_id)
         user_answers,created = assignment.UserAnswers.get_or_create(user = user,assignment=assignment)
         context['user_attempts'] = user_answers.attempts
@@ -50,7 +50,7 @@ def answer_assignment(request,assignment_id):
 
     user = request.user.customuser
     context = {}
-    if user.role == "Student":
+    if user.role == "Student" or user.role =="Teacher":
         assignment = Assignment.objects.get(id=assignment_id)
         user_answers,created = assignment.UserAnswers.get_or_create(user = user,assignment=assignment)
         if user_answers.attempts <= assignment.tries:

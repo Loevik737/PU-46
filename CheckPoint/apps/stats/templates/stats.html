@@ -8,8 +8,14 @@
 ['corechart']}]}"></script>
 <!--form for creating a new plan-->
 {% if drawData %}
-<h2>Your average is: {{average}}%</h2>
+
 <div class="container-fluid">
+{% if Teacher %}
+<h3>Average score for all students: {{average}}%</h3>
+{% endif %}
+{% if Student %}
+<h3>Your average score is: {{average}}%</h3>
+{% endif %}
 <div class="row">
 {% for key,value in drawData.items %}
   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" id="chart{{forloop.counter0}}" style="width: 500px; height: 300px"> </div>
@@ -22,6 +28,6 @@
 </div>
 </div>
 {% else %}
-<div><b>You have not taken any assignments in the subjects you attend</b> </div>
+<div><b>No assignments taken in any of the subjects you attend or teach</b> </div>
 {% endif %}
 {% endblock %}
