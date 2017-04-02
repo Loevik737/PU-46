@@ -112,7 +112,7 @@ def create_assignment(request):
             #if the form was valid,save it and redirect us to the site for the new plan
             if form.is_valid():
                 form.save()
-                return HttpResponseRedirect('../'+ str(Assignment.objects.latest('id').id))
+                return HttpResponseRedirect('../'+ str(Assignment.objects.latest('id').id)+'/edit')
             else:
                 context["form"] = form
         else:

@@ -5,14 +5,16 @@ from CheckPoint.apps.subject.models import Subject
 
 def stats_view(request):
     user = request.user.customuser
-    user_answers = UserAnswers.objects.filter(user_id=user.id)
-    attending = user.attendingSubject
+    #user_answers = UserAnswers.objects.filter(user_id=user.id)
+    user_answers = UserAnswers.objects.all()
+    #attending = user.attendingSubject
+    teaching = user.teachingSubject.all()
     args = {'drawData': {}}
     args['average'] = [0,0]
     for ans in user_answers:
         title = Assignment.objects.get(id=ans.assignment_id).title
         subject = str(Subject.objects.get(id =Assignment.objects.get(id=ans.assignment_id).subject_id).code)
-        if attending.filter(code=subject).exists():
+        if teaching.filter(code=subject).exists():
             if  subject not in args['drawData'].keys():
                 args['drawData'][subject] = []
             args['drawData'][subject].append(str(title))
