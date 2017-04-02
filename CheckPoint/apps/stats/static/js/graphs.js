@@ -5,18 +5,6 @@ function drawChart(inData,id,subject) {
   var dataArray = [['Assignment', 'Correct answers in %']];
   var tempArray = [];
   var average = 0
-  /*
-  for(var i = 0; i <inData.length; i++){
-      if(i % 2 == 1 && i != 0){
-        average += inData[i]
-        tempArray.push(inData[i]);
-        dataArray.push(tempArray);
-        tempArray = []
-      }
-      else{
-        tempArray.push(inData[i]);
-      }
-  }*/
 
   for(var i = 0; i <inData.length; i++){
       if(i % 2 == 1 && i != 0){
@@ -54,8 +42,7 @@ function drawChart(inData,id,subject) {
         // key columns (columns to group by)
         [0],
         // third column (index 2) will be summed
-        [{'column': 1, 'aggregation': google.visualization.data.avg, 'type': 'number'}]
-      );
+        [{'column': 1, 'aggregation': google.visualization.data.avg, 'type': 'number'}]);
 
       var chart = new google.visualization.BarChart(document.getElementById('chart'+id));
       chart.draw(result, options);
