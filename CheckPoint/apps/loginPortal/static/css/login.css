@@ -3,8 +3,7 @@ form {
 }
 
 h2 {
-  margin-left: 47%;
-  margin-right: 40%;
+  margin-left: 25%;
   font-family: "Open Sans", sans-serif;
   font-size: 35;
 }
@@ -45,28 +44,45 @@ select {
   background-color: white;
    height: 29px;
    overflow: hidden;
-   width: 22%;
+   width: 44%;
    height: 5%;
    font-family: "Open Sans", sans-serif;
    font-size: 20;
+   z-index: 0;
 }
 
 input[type=text], input[type=password] {
-    width: 25%;
+    width: 50%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
-   	margin-left: 40%;
-    margin-right: 25%;
+   	margin-left: 25%;
     font-family: "Open Sans", sans-serif;
 }
+
+.errorlist{
+  background-color: #ff3333;
+  color: white !important;
+  border-radius: 4px !important;
+  list-style: none;
+  font-family: "Open Sans", sans-serif;
+}
+
+#main{
+  position: relative;
+  width: 50%;
+  height: 100%;
+  margin: 0 auto;
+  margin-bottom: 100px;
+}
+
 
 label {
   font-family: "Open Sans", sans-serif;
   font-size: 20;
-  margin-left: 40%;
+  margin-left: 25%;
 }
 
 .acceptButton {
@@ -76,9 +92,8 @@ label {
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 25%;
-    margin-left: 40%;
-    margin-right: 25%;
+    width: 50%;
+    margin-left: 25%;
     font-family: "Open Sans", sans-serif;
     font-size: 15;
     color:black
@@ -102,16 +117,6 @@ span.psw {
     padding-top: 16px;
 }
 
-.errorlist {
-  color:orangered;
-  list-style-type: none;
-  font-family: "Open Sans", sans-serif;
-  font-size: 18;
-  margin-left: 30%;
-  margin-right: 25%
-
-  z-index: 2;
-}
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
     span.psw {
