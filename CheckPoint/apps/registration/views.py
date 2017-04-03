@@ -39,6 +39,5 @@ def register(request):
 
 def register_success(request):
     #render the registersuccess template
-    return render(request,
-        'registration/registersuccess.html',
+    return HttpResponseRedirect('../../login/'
     )

@@ -45,7 +45,7 @@ def subjectView(request):
                 if subject_info[0] in subjectDict.keys():
                     subject = Subject.objects.get_or_create(code = subject_info[0],name=subject_info[1])
                     user.attendingSubject.add(subject[0].pk)
-                    return HttpResponseRedirect('../subjects/')
+                    return HttpResponseRedirect('../home/')
                 else:
                     args['invalid_subject'] = 1
             else:

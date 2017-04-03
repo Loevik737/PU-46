@@ -23,7 +23,7 @@ class RegistrationForm(forms.Form):
     password2 = forms.CharField(
         widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)),
         label=_("Password (again)"))
-    role = forms.ChoiceField(choices = ROLES    , widget=forms.Select(), required=True)
+    role = forms.ChoiceField(choices = ROLES    , widget=forms.Select(), required=True, label=_("Roles"))
 
     def clean_role(self):
         for i,v in ROLES:
