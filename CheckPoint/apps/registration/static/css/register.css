@@ -3,15 +3,10 @@ form {
 }
 
 h2 {
-  margin-left: 47%;
+  margin-left: 45%;
   margin-right: 40%;
   font-family: "Open Sans", sans-serif;
   font-size: 35;
-}
-
-.biglogo .img-respomsive{
-  margin: 0 auto;
-
 }
 
 .background-image {
@@ -33,26 +28,8 @@ h2 {
   filter: blur(3px);
 }
 
-.login {
-  z-index: 0;
-}
-
-form {
-  border: none;
-}
-
-select {
-  background-color: white;
-   height: 29px;
-   overflow: hidden;
-   width: 22%;
-   height: 5%;
-   font-family: "Open Sans", sans-serif;
-   font-size: 20;
-}
-
-input[type=text], input[type=password] {
-    width: 25%;
+/*#id_email, #id_password2, #id_password1, #id_username, label{
+    width: 200% !important;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -61,32 +38,21 @@ input[type=text], input[type=password] {
    	margin-left: 40%;
     margin-right: 25%;
     font-family: "Open Sans", sans-serif;
-}
-
-label {
-  font-family: "Open Sans", sans-serif;
-  font-size: 20;
-  margin-left: 40%;
-}
+    border: none;
+    z-index: 0;
+}*/
 
 .acceptButton {
+  width: 25%;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 25%;
-    margin-left: 40%;
-    margin-right: 25%;
     font-family: "Open Sans", sans-serif;
     font-size: 15;
     color:black
-}
-
-p {
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .acceptButton:hover {
@@ -107,7 +73,7 @@ span.psw {
   list-style-type: none;
   font-family: "Open Sans", sans-serif;
   font-size: 18;
-  margin-left: 30%;
+  margin-left: 25%;
   margin-right: 25%
 
   z-index: 2;

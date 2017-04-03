@@ -4,18 +4,20 @@
 
 {% block content %}
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
   <div class="background-image"></div>
   <div class="login">
     <div class="imgcontainer">
-      <center>
-      <img src="{% static 'images/logo.png' %}" alt="Avatar" class="avatar">
-    </center>
+      <img class="img-respomsive center-block" src="{% static 'images/logo.png' %}" alt="Avatar" class="avatar">
     </div>
+<div class="center-block">
 
   <form method="post">
+
     {% csrf_token %}
     {{ form.as_p }}
     <button class="acceptButton" type="submit">Login</button>
   </form>
+  </div>
   <div>
 {% endblock %}
