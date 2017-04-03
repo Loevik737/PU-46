@@ -9,6 +9,7 @@ from CheckPoint.apps.assignment.forms import (CreateAssignment, CreateMultipleCh
 from CheckPoint.apps.assignment.models import (Assignment, MultipleChoiseQuestion, OneWordQuestion,
                      TrueFalseQuestion, UserAnswers)
 
+
 def index(request, assignment_id):
     #when we get the id of the assingement from url, we look up if there is an object in the
     #database who has that id
@@ -30,7 +31,7 @@ def index(request, assignment_id):
 def result_assignment(request,assignment_id):
     user = request.user.customuser
     context = {}
-    if user.role == "Student":
+    if user.role == "Student" or user.role =="Teacher":
         assignment = Assignment.objects.get(id=assignment_id)
         user_answers,created = assignment.UserAnswers.get_or_create(user = user,assignment=assignment)
         context['user_attempts'] = user_answers.attempts
@@ -49,7 +50,7 @@ def answer_assignment(request,assignment_id):
 
     user = request.user.customuser
     context = {}
-    if user.role == "Student":
+    if user.role == "Student" or user.role =="Teacher":
         assignment = Assignment.objects.get(id=assignment_id)
         user_answers,created = assignment.UserAnswers.get_or_create(user = user,assignment=assignment)
         if user_answers.attempts <= assignment.tries:
@@ -111,7 +112,7 @@ def create_assignment(request):
             #if the form was valid,save it and redirect us to the site for the new plan
             if form.is_valid():
                 form.save()
-                return HttpResponseRedirect('../'+ str(Assignment.objects.latest('id').id))
+                return HttpResponseRedirect('../'+ str(Assignment.objects.latest('id').id)+'/edit')
             else:
                 context["form"] = form
         else:
@@ -124,12 +125,12 @@ def create_assignment(request):
 
 def edit_assignment(request, assignment_id):
     context={}
-    user = request.user
-    if user.customuser.role == 'Teacher':
+    user = request.user.customuser
+    assignment = Assignment.objects.get(id=assignment_id)
+    if user.role == 'Teacher' and user.teachingSubject.all().filter(id=assignment.subject_id).exists():
 
         #when we get the id of the assingement from url, we look up if there is an object in the
         #database who has that id
-        assignment = Assignment.objects.get(id=assignment_id)
         multipleChoiseQuestions = assignment.MultipleChoiseQuestions.all()
         trueFalseQuestions = assignment.TrueFalseQuestions.all()
         oneWordQuestions = assignment.OneWordQuestions.all()

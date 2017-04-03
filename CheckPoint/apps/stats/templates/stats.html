@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Stats{% endblock %}
+{% block content %}
+{% load static %}
+<script type="text/javascript"  src="{% static 'js/graphs.js' %}"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload=
+{'modules':[{'name':'visualization','version':'1.1','packages':
+['corechart']}]}"></script>
+<!--form for creating a new plan-->
+{% if drawData %}
+
+<div class="container-fluid">
+{% if Teacher %}
+<h3>Average score for all students: {{average}}%</h3>
+{% endif %}
+{% if Student %}
+<h3>Your average score is: {{average}}%</h3>
+{% endif %}
+<div class="row">
+{% for key,value in drawData.items %}
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" id="chart{{forloop.counter0}}" style="width: 500px; height: 300px"> </div>
+  <script>
+  {% autoescape off %}
+    drawChart({{value}},{{forloop.counter0}},'{{key}}');
+  {% endautoescape %}
+  </script>
+{% endfor %}
+</div>
+</div>
+{% else %}
+<div><b>No assignments taken in any of the subjects you attend or teach</b> </div>
+{% endif %}
+{% endblock %}
