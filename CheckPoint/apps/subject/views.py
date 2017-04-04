@@ -2,21 +2,18 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from CheckPoint.apps.subject.models import Subject
-from CheckPoint.apps.registration.models import CustomUser
 from CheckPoint.apps.plan.models import Plan
 import json
-import os
+#import os
 
-module_dir = os.path.dirname(__file__)  # get current directory
-file_path = os.path.join(module_dir, './static/json/subjects.json')
+#module_dir = os.path.dirname(__file__)  # get current directory
 subjectDict = {}
-with open(file_path) as json_data:
+with open('/home/havard/PU/CheckPoint/CheckPoint/static/json/subjects.json','r') as json_data:
     d = json.load(json_data)
     for sub in d['emne']:
         temp = sub[0]['entityKeys'][0]['entityKeyId']
         temp = temp[13:len(temp)-2]
         subjectDict[temp] = ''.join(sub[0]['hasName'][0]['value']).encode('utf-8').strip()
-
 def subjectView(request):
     #get costumuser
     user =request.user.customuser
