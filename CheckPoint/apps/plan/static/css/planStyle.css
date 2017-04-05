@@ -11,7 +11,7 @@ button.accordion {
     transition: 0.4s;
 }
 
-button.accordion.active, button.accordion:hover {
+button.accordion.active, button.accordion:hover, .allPlansButton:hover {
     background-color: #ddd;
 }
 /* */
@@ -75,4 +75,17 @@ div.panel {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.allPlansButton{
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
 }

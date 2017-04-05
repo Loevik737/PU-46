@@ -32,6 +32,18 @@ def index(request, plan_id):
     }
     return render(request, 'plan/plan.html', context)
 
+def show_related_plans(request):
+    user = request.user.customuser
+    subjects = user.teachingSubject.all()
+    args = {'plans' : {}}
+    for sub in subjects:
+        plans = Plan.objects.filter(subject_id = sub.id )
+        if plans:
+            args['plans'][sub.code]=plans
+    print(args['plans'])
+    return render(request, 'plan/allPlans.html', args)
+
+
 
 """
 The create_plan view sends an empty context to html template and checks if we get a POST request.

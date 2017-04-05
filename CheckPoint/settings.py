@@ -59,7 +59,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'CheckPoint.middleware.login_required_middleware.LoginRequiredMiddleware',
 ]
+
+LOGIN_URL = '/login/'
+
+LOGIN_EXEMPT_URLS = (
+ #r'^about\.html$',
+ #r'^legal/', # allow any URL under /legal/*
+)
 
 ROOT_URLCONF = 'CheckPoint.urls'
 
