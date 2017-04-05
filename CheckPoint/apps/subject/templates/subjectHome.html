@@ -5,6 +5,8 @@
 {% block content %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static "css/subject.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/awesomplete.css" %}" />
+    <script src="{% static 'js/awesomplete.js' %}" async></script>
 <p>
 List of subjects you attend:
 </p>
@@ -43,7 +45,7 @@ List of subjects you attend:
             {% if invalid_subject%}
               <p class="errorlist">Subject can not be added </p>
             {% endif %}
-            <input list="subjects" name="subjectInfo" value="">
+            <input class="awesomplete" list="subjects" name="subjectInfo" value="">
               <datalist id="subjects">
                 {% for key,value in subjectDict.iteritems %}
                     <option value="{{key}} {{value}}">
