@@ -66,7 +66,7 @@ LOGIN_URL = '/login/'
 
 LOGIN_EXEMPT_URLS = (
  #r'^about\.html$',
- #r'^legal/', # allow any URL under /legal/*
+ r'^register/', # allow any URL under /legal/*
 )
 
 ROOT_URLCONF = 'CheckPoint.urls'
