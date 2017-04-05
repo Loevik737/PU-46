@@ -13,7 +13,8 @@ with open('/home/havard/PU/CheckPoint/CheckPoint/static/json/subjects.json','r')
     for sub in d['emne']:
         temp = sub[0]['entityKeys'][0]['entityKeyId']
         temp = temp[13:len(temp)-2]
-        subjectDict[temp] = ''.join(sub[0]['hasName'][0]['value']).encode('utf-8').strip()
+        subjectDict[temp] = ''.join(sub[0]['hasName'][0]['value'])#.encode('utf-8').strip()
+
 def subjectView(request):
     #get costumuser
     user =request.user.customuser
@@ -31,6 +32,7 @@ def subjectView(request):
     if user.role == 'Teacher':
         args['teaching_subjects'] =  user.teachingSubject.all
     args["subjectDict"] = subjectDict
+
     if request.method == 'POST':
         if 'delete_attending_subject' in request.POST:
             user.attendingSubject.remove(int(request.POST['delete_attending_pk']))
