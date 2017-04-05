@@ -47,7 +47,7 @@ List of subjects you attend:
             {% endif %}
             <input class="awesomplete" list="subjects" name="subjectInfo" value="">
               <datalist id="subjects">
-                {% for key,value in subjectDict.iteritems %}
+                {% for key,value in subjectDict.items %}
                     <option value="{{key}} {{value}}">
                 {% endfor %}
               </datalist>

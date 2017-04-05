@@ -13,6 +13,10 @@ h2 {
 
 }
 
+.img-respomsive{
+    width: 100%;
+}
+
 .background-image {
   position: fixed;
   left: 0;
@@ -72,7 +76,8 @@ input[type=text], input[type=password] {
 
 #main{
   position: relative;
-  width: 50%;
+  width: 100%;
+  max-width: 600px;
   height: 100%;
   margin: 0 auto;
   margin-bottom: 100px;
