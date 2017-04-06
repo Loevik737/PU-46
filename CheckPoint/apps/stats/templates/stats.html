@@ -2,6 +2,7 @@
 {% block title %}Stats{% endblock %}
 {% block content %}
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/stats.css' %}" />
 <script type="text/javascript"  src="{% static 'js/graphs.js' %}"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi?autoload=
 {'modules':[{'name':'visualization','version':'1.1','packages':
@@ -18,7 +19,7 @@
 {% endif %}
 <div class="row">
 {% for key,value in drawData.items %}
-  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" id="chart{{forloop.counter0}}" style="width: 500px; height: 300px"> </div>
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 chart" id="chart{{forloop.counter0}}"> </div>
   <script>
   {% autoescape off %}
     drawChart({{value}},{{forloop.counter0}},'{{key}}');
