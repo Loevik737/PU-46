@@ -14,19 +14,19 @@
                 <p><b>Role:</b> {{user.customuser.role}} </p>
             </div>
             {{info_message}}
-            <form method="POST" action="/user/edit/" name="update_info_form" class="updateInfoClass" />
+            <form class="form-group" method="POST" action="/user/edit/" name="update_info_form" class="updateInfoClass" />
               <!--csrf token to stop csrf attacks-->
               {% csrf_token %}
               {{ form.as_p }}
                 <!--Giving the post request the name update_info so we can differ the forms-->
-              <button class="acceptButton" type="submit" name="update_info">Update</button>
+              <button class="acceptButton btn-default form-control" type="submit" name="update_info">Update</button>
             </form>
-            <form method="POST" action="/user/edit/" name="change_password_form" class="changePasswordClass" />
+            <form method="POST" action="/user/edit/" name="change_password_form" class="changePasswordClass form-group" />
               <!--csrf token to stop csrf attacks-->
               {% csrf_token %}
               {{ change_password_form.as_p }}
               <!--Giving the post request the name change_password so we can differ the forms-->
-              <button class="acceptButton" type="submit" name="change_password">Change Password</button>
+              <button class="acceptButton btn-default form-control" type="submit" name="change_password">Change Password</button>
             </form>
         <!--If there is no object, tell the user-->
         {% else %}

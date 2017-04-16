@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 from CheckPoint.apps.registration.models import CustomUser
 #from CheckPoint.apps.subject.models import Subject

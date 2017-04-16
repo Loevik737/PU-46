@@ -12,10 +12,7 @@
 
 <div class="container-fluid">
 {% if Teacher %}
-<h3>Average score for all students: {{average}}%</h3>
-{% endif %}
-{% if Student %}
-<h3>Your average score is: {{average}}%</h3>
+<h3>Average score is: {{average}}%</h3>
 {% endif %}
 <div class="row">
 {% for key,value in drawData.items %}

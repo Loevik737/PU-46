@@ -9,18 +9,18 @@
     <script src="{% static 'js/awesomplete.js' %}" async></script>
 
     <h2>List of subjects you attend:</h2>
-    <form action="" method="POST">{% csrf_token %}
+    <form class="form-group subjects" action="" method="POST">{% csrf_token %}
       <label>
         {% if invalid_subject%}
           <p class="errorlist">Subject can not be added </p>
         {% endif %}
-        <input class="awesomplete" list="subjects" name="subjectInfo" value="">
+        <input class="awesomplete form-control" list="subjects" name="subjectInfo" value="">
           <datalist id="subjects">
             {% for key,value in subjectDict.items %}
                 <option value="{{key}} {{value}}">
             {% endfor %}
           </datalist>
-        <input class="acceptButton" type="submit" value="Add subject to attending" />
+        <input class="acceptButton form-control btn-default" type="submit" value="Add subject to attending" />
       </label>
     </form>
 
@@ -29,30 +29,44 @@
             <!-- if the subject is in plansubject(aka it has a plan) -->
             {% if subject.name in plansubject %}
                 <!-- make a subject button with a link to the subjects plan -->
-                <button class="subject" onclick="location.href='../plan/{{ plansubject|cut:subject.name  }}'; return false;">{{ subject.name }} {{subject.code}}</button>
+                <button class="subject" onclick="location.href='../plan/{{ plansubject|cut:subject.name  }}'; return false;">{{ subject.name }} {{subject.code}}
+                  <form class="form-group" action="" method="POST">{% csrf_token %}
+                    <input  name="delete_teaching_pk" type="hidden" value="{{subject.pk}}" />
+                    <input class="deleteButton form-control btn-danger" name="delete_teaching_subject" type="submit" value="X" />
+                  </form>
+                </button>
             {% else %}
                 <!-- else, make an unclickable subject button(because there is no subject plan) -->
-                <button class="subject">{{ subject.name }} {{subject.code}}(no plan)</button>
+                <button class="subject">{{ subject.name }} {{subject.code}}(no plan)
+                  <form  class="form-group" action="" method="POST">{% csrf_token %}
+                  <input  name="delete_attending_pk" type="hidden" value="{{subject.pk}}" />
+                  <input class="deleteButton form-control  btn-danger" name="delete_attending_subject" type="submit" value="X" />
+                </form>
+              </button>
             {% endif %}
-            <form action="" method="POST">{% csrf_token %}
-              <input  name="delete_attending_pk" type="hidden" value="{{subject.pk}}" />
-              <input class="deleteButton" name="delete_attending_subject" type="submit" value="X" />
-            </form>
+
         {% endfor %}
 
         <h2>List of subjects you are teaching: </h2>
         {% for subject in teaching_subjects %}
           {% if subject.name in plansubject %}
               <!-- make a subject button with a link to the subjects plan -->
-              <button class="subject" onclick="location.href='../plan/{{ plansubject|cut:subject.name  }}';return false;">{{ subject.name }} {{subject.code}}</button>
+              <button class="subject" onclick="location.href='../plan/{{ plansubject|cut:subject.name  }}';return false;">{{ subject.name }} {{subject.code}}
+                <form class="form-group" action="" method="POST">{% csrf_token %}
+                  <input  name="delete_teaching_pk" type="hidden" value="{{subject.pk}}" />
+                  <input class="deleteButton form-control btn-danger" name="delete_teaching_subject" type="submit" value="X" />
+                </form>
+              </button>
           {% else %}
               <!-- else, make an unclickable subject button(because there is no subject plan) -->
-              <button class="subject">{{ subject.name }} {{subject.code}}(no plan)</button>
+              <button class="subject">{{ subject.name }} {{subject.code}}(no plan)
+                 <form class="form-group" action="" method="POST">{% csrf_token %}
+                    <input  name="delete_teaching_pk" type="hidden" value="{{subject.pk}}" />
+                    <input class="deleteButton form-control btn-danger" name="delete_teaching_subject" type="submit" value="X" />
+                  </form>
+              </button>
           {% endif %}
-          <form action="" method="POST">{% csrf_token %}
-            <input  name="delete_teaching_pk" type="hidden" value="{{subject.pk}}" />
-            <input class="deleteButton" name="delete_teaching_subject" type="submit" value="X" />
-          </form>
+
         {% endfor %}
 
 <script type="text/javascript" src="{% static "js/plan.js" %}"></script>

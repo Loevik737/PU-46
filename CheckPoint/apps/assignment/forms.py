@@ -15,15 +15,17 @@ class SubjectModelChoiceField(ModelChoiceField):
 class CreateAssignment(forms.ModelForm):
     #creating a textfield for title
     title = forms.CharField(required = True,label='Title:',
-                    widget=forms.TextInput(attrs={'placeholder': 'title...'}))
+                    widget=forms.TextInput(attrs={'placeholder': 'title...','class':'form-control'}))
     #creating a dropdown for subjects witch gets all the subjects from the database
-    subject = SubjectModelChoiceField(queryset = Subject.objects.all())
+    subject = SubjectModelChoiceField(queryset = Subject.objects.all(),widget=forms.Select(attrs={'class':'form-control'}))
     #creating a textfield for term
     term = forms.CharField(required = True,label='Term:',
-                    widget=forms.TextInput(attrs={'placeholder': 'term...'}))
+                    widget=forms.TextInput(attrs={'placeholder': 'term...','class':'form-control'}))
     #creating a IntegerField for the year, the default is the current year
-    year = forms.IntegerField(required = True,label='Year:',initial=datetime.datetime.now().year)
-    tries = forms.IntegerField(required = True, label='Tries:',initial=3)
+    year = forms.IntegerField(required = True,label='Year:',initial=datetime.datetime.now().year,
+                    widget=forms.NumberInput(attrs={'class':'form-control'}))
+    tries = forms.IntegerField(required = True, label='Tries:',initial=3,
+                    widget=forms.NumberInput(attrs={'class':'form-control'}))
     #the model we will use will be the auth User model and the fields are named title, subject, term, year
     class Meta:
         model = Assignment
@@ -38,7 +40,7 @@ class CreateMultipleChoiseQuestion(forms.ModelForm):
 
 class CreateTrueFalseQuestion(forms.ModelForm):
     question = forms.CharField(required=True,label="Question:",
-                    widget=forms.TextInput(attrs={'placeholder': 'questin...'}))
+                    widget=forms.TextInput(attrs={'placeholder': 'questin...','class':'form-control'}))
     answear = forms.BooleanField(required=False, initial=False, label='True?:')
 
     class Meta:
@@ -47,9 +49,9 @@ class CreateTrueFalseQuestion(forms.ModelForm):
 
 class CreateOneWordQuestion(forms.ModelForm):
     question = forms.CharField(required=True,label="Question:",
-                    widget=forms.TextInput(attrs={'placeholder': 'questin...'}))
-    answear = forms.CharField(required=True,label="Answear:",
-                    widget=forms.TextInput(attrs={'placeholder': 'answear...'}))
+                    widget=forms.TextInput(attrs={'placeholder': 'questin...','class':'form-control'}))
+    answear = forms.CharField(required=True,label="Answer:",
+                    widget=forms.TextInput(attrs={'placeholder': 'answer...','class':'form-control'}))
     #a costum validation for checking if the answear contains spaces
     def clean_answear(self):
         answear = self.cleaned_data['answear']
