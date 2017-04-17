@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Plan{% endblock %}
 {% block content %}
-<h2>All plans in your subjects <button class="btn-primary btn" onclick="location.href='../create';">Create new plan</button></h2>
+<h2>All plans in your subjects <button class="btn-primary btn" onclick="location.href='../create';">Create new plan +</button></h2>
 <!--form for creating a new plan-->
 {% for key,value in plans.items %}
   <button class="accordion"> Subject: {{ key }} </button>

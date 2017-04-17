@@ -23,4 +23,10 @@ form{
 .subjects{
   width: 100%;
 }
+input.deleteButton{
+  position: relative;;
+  margin-top: -55px;
+  z-index: 1;
+}
+
 /* */

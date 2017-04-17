@@ -57,7 +57,7 @@ def create_plan(request):
     #if we get a POST request jump into the if statement
     if request.method == 'POST':
         #set for to the POST request we got
-        form = CreatePlanForm(request.POST)
+        form = CreatePlanForm(request.POST,user=request.user.customuser)
         #if the form was valid,save it and redirect us to the site for the new plan
         if form.is_valid():
             start_week_number = form.cleaned_data['beginning_week']
@@ -66,7 +66,7 @@ def create_plan(request):
             return HttpResponseRedirect(reverse('plan', args=[plan.id]))
     else:
         #if we dont get a POST request, send the form class with the dictionary to the template
-        form = CreatePlanForm()
+        form = CreatePlanForm(user=request.user.customuser)
         context['form'] = form
     return render(request,'plan/createplan.html',context)
 

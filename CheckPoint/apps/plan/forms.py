@@ -6,6 +6,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.forms import ModelChoiceField, ModelForm
 
 from CheckPoint.apps.subject.models import Subject
+from CheckPoint.apps.subject.models import CustomUser
 
 from .models import Lecture, Plan, Week
 
@@ -23,8 +24,8 @@ class CreatePlanForm(ModelForm):
     title = forms.CharField(required=True,label='Title',
                     widget=forms.TextInput(attrs={'placeholder': 'title...','class':'form-control'}))
     #creating a dropdown for subjects witch gets all the subjects from the database
-    subject = SubjectModelChoiceField(queryset = Subject.objects.all(),
-    widget=forms.Select(attrs={'class':'form-control'}))
+    subject = SubjectModelChoiceField(queryset = None,
+                    widget=forms.Select(attrs={'class':'form-control'}))
     #creating a textfield for term
     term = forms.CharField(required=True,label='Term:',
                     widget=forms.TextInput(attrs={'placeholder': 'term...','class':'form-control'}))
@@ -35,6 +36,11 @@ class CreatePlanForm(ModelForm):
     beginning_week =forms.IntegerField(required=False, label='Beginning week:',
                     widget=forms.NumberInput(attrs={'placeholder': 'week number','class':'form-control'}))
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user',None)
+        super(CreatePlanForm, self).__init__(*args, **kwargs)
+        if user:
+            self.fields['subject'].queryset = user.teachingSubject.all()
     #the model we will use will be the auth User model and the fields are named title, subject, term, year
     class Meta:
         model = Plan
