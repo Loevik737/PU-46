@@ -107,7 +107,7 @@ def create_assignment(request):
         #if we get a POST request jump into the if statement
         if request.method == 'POST':
             #set for to the POST request we got
-            form = CreateAssignment(request.POST)
+            form = CreateAssignment(request.POST,user=request.user.customuser)
             #if the form was valid,save it and redirect us to the site for the new plan
             if form.is_valid():
                 form.save()
@@ -116,7 +116,7 @@ def create_assignment(request):
                 context["form"] = form
         else:
             #if we dont get a POST request, send the form class with the dictionary to the template
-            form = CreateAssignment()
+            form = CreateAssignment(user=request.user.customuser)
             context['form'] = form
     else:
         context['decline'] = 1

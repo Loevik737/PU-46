@@ -17,7 +17,7 @@ class CreateAssignment(forms.ModelForm):
     title = forms.CharField(required = True,label='Title:',
                     widget=forms.TextInput(attrs={'placeholder': 'title...','class':'form-control'}))
     #creating a dropdown for subjects witch gets all the subjects from the database
-    subject = SubjectModelChoiceField(queryset = Subject.objects.all(),widget=forms.Select(attrs={'class':'form-control'}))
+    subject = SubjectModelChoiceField(queryset = None,widget=forms.Select(attrs={'class':'form-control'}))
     #creating a textfield for term
     term = forms.CharField(required = True,label='Term:',
                     widget=forms.TextInput(attrs={'placeholder': 'term...','class':'form-control'}))
@@ -27,6 +27,11 @@ class CreateAssignment(forms.ModelForm):
     tries = forms.IntegerField(required = True, label='Tries:',initial=3,
                     widget=forms.NumberInput(attrs={'class':'form-control'}))
     #the model we will use will be the auth User model and the fields are named title, subject, term, year
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user',None)
+        super(CreateAssignment, self).__init__(*args, **kwargs)
+        if user:
+            self.fields['subject'].queryset = user.teachingSubject.all()
     class Meta:
         model = Assignment
         fields = ('title','subject','term','year','tries')
