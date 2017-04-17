@@ -24,7 +24,12 @@
             <form method="POST" action="/user/edit/" name="change_password_form" class="changePasswordClass form-group" />
               <!--csrf token to stop csrf attacks-->
               {% csrf_token %}
-              {{ change_password_form.as_p }}
+              <!--{{ change_password_form.as_p }}-->
+              {% for field in change_password_form %}
+                      <label>{{field.label}}</label>
+                      <input class="form-control" id="{{ field.id_for_label }}"  name="{{ field.html_name }}" placeholder="{{field.placeholder}}"  type="password" />
+                      {{ field.errors }}
+              {% endfor %}
               <!--Giving the post request the name change_password so we can differ the forms-->
               <button class="acceptButton btn-default form-control" type="submit" name="change_password">Change Password</button>
             </form>

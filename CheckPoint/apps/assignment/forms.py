@@ -42,6 +42,12 @@ class CreateMultipleChoiseQuestion(forms.ModelForm):
     class Meta:
         model = MultipleChoiseQuestion
         fields = ('question','answear','choises')
+    def __init__(self, *args, **kwargs):
+        super(CreateMultipleChoiseQuestion, self).__init__(*args, **kwargs)
+        self.fields['question'].widget.attrs.update({'class' : 'form-control'})
+        self.fields['answear'].widget.attrs.update({'class' : 'form-control'})
+        self.fields['choises'].widget.attrs.update({'class' : 'form-control'})
+
 
 class CreateTrueFalseQuestion(forms.ModelForm):
     question = forms.CharField(required=True,label="Question:",
