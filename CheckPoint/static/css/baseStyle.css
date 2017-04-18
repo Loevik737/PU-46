@@ -13,3 +13,24 @@
   z-index: 1000;
   padding-bottom: 0px;
 }
+
+#main{
+  width: 97%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px; /* 5px rounded corners */
+    margin-bottom: 30px;
+}
+
+.errorlist{
+  background-color: #ff3333;
+  color: white !important;
+  border-radius: 4px !important;
+  list-style: none;
+  font-family: "Open Sans", sans-serif;
+}

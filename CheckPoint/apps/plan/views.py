@@ -32,6 +32,18 @@ def index(request, plan_id):
     }
     return render(request, 'plan/plan.html', context)
 
+def show_related_plans(request):
+    user = request.user.customuser
+    subjects = user.teachingSubject.all()
+    args = {'plans' : {}}
+    for sub in subjects:
+        plans = Plan.objects.filter(subject_id = sub.id )
+        if plans:
+            args['plans'][sub.code]=plans
+    print(args['plans'])
+    return render(request, 'plan/allPlans.html', args)
+
+
 
 """
 The create_plan view sends an empty context to html template and checks if we get a POST request.
@@ -45,7 +57,7 @@ def create_plan(request):
     #if we get a POST request jump into the if statement
     if request.method == 'POST':
         #set for to the POST request we got
-        form = CreatePlanForm(request.POST)
+        form = CreatePlanForm(request.POST,user=request.user.customuser)
         #if the form was valid,save it and redirect us to the site for the new plan
         if form.is_valid():
             start_week_number = form.cleaned_data['beginning_week']
@@ -54,7 +66,7 @@ def create_plan(request):
             return HttpResponseRedirect(reverse('plan', args=[plan.id]))
     else:
         #if we dont get a POST request, send the form class with the dictionary to the template
-        form = CreatePlanForm()
+        form = CreatePlanForm(user=request.user.customuser)
         context['form'] = form
     return render(request,'plan/createplan.html',context)
 

@@ -39,6 +39,7 @@
                         {% else %}
                         <div>No lectures this week</div>
                     {% endif %}
+
                     {% if user.customuser.role == 'Teacher' %}
                         <button id="myCreateBtn" onclick="openModal({{ forloop.counter }})"> Add lecture </button>
                         <!-- The Modal -->

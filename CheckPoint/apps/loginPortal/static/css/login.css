@@ -13,6 +13,10 @@ h2 {
 
 }
 
+.img-respomsive{
+    width: 100%;
+}
+
 .background-image {
   position: fixed;
   left: 0;
@@ -62,17 +66,12 @@ input[type=text], input[type=password] {
     font-family: "Open Sans", sans-serif;
 }
 
-.errorlist{
-  background-color: #ff3333;
-  color: white !important;
-  border-radius: 4px !important;
-  list-style: none;
-  font-family: "Open Sans", sans-serif;
-}
+
 
 #main{
   position: relative;
-  width: 50%;
+  width: 100%;
+  max-width: 600px;
   height: 100%;
   margin: 0 auto;
   margin-bottom: 100px;

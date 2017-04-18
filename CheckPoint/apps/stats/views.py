@@ -13,7 +13,6 @@ def get_args(request,user_answers,related_subjects):
                 args['drawData'][subject] = []
             args['drawData'][subject].append(str(title))
             qCount = MultipleChoiseQuestion.objects.filter(assignment_id=ans.assignment_id).count()+TrueFalseQuestion.objects.filter(assignment_id=ans.assignment_id).count()+OneWordQuestion.objects.filter(assignment_id=ans.assignment_id).count()
-            print(qCount,ans.assignment_id)
             wCount = ans.wrongTFQ.count()+ans.wrongOWQ.count()+ans.wrongMCQ.count()
             persentage = float(float((qCount-wCount))/qCount)*100
             args['average'][0] += persentage

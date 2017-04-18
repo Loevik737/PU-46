@@ -38,9 +38,20 @@
                 </div>
                 <div id="navbar1" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav navbar-left">
-                    <li class="active"><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="#">About</a></li>
-                      <li><a href="{% url 'all' %}">Assignments</a></li>
+
+                    <li ><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'all' %}">Assignments</a></li>
+                    {% if user.customuser.role == "Teacher" %}
+                      <li><a href="{% url 'show_related_plans' %}">Plans</a></li>
+                    {% endif %}
+                    {% if user.customuser.role == "Student" %}
+                      <li><a href="{% url 'student_stats' %}">Stats</a></li>
+                    {% endif %}
+                    {% if user.customuser.role == "Teacher" %}
+                      <li><a href="{% url 'teacher_stats' %}">Stats as teacher</a></li>
+                      <li><a href="{% url 'student_stats' %}">Stats as student</a></li>
+                    {% endif %}
+
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                     <li><a href="{% url 'editUser' %}"><span class="glyphicon glyphicon-user"></span> {{user.username}}</a></li>
@@ -83,6 +94,7 @@
     </header>
 
     <body>
+
       <section id="main">
         <!--other html snippets will be added in the block under-->
         {% block content %}

@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^home/', include('CheckPoint.apps.subject.urls')),
     url(r'^assignment/', include('CheckPoint.apps.assignment.urls')),
     url(r'^stats/', include('CheckPoint.apps.stats.urls')),
+    url(r'^', include('CheckPoint.apps.subject.urls')),
 ]
