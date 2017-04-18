@@ -5,6 +5,9 @@
         {% if user %}
         <!--Test form-->
             <h2>Assignment {{assignment.title}} for {{assignment.subject.name}}({{assignment.subject.code}}) <button class="btn-primary btn" onclick="location.href='../assignment/{{assignment.id}}/answer';">Take assignment</button></h2>
+            {% if user.customuser.role == 'Teacher' %}
+              <button class="btn-primary btn" onclick="location.href='../assignment/{{assignment.id}}/edit';">Edit assignment</button>
+            {% endif %}
             {% if multipleChoiseQuestions %}
                 <ul class="list-group">Multiple Choice Questions
                 {% for mcq in multipleChoiseQuestions %}
@@ -32,6 +35,7 @@
             {% else %}
                  <strong>No one word questions</strong>
             {% endif %}
+
         {% else %}
             <strong>You are not logged in</strong>
         {% endif %}

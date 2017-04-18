@@ -40,7 +40,11 @@
                   <ul class="nav navbar-nav navbar-left">
 
                     <li ><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'all' %}">Assignments</a></li>
+                    {% if user.customuser.role == "Teacher" %}
+                    <li><a href="{% url 'all_teaching' %}">Assignments</a></li>
+                    {% else %}
+                    <li><a href="{% url 'all_attending' %}">Assignments</a></li>
+                    {% endif %}
                     {% if user.customuser.role == "Teacher" %}
                       <li><a href="{% url 'show_related_plans' %}">Plans</a></li>
                     {% endif %}
