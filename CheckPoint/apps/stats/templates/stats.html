@@ -11,9 +11,7 @@
 {% if drawData %}
 
 <div class="container-fluid">
-{% if Teacher %}
 <h3>Average score is: {{average}}%</h3>
-{% endif %}
 <div class="row">
 {% for key,value in drawData.items %}
   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 chart" id="chart{{forloop.counter0}}"> </div>
