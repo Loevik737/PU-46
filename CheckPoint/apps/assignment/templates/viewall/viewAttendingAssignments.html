@@ -3,20 +3,17 @@
 {% block title %}Subjects{% endblock %}
 
 {% block content %}
+{% load static %}
+
 <h2>
-Assignments in the subjects you teach:
-      <button class="btn-primary btn" onclick="location.href='../create';"> Create new assignment +</button>
+Assignments in the subjects you attend:
 </h2>
     {% for key, value in assignments.items %}
     <button class="accordion">{{ key}}</button>
     <div class="panel">
-
         {% for assignment in value %}
-
            <button class="allPlansButton" onclick="location.href='../{{ assignment.id }}'">{{ assignment.title }}</button>
-
         {% endfor %}
-
     </div>
     {% endfor %}
 {% endblock %}

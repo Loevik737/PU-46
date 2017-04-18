@@ -14,13 +14,30 @@
                                 {% csrf_token %}
                                  {{ delete_week_form }}
                                 <input type="hidden" name="week_id" value="{{ week.id }}"/>
-                                <input type="submit" value="Delete week"
+                                <input type="submit" class="form-control btn-danger" value="Delete week"
                                 onclick="return confirm('Delete this week and all lectures in it?')"/>
                             </form>
                         {% endif %}
+                        {% if user.customuser.role == 'Teacher' %}
+                            <button class="form-control btn-primary" id="myCreateBtn" onclick="openModal({{ forloop.counter }})"> Add lecture + </button>
+                            <!-- The Modal -->
+                            <div id="myCreateModal-{{ forloop.counter }}" class="modal">
+                              <!-- Modal content -->
+                                <div class="modal-content">
+                                    <form class="form-group" action="{% url 'createLecture' plan.id week.id %}" method="post">
+                                    {% csrf_token %}
+                                        <div>
+                                            {{ create_lecture_form.as_p }}
+                                        </div>
+                                        <input class="acceptButton" type="submit" value="Save lecture" />
+                                    </form>
+                                    <span class="close" onclick="closeModal({{ forloop.counter }})">&times;</span>
+                                </div>
+                            </div>
+                        {% endif %}
                         {% if week.lectures.all.count > 0 %}
                             {% for lecture in week.lectures.all %}
-                                <div class="lecture">
+                                <div class="lecture card">
                                     <h3>{{ lecture.title }}</h3>
                                     <p> {{ lecture.comment }} </p>
                                     {% if objectives %}
@@ -32,7 +49,7 @@
                                         </ul>
                                     {% endif %}
                                     {% if user.customuser.role == 'Teacher' %}
-                                        <a href="{% url 'edit' lecture.id %}"><button id="myEditBtn">Edit lecture</button></a>
+                                        <a href="{% url 'edit' lecture.id %}"><button id="myEditBtn" class="form-control btn-default">Edit lecture</button></a>
                                     {% endif %}
                                 </div>
                             {% endfor %}
@@ -40,23 +57,7 @@
                         <div>No lectures this week</div>
                     {% endif %}
 
-                    {% if user.customuser.role == 'Teacher' %}
-                        <button id="myCreateBtn" onclick="openModal({{ forloop.counter }})"> Add lecture </button>
-                        <!-- The Modal -->
-                        <div id="myCreateModal-{{ forloop.counter }}" class="modal">
-                          <!-- Modal content -->
-                            <div class="modal-content">
-                                <form class="form-inline" action="{% url 'createLecture' plan.id week.id %}" method="post">
-                                {% csrf_token %}
-                                    <div class="form-group">
-                                        {{ create_lecture_form.as_p }}
-                                    </div>
-                                    <input class="acceptButton" type="submit" value="Save lecture" />
-                                </form>
-                                <span class="close" onclick="closeModal({{ forloop.counter }})">&times;</span>
-                            </div>
-                        </div>
-                    {% endif %}
+
                     </div>
                 {% endfor %}
             {% else %}
@@ -68,7 +69,7 @@
                     <div class="form-group">
                         {{ create_week_form }}
                     </div>
-                    <input class="acceptButton" type="submit" value="Add week" />
+                    <input class="acceptButton form-control btn-primary" type="submit" value="Add week +" />
                 </form>
             {% endif %}
         {% else %}

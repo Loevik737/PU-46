@@ -203,8 +203,19 @@ def edit_assignment(request, assignment_id):
 def viewSubjectAssignments(request):
     user = request.user.customuser
     teachingSubjects = user.teachingSubject.all()
-    args={}
+    args={'assignments':{}}
     for sub in teachingSubjects:
         assignments = Assignment.objects.filter(subject_id = sub.id)
-        args['assignments'][sub.code]=assignments
+        if assignments:
+            args['assignments'][sub.code]=assignments
     return render(request, 'viewall/viewAssignments.html', args)
+
+def viewSubjectAttendingAssignments(request):
+    user = request.user.customuser
+    teachingSubjects = user.attendingSubject.all()
+    args={'assignments':{}}
+    for sub in teachingSubjects:
+        assignments = Assignment.objects.filter(subject_id = sub.id)
+        if assignments:
+            args['assignments'][sub.code]=assignments
+    return render(request, 'viewall/viewAttendingAssignments.html', args)

@@ -53,12 +53,18 @@ Form for creating a lecture, excludes foreign key and many to many field and add
 class CreateLectureForm(ModelForm):
     objectives_form_field = forms.CharField(label='Learning objectives',
                                             widget=forms.Textarea(attrs={
-                                                'placeholder': "Learningobjectives seperated by ';'",
+                                                'placeholder': "Learningobjectives seperated by ';'",'class':'form-control'
                                             }))
     class Meta:
         model = Lecture
         exclude = ['plan','week', 'objectives']
         fields = ['id', 'title', 'comment']
+
+    def __init__(self, *args, **kwargs):
+        super(CreateLectureForm, self).__init__(*args, **kwargs)
+        self.fields['title'].widget.attrs.update({'class' : 'form-control'})
+        self.fields['comment'].widget.attrs.update({'class' : 'form-control'})
+
 
 
 """

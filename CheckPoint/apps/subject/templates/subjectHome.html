@@ -44,8 +44,9 @@
             {% endif %}
 
         {% endfor %}
-
+        {% if user.customuser.role == 'Teacher' %}
         <h2>List of subjects you are teaching: </h2>
+        {% if teaching_subjects %}
         {% for subject in teaching_subjects %}
           {% if subject.name in plansubject %}
               <!-- make a subject button with a link to the subjects plan -->
@@ -64,6 +65,9 @@
           {% endif %}
 
         {% endfor %}
-
+        {% else %}
+        <strong>Only administrators can make you a tacher in a subject</strong>
+        {% endif %}
+        {% endif %}
 <script type="text/javascript" src="{% static "js/plan.js" %}"></script>
 {% endblock %}
