@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load subject_extras %}
+{% block title %}Subjects{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/subject.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/awesomplete.css" %}" />
+    <script src="{% static 'js/awesomplete.js' %}" async></script>
+<p>
+Assignments in the subjects you attend:
+</p>
+    {% for key, value in assignments.items %}
+    <button class="accordion">{{ key}}</button>
+    <div class="panel">
+    <ul>
+        {% for assignment in value %}
+           <li>
+           <button onclick="location.href='../{{ assignment.id }}'">{{ assignment.title }}</button>
+           </li>
+        {% endfor %}
+    </ul>
+    </div>
+    {% endfor %}
+{% endblock %}
+
+
+
+
+<script type="text/javascript" src="{% static "js/plan.js" %}"></script>

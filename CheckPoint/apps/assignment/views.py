@@ -199,3 +199,12 @@ def edit_assignment(request, assignment_id):
     else:
         context['decline'] = 1
     return render(request, 'edit/editAssignment.html', context)
+
+def viewSubjectAssignments(request):
+    user = request.user.customuser
+    teachingSubjects = user.teachingSubject.all()
+    args={}
+    for sub in teachingSubjects:
+        assignments = Assignment.objects.filter(subject_id = sub.id)
+        args['assignments'][sub.code]=assignments
+    return render(request, 'viewall/viewAssignments.html', args)
