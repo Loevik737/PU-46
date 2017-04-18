@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load subject_extras %}
+{% block title %}Subjects{% endblock %}
+
+{% block content %}
+<h2>
+Assignments in the subjects you teach:
+      <button class="btn-primary btn" onclick="location.href='../create';"> Create new assignment +</button>
+</h2>
+    {% for key, value in assignments.items %}
+    <button class="accordion">{{ key}}</button>
+    <div class="panel">
+
+        {% for assignment in value %}
+
+           <button class="allPlansButton" onclick="location.href='../{{ assignment.id }}'">{{ assignment.title }}</button>
+
+        {% endfor %}
+
+    </div>
+    {% endfor %}
+{% endblock %}

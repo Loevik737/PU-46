@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^(?P<assignment_id>[0-9]+)/edit$', views.edit_assignment, name='editAssignment'),
     url(r'^(?P<assignment_id>[0-9]+)/result$', views.result_assignment, name='resultAssignment'),
     url(r'^create/$', views.create_assignment, name = "create"),
+    url(r'^allteaching/$', views.viewSubjectAssignments, name = "all_teaching"),
+    url(r'^allattending/$', views.viewSubjectAttendingAssignments, name = "all_attending")
 ]

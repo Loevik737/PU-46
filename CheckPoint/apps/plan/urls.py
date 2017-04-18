@@ -12,5 +12,5 @@ urlpatterns = [
     url(r'^deleteLecture/$', views.delete_lecture, name='deleteLecture'),
     url(r'^(?P<plan_id>[0-9]+)/createWeek/$', views.create_week, name='createWeek'),
     url(r'^deleteWeek/$', views.delete_week, name='deleteWeek'),
-    url(r'^allplans/$' , views.show_related_plans, name="show_related_plans"),
+    url(r'^all/$' , views.show_related_plans, name="show_related_plans"),
 ]

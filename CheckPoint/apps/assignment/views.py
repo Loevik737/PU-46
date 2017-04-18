@@ -107,7 +107,7 @@ def create_assignment(request):
         #if we get a POST request jump into the if statement
         if request.method == 'POST':
             #set for to the POST request we got
-            form = CreateAssignment(request.POST)
+            form = CreateAssignment(request.POST,user=request.user.customuser)
             #if the form was valid,save it and redirect us to the site for the new plan
             if form.is_valid():
                 form.save()
@@ -116,7 +116,7 @@ def create_assignment(request):
                 context["form"] = form
         else:
             #if we dont get a POST request, send the form class with the dictionary to the template
-            form = CreateAssignment()
+            form = CreateAssignment(user=request.user.customuser)
             context['form'] = form
     else:
         context['decline'] = 1
@@ -199,3 +199,23 @@ def edit_assignment(request, assignment_id):
     else:
         context['decline'] = 1
     return render(request, 'edit/editAssignment.html', context)
+
+def viewSubjectAssignments(request):
+    user = request.user.customuser
+    teachingSubjects = user.teachingSubject.all()
+    args={'assignments':{}}
+    for sub in teachingSubjects:
+        assignments = Assignment.objects.filter(subject_id = sub.id)
+        if assignments:
+            args['assignments'][sub.code]=assignments
+    return render(request, 'viewall/viewAssignments.html', args)
+
+def viewSubjectAttendingAssignments(request):
+    user = request.user.customuser
+    teachingSubjects = user.attendingSubject.all()
+    args={'assignments':{}}
+    for sub in teachingSubjects:
+        assignments = Assignment.objects.filter(subject_id = sub.id)
+        if assignments:
+            args['assignments'][sub.code]=assignments
+    return render(request, 'viewall/viewAttendingAssignments.html', args)

@@ -46,4 +46,16 @@ function drawChart(inData,id,subject) {
 
       var chart = new google.visualization.BarChart(document.getElementById('chart'+id));
       chart.draw(result, options);
+      var drawIt;
+      $(window).resize(function(){
+        if ($(window).width() < 600) {
+          clearTimeout(drawIt);
+          drawIt = setTimeout(function() {
+            chart.draw(result,options)
+            console.log("Drawing")
+            }, 100);
+
+            }
+          }
+      );
 }

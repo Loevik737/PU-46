@@ -3,8 +3,8 @@
 {% block content %}
 <h2>Create plan</h2>
 <!--form for creating a new plan-->
-<form method="post" action=".">{% csrf_token %}
+<form class="form-group" method="post" action=".">{% csrf_token %}
         {{ form.as_p }}
-    <input class="acceptButton" type="submit" value="create" />
+    <input class="acceptButton btn btn-default form-control" type="submit" value="Create" />
 </form>
 {% endblock %}

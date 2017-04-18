@@ -69,13 +69,7 @@ input[type=text], input[type=password] {
     font-family: "Open Sans", sans-serif;
 }
 
-.errorlist{
-  background-color: #ff3333;
-  color: white !important;
-  border-radius: 4px !important;
-  list-style: none;
-  font-family: "Open Sans", sans-serif;
-}
+
 
 #main{
   position: relative;
