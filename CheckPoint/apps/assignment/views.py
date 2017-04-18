@@ -200,3 +200,49 @@ def edit_assignment(request, assignment_id):
     else:
         context['decline'] = 1
     return render(request, 'edit/editAssignment.html', context)
+
+def viewSubjectAssignments(request):
+    user = request.user.customuser
+    teachingSubjects = user.teachingSubject.all()
+    args={}
+    for sub in teachingSubjects:
+        assignments = Assignment.objects.filter(subject_id = sub.id)
+        args['assignments'][sub.code]=assignments
+    return render(request, 'viewall/viewAssignments.html', args)
+
+#def assignmentView(request):
+    #get costumuser
+ #   user =request.user.customuser
+  #  if user.role == 'Teacher':
+
+        #get subjects the user attends
+   #     all_teaching_subjects = user.teachingSubject.all
+
+        #get all plan objects
+    #    assignment = Assignment.objects.all()
+        #make dictionary where key is subjectname in plan and value is planID
+     #   teachingsubject = {}
+      #  for object in assignment:
+       #     teachingsubject[object.subject.name]=object.id
+        #make user subjects, plan objects and plansubject dictionary usable from template
+        #args = {'subjects': all_teaching_subjects,'assignment': assignment, 'teachingsubject':teachingsubject, }
+        #args["subjectDict"] = subjectDict
+        #if request.method == 'POST':
+         #   if 'delete_attending_subject' in request.POST:
+          #      user.attendingSubject.remove(int(request.POST['delete_attending_pk']))
+           # if 'delete_teaching_subject' in request.POST:
+            #    user.teachingSubject.remove(int(request.POST['delete_teaching_pk']))
+            #if 'subjectInfo' in request.POST:
+             #   if ' ' in request.POST['subjectInfo']:
+              #      subject_info = request.POST['subjectInfo'].split(' ',1)
+               #     if subject_info[0] in subjectDict.keys():
+                #        subject = Subject.objects.get_or_create(code = subject_info[0],name=subject_info[1])
+                 #       user.attendingSubject.add(subject[0].pk)
+                  #      return HttpResponseRedirect('../home/')
+                   # else:
+                    #    args['invalid_subject'] = 1
+                #else:
+                 #   args['invalid_subject'] = 1
+
+        #render subjectHome.html
+        #return render(request, 'viewAssignments.html', args)'''
