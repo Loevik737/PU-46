@@ -6,16 +6,16 @@ from django.contrib.auth.models import User
 class UpdateUser(forms.ModelForm):
     #creating a formfield for username
     username = forms.CharField(required=False,label='Change username',
-                    widget=forms.TextInput(attrs={'placeholder': 'new username'}))
+                    widget=forms.TextInput(attrs={'placeholder': 'new username','class':"form-control"}))
     #creating a formfield for email
     email = forms.EmailField(required=False,label='Change email',
-                    widget=forms.TextInput(attrs={'placeholder': 'new email...'}))
+                    widget=forms.TextInput(attrs={'placeholder': 'new email...','class':"form-control"}))
     #creating a formfield for last name
     first_name = forms.CharField(required=False,label='Change first name',
-                    widget=forms.TextInput(attrs={'placeholder': 'new first name'}))
+                    widget=forms.TextInput(attrs={'placeholder': 'new first name','class':"form-control"}))
     #creating a formdef test_role(self):field for last name
     last_name = forms.CharField(required=False,label='Change last name',
-                    widget=forms.TextInput(attrs={'placeholder': 'new last name'}))
+                    widget=forms.TextInput(attrs={'placeholder': 'new last name','class':"form-control"}))
     #the model we will use will be the auth User model and the fields are named username,email
     class Meta:
         model = User

@@ -4,31 +4,31 @@
         <!--Checks if there is a userobject in user -->
         {% if user %}
         <!--Test form-->
-            <h2>Assignment {{assignment.title}} for {{assignment.subject.name}}({{assignment.subject.code}})</h2>
+            <h2>Assignment {{assignment.title}} for {{assignment.subject.name}}({{assignment.subject.code}}) <button class="btn-primary btn" onclick="location.href='../assignment/{{assignment.id}}/answer';">Take assignment</button></h2>
             {% if multipleChoiseQuestions %}
-                <strong>Multiple Choice Questions</strong>
+                <ul class="list-group">Multiple Choice Questions
                 {% for mcq in multipleChoiseQuestions %}
-                  <p><b>Question {{forloop.counter0}}:</b> {{mcq.question}}</p>
-                  {% for choise in mcq.choises %}
-                    <p>Choice {{forloop.counter0}}: {{choise}}</p>
-                  {% endfor %}
+                  <li class="list-group-item">Question: {{mcq.question}}</li>
                 {% endfor %}
+                </ul>
             {% else %}
                  <strong>No multiple choise questions</strong>
             {% endif %}
             {% if trueFalseQuestions %}
-                <strong>True/False Questions</strong>
+                <ul class="list-group">True/False Questions
                 {% for tfq in trueFalseQuestions %}
-                  <p><b>Question {{forloop.counter0}}: </b>{{tfq.question}}</p>
+                  <li class="list-group-item">Question:{{tfq.question}}</li>
                 {% endfor %}
+                </ul>
             {% else %}
                  <strong>No True/false questions</strong>
             {% endif %}
             {% if oneWordQuestions %}
-                <strong>One Word Questions</strong>
+                <ul class="list-group">One Word Questions
                 {% for owq in oneWordQuestions %}
-                  <p><b>Question {{forloop.counter0}}: </b>{{owq.question}}</p>
+                  <li class="list-group-item">Question: {{owq.question}}</p>
                 {% endfor %}
+                </ul>
             {% else %}
                  <strong>No one word questions</strong>
             {% endif %}
