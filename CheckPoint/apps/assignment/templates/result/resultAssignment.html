@@ -31,7 +31,7 @@
       <div>All One Word Question answers were correct</div>
   {% endif %}
   {% if retry and user_wrongMCQ.all or user_wrongTFQ.all or user_wrongOWQ.all %}
-    <button onclick="location.href='../{{as_id}}/answer';">Retry</button>
+    <button class="btn btn-default" onclick="location.href='../{{as_id}}/answer';">Retry</button>
   {% endif %}
 
 {% else %}
