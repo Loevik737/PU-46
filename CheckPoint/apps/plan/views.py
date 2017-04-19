@@ -156,7 +156,10 @@ redirected to plan.
 def create_week(request, plan_id):
     if request.method == 'POST':
         plan = Plan.objects.get(id=plan_id)
-        week_number = list(plan.weeks.all().order_by('id'))[-1].week_number + 1
+        if plan.weeks.all():
+            week_number = list(plan.weeks.all().order_by('id'))[-1].week_number + 1
+        else:
+            week_number = 1;
         form = CreateWeekForm(request.POST or None)
         if form.is_valid():
             week = form.save(commit=False)
