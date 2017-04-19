@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}Assignment{% endblock %}
 {% block content %}
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/assignmentStyle.css' %}" />
         <!--Checks if there is a userobject in user -->
         {% if user %}
         <!--Test form-->
-            <h2>Assignment {{assignment.title}} for {{assignment.subject.name}}({{assignment.subject.code}}) <button class="btn-primary btn" onclick="location.href='../assignment/{{assignment.id}}/answer';">Take assignment</button></h2>
-            {% if user.customuser.role == 'Teacher' %}
-              <button class="btn-primary btn" onclick="location.href='../assignment/{{assignment.id}}/edit';">Edit assignment</button>
+            <h2>Assignment {{assignment.title}} for {{assignment.subject.name}}({{assignment.subject.code}}) </h2>
+            <button class="btn-primary btn" onclick="location.href='../assignment/{{assignment.id}}/answer';">Take assignment</button>{% if user.customuser.role == 'Teacher' %}
+            <button class="btn-primary btn" onclick="location.href='../assignment/{{assignment.id}}/edit';">Edit assignment</button>
             {% endif %}
+            <div class="box">
             {% if multipleChoiseQuestions %}
                 <ul class="list-group">Multiple Choice Questions
                 {% for mcq in multipleChoiseQuestions %}
@@ -17,6 +20,8 @@
             {% else %}
                  <strong>No multiple choise questions</strong>
             {% endif %}
+          </div>
+          <div class="box">
             {% if trueFalseQuestions %}
                 <ul class="list-group">True/False Questions
                 {% for tfq in trueFalseQuestions %}
@@ -26,6 +31,8 @@
             {% else %}
                  <strong>No True/false questions</strong>
             {% endif %}
+          </div>
+          <div class="box">
             {% if oneWordQuestions %}
                 <ul class="list-group">One Word Questions
                 {% for owq in oneWordQuestions %}
@@ -39,5 +46,5 @@
         {% else %}
             <strong>You are not logged in</strong>
         {% endif %}
-
+      </div>
 {% endblock %}

@@ -5,8 +5,8 @@
 {% block content %}
 <h2>
 Assignments in the subjects you teach:
-      <button class="btn-primary btn" onclick="location.href='../create';"> Create new assignment +</button>
 </h2>
+<button class="btn-primary btn" onclick="location.href='../create';"> Create new assignment +</button>
     {% for key, value in assignments.items %}
     <button class="accordion">{{ key}}</button>
     <div class="panel">
