@@ -26,7 +26,7 @@ class CreateAssignment(forms.ModelForm):
                     widget=forms.NumberInput(attrs={'class':'form-control'}))
     tries = forms.IntegerField(required = True, label='Tries:',initial=3,
                     widget=forms.NumberInput(attrs={'class':'form-control'}))
-    #the model we will use will be the auth User model and the fields are named title, subject, term, year
+    #the model we will use will be the model and the fields are named title, subject, term, year
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user',None)
         super(CreateAssignment, self).__init__(*args, **kwargs)

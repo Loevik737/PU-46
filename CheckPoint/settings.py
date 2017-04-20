@@ -42,10 +42,11 @@ INSTALLED_APPS = [
     'CheckPoint.apps.subject',
     'CheckPoint.apps.loginPortal',
     'CheckPoint.apps.registration',
-    'CheckPoint.apps.home',
     'CheckPoint.apps.assignment',
     'CheckPoint.apps.stats',
     'multiselectfield',
+    'django_nose',
+    'coverage',
 
 ]
 
@@ -58,6 +59,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'CheckPoint.middleware.login_required_middleware.LoginRequiredMiddleware',
+]
+
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Tell nose to measure coverage on the 'foo' and 'bar' apps
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=CheckPoint.apps.stats,CheckPoint.apps.loginPortal,CheckPoint.apps.assignment,CheckPoint.apps.plan,CheckPoint.apps.userInfo,CheckPoint.apps.subject',
 ]
 
 LOGIN_URL = '/login/'
