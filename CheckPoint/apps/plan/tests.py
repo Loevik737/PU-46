@@ -75,6 +75,10 @@ class CreateTestCase(TestCase):
         print(form.errors)
         self.assertTrue(form.is_valid())
 
+def containsKey(key,context):
+    if key in context:
+        return True
+    return False
 
 class ViewTestCase(TestCase):
     def setUp(self):
@@ -93,6 +97,7 @@ class ViewTestCase(TestCase):
         self.cuser.teachingSubject.add(self.subject)
         self.cuser2.attendingSubject.add(self.subject)
 
+
     def test_view_index(self):
         self.client.login(username='student',password="12345")
         response = self.client.get('/plan/'+ str(Plan.objects.all()[0].id))
@@ -102,3 +107,25 @@ class ViewTestCase(TestCase):
         response = self.client.get('/plan/'+ str(Plan.objects.all()[0].id))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'plan/plan.html')
+
+    def test_view_show_related_plans(self):
+        self.client.login(username='student',password="12345")
+        response = self.client.get('/plan/all/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(containsKey('plans',response.context),True)
+        self.assertTemplateUsed(response, 'plan/allPlans.html')
+
+    def test_view_create_plan_student_decline(self):
+        self.client.login(username='student',password="12345")
+        response = self.client.get('/plan/create/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['decline'], 1)
+        self.assertTemplateUsed(response, 'plan/createplan.html')
+
+    def test_view_create_plan_teacher_loads(self):
+        self.client.login(username='teacher',password="12345")
+        response = self.client.get('/plan/create/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['decline'], 0)
+        self.assertEqual(containsKey('form',response.context),True)
+        self.assertTemplateUsed(response, 'plan/createplan.html')

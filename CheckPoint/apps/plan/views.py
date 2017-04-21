@@ -52,22 +52,26 @@ the page gets redirected to the plan that just was created.
 If not, the form class with the dictionary to the template.
 """
 def create_plan(request):
-    #the dictionary we will send to the html template
-    context={}
-    #if we get a POST request jump into the if statement
-    if request.method == 'POST':
-        #set for to the POST request we got
-        form = CreatePlanForm(request.POST,user=request.user.customuser)
-        #if the form was valid,save it and redirect us to the site for the new plan
-        if form.is_valid():
-            start_week_number = form.cleaned_data['beginning_week']
-            plan = form.save()
-            week = Week.objects.create(plan=plan,week_number=start_week_number)
-            return HttpResponseRedirect(reverse('plan', args=[plan.id]))
+    context = {}
+    if request.user.customuser.role == 'Teacher':
+        #the dictionary we will send to the html template
+        context={'decline':0}
+        #if we get a POST request jump into the if statement
+        if request.method == 'POST':
+            #set for to the POST request we got
+            form = CreatePlanForm(request.POST,user=request.user.customuser)
+            #if the form was valid,save it and redirect us to the site for the new plan
+            if form.is_valid():
+                start_week_number = form.cleaned_data['beginning_week']
+                plan = form.save()
+                week = Week.objects.create(plan=plan,week_number=start_week_number)
+                return HttpResponseRedirect(reverse('plan', args=[plan.id]))
+        else:
+            #if we dont get a POST request, send the form class with the dictionary to the template
+            form = CreatePlanForm(user=request.user.customuser)
+            context['form'] = form
     else:
-        #if we dont get a POST request, send the form class with the dictionary to the template
-        form = CreatePlanForm(user=request.user.customuser)
-        context['form'] = form
+        context['decline'] = 1
     return render(request,'plan/createplan.html',context)
 
 
