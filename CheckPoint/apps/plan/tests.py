@@ -62,15 +62,43 @@ class CreateTestCase(TestCase):
 
     def test_create_form_valid(self):
         form = CreateLectureForm(data=_test_lecture_data)
+        form.objectives = self.obj1
+        print(form.errors)
         self.assertTrue(form.is_valid())
 
     def test_createPlan(self):
-        _test_plan_data['subject'] = 1
+        _test_plan_data['subject'] = _test_plan_data['subject'].id
         form = CreatePlanForm(data=_test_plan_data,user=self.cuser)
+
         print(_test_plan_data)
         print(self.cuser.teachingSubject.all())
         print(form.errors)
         self.assertTrue(form.is_valid())
 
-    def test_createLecture(self):
-        pass
+
+class ViewTestCase(TestCase):
+    def setUp(self):
+        self.sub = Subject.objects.create(**_test_subject_data)
+        _test_plan_data['subject'] = self.sub
+        self.plan = Plan.objects.create(**_test_plan_data)
+        self.teacher = User.objects.create(username='teacher')
+        self.teacher.set_password('12345')
+        self.teacher.save()
+        self.cuser = CustomUser.objects.create(user=self.teacher,role='Teacher')
+        self.student = User.objects.create(username='student')
+        self.student.set_password('12345')
+        self.student.save()
+        self.cuser2 = CustomUser.objects.create(user=self.student,role='Student')
+        self.subject = Subject.objects.create(code="TDT1000",name="abc")
+        self.cuser.teachingSubject.add(self.subject)
+        self.cuser2.attendingSubject.add(self.subject)
+
+    def test_view_index(self):
+        self.client.login(username='student',password="12345")
+        response = self.client.get('/plan/'+ str(Plan.objects.all()[0].id))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'plan/plan.html')
+        self.client.login(username='teacher',password="12345")
+        response = self.client.get('/plan/'+ str(Plan.objects.all()[0].id))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'plan/plan.html')

@@ -102,7 +102,7 @@ def answer_assignment(request,assignment_id):
 def create_assignment(request):
     user = request.user
     #the dictionary we will send to the html template
-    context={}
+    context={'decline':0}
     if user.customuser.role == 'Teacher':
         #if we get a POST request jump into the if statement
         if request.method == 'POST':
@@ -194,6 +194,7 @@ def edit_assignment(request, assignment_id):
             'multipleChoiseQuestions': multipleChoiseQuestions,
             'trueFalseQuestions': trueFalseQuestions,
             'oneWordQuestions': oneWordQuestions,
+            'decline': 0,
 
         }
     else:
