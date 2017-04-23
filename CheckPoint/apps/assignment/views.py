@@ -52,7 +52,7 @@ def answer_assignment(request,assignment_id):
     if user.role == "Student" or user.role =="Teacher":
         assignment = Assignment.objects.get(id=assignment_id)
         user_answers,created = assignment.UserAnswers.get_or_create(user = user,assignment=assignment)
-        if user_answers.attempts <= assignment.tries:
+        if user_answers.attempts < assignment.tries:
             multipleChoiseQuestions = assignment.MultipleChoiseQuestions.all()
             trueFalseQuestions = assignment.TrueFalseQuestions.all()
             oneWordQuestions = assignment.OneWordQuestions.all()

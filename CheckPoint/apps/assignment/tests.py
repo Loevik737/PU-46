@@ -71,6 +71,11 @@ class questionsFormTest( TestCase):
         form = CreateOneWordQuestion(data= data)
         self.assertTrue(form.has_error('answear', code='contained space'))
 
+
+def responceOk(self,template,response):
+    self.assertEqual(response.status_code, 200)
+    self.assertTemplateUsed(response, template)
+
 class assignmentViewTest( TestCase):
 
     def setUp(self):
@@ -85,62 +90,82 @@ class assignmentViewTest( TestCase):
         self.subject = Subject.objects.create(code="TDT1000",name="abc")
         self.cuser.teachingSubject.add(self.subject)
         self.cuser2.attendingSubject.add(self.subject)
-        self.assignment = Assignment.objects.create(title="abc",subject=self.subject,term="abc",year=2017,tries=3)
+        self.assignment = Assignment.objects.create(title="abc",subject=self.subject,term="abc",year=2017,tries=1)
 
-    def test_view_create_teacher_load(self):
+    def test_view_create_teacher_load_accept(self):
         self.client.login(username='teacher',password="12345")
         response = self.client.get('/assignment/create/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'create/createAssignment.html')
+        responceOk(self,'create/createAssignment.html',response)
         self.assertEqual(response.context['decline'],0)
 
     def test_view_create_student_decline(self):
         self.client.login(username='student',password="12345")
         response = self.client.get('/assignment/create/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'create/createAssignment.html')
+        responceOk(self,'create/createAssignment.html',response)
         self.assertEqual(response.context['decline'],1)
 
     def test_view_viewSubjectAssignments(self):
         self.client.login(username='teacher',password="12345")
         response = self.client.get('/assignment/allteaching/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'viewall/viewAssignments.html')
+        responceOk(self,'viewall/viewAssignments.html',response)
 
     def test_view_viewSubjectAttendingAssignments(self):
         self.client.login(username='student',password="12345")
         response = self.client.get('/assignment/allattending/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'viewall/viewAttendingAssignments.html')
+        responceOk(self,'viewall/viewAttendingAssignments.html',response)
 
     def test_view_edit_assignments_teacher(self):
         self.client.login(username='teacher',password="12345")
         response = self.client.get('/assignment/'+ str(Assignment.objects.all()[0].id) +'/edit')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'edit/editAssignment.html')
+        responceOk(self,'edit/editAssignment.html',response)
         self.assertEqual(response.context['decline'], 0)
 
     def test_view_edit_assignments_teacher_post(self):
         self.client.login(username='teacher',password="12345")
         response = self.client.post('/assignment/'+ str(Assignment.objects.all()[0].id) +'/edit')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'edit/editAssignment.html')
+        responceOk(self,'edit/editAssignment.html',response)
         self.assertEqual(response.context['decline'], 0)
 
-    def test_view_edit_assignments_student(self):
+    def test_view_edit_assignments_student_decline(self):
         self.client.login(username='student',password="12345")
         response = self.client.get('/assignment/'+ str(Assignment.objects.all()[0].id) +'/edit')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'edit/editAssignment.html')
+        responceOk(self,'edit/editAssignment.html',response)
         self.assertEqual(response.context['decline'], 1)
 
 
     def test_view_index(self):
         self.client.login(username='student',password="12345")
         response = self.client.get('/assignment/'+ str(Assignment.objects.all()[0].id))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'view/assignment.html')
+        responceOk(self,'view/assignment.html',response)
         self.client.login(username='teacher',password="12345")
         response = self.client.get('/assignment/'+ str(Assignment.objects.all()[0].id))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'view/assignment.html')
+        responceOk(self,'view/assignment.html',response)
+
+    def test_view_result_assignment(self):
+        self.client.login(username='student',password="12345")
+        response = self.client.get('/assignment/'+ str(Assignment.objects.all()[0].id)+ '/result')
+        responceOk(self, 'result/resultAssignment.html',response)
+
+    def test_view_answer_assignment_get(self):
+        self.client.login(username='student',password="12345")
+        response = self.client.get('/assignment/'+ str(Assignment.objects.all()[0].id)+ '/answer')
+        responceOk(self, 'answer/answerAssignment.html',response)
+        self.client.login(username='teacher',password="12345")
+        response = self.client.get('/assignment/'+ str(Assignment.objects.all()[0].id)+ '/answer')
+        responceOk(self, 'answer/answerAssignment.html',response)
+
+    def test_view_answer_assignment_post(self):
+        self.client.login(username='student',password="12345")
+        response = self.client.post('/assignment/'+ str(Assignment.objects.all()[0].id)+ '/answer',follow=True)
+        responceOk(self, 'result/resultAssignment.html',response)
+        self.client.login(username='teacher',password="12345")
+        response = self.client.post('/assignment/'+ str(Assignment.objects.all()[0].id)+ '/answer',follow=True)
+        responceOk(self, 'result/resultAssignment.html',response)
+
+    def test_view_answer_assignment_post_tries_decline(self):
+        self.client.login(username='student',password="12345")
+        response = self.client.post('/assignment/'+ str(Assignment.objects.all()[0].id)+ '/answer',follow=True)
+        responceOk(self, 'result/resultAssignment.html',response)
+        response = self.client.post('/assignment/'+ str(Assignment.objects.all()[0].id)+ '/answer',follow=True)
+        responceOk(self, 'answer/answerAssignment.html',response)
+        self.assertEqual(response.context['decline'], 1)

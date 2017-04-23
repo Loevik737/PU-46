@@ -63,22 +63,22 @@ class CreateTestCase(TestCase):
     def test_create_form_valid(self):
         form = CreateLectureForm(data=_test_lecture_data)
         form.objectives = self.obj1
-        print(form.errors)
         self.assertTrue(form.is_valid())
 
     def test_createPlan(self):
         _test_plan_data['subject'] = _test_plan_data['subject'].id
         form = CreatePlanForm(data=_test_plan_data,user=self.cuser)
-
-        print(_test_plan_data)
-        print(self.cuser.teachingSubject.all())
-        print(form.errors)
         self.assertTrue(form.is_valid())
 
 def containsKey(key,context):
     if key in context:
         return True
     return False
+
+def responceOk(self,template,response):
+    self.assertEqual(response.status_code, 200)
+    self.assertTemplateUsed(response, template)
+
 
 class ViewTestCase(TestCase):
     def setUp(self):
@@ -101,31 +101,26 @@ class ViewTestCase(TestCase):
     def test_view_index(self):
         self.client.login(username='student',password="12345")
         response = self.client.get('/plan/'+ str(Plan.objects.all()[0].id))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'plan/plan.html')
+        responceOk(self,'plan/plan.html',response)
         self.client.login(username='teacher',password="12345")
         response = self.client.get('/plan/'+ str(Plan.objects.all()[0].id))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'plan/plan.html')
+        responceOk(self,'plan/plan.html',response)
 
     def test_view_show_related_plans(self):
         self.client.login(username='student',password="12345")
         response = self.client.get('/plan/all/')
-        self.assertEqual(response.status_code, 200)
+        responceOk(self,'plan/allPlans.html',response)
         self.assertEqual(containsKey('plans',response.context),True)
-        self.assertTemplateUsed(response, 'plan/allPlans.html')
 
     def test_view_create_plan_student_decline(self):
         self.client.login(username='student',password="12345")
         response = self.client.get('/plan/create/')
-        self.assertEqual(response.status_code, 200)
+        responceOk(self,'plan/createplan.html',response)
         self.assertEqual(response.context['decline'], 1)
-        self.assertTemplateUsed(response, 'plan/createplan.html')
 
     def test_view_create_plan_teacher_loads(self):
         self.client.login(username='teacher',password="12345")
         response = self.client.get('/plan/create/')
-        self.assertEqual(response.status_code, 200)
+        responceOk(self,'plan/createplan.html',response)
         self.assertEqual(response.context['decline'], 0)
         self.assertEqual(containsKey('form',response.context),True)
-        self.assertTemplateUsed(response, 'plan/createplan.html')
