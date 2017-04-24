@@ -76,14 +76,18 @@ def create_plan(request):
 
 
 def edit(request, lecture_id):
-    lecture = Lecture.objects.get(pk=lecture_id)
-    print(lecture_id)
-    form = CreateLectureForm(instance=lecture)
+    context = {}
+    if request.user.customuser.role == 'Teacher':
+        lecture = Lecture.objects.get(pk=lecture_id)
+        form = CreateLectureForm(instance=lecture)
 
-    context = {
-        'lecture': lecture,
-        'edit_form': form
-    }
+        context = {
+            'lecture': lecture,
+            'edit_form': form,
+            'decline' : 0
+        }
+    else:
+        context['decline'] = 1
     return render(request, 'plan/editlecture.html', context)
 
 
@@ -93,47 +97,61 @@ If there is, the hidden fields is saved. It creates an empty CreateLectureForm.
 The form, if valid, is used to create a lecture, foreign keys/excluded keys is found and added to the lecture, then
 the lecture is saved. Many to many field Objectives is added afterwords.
 
-Then the page get reloaded.
+Then the page gets reloaded.
 """
 def create_lecture(request, plan_id, week_id):
-    if request.method == 'POST':
-        form = CreateLectureForm(request.POST or None)
-        if form.is_valid():
-            plan = Plan.objects.get(id=plan_id)
-            week = Week.objects.get(id=week_id)
-            lecture = form.save(commit=False)
-            lecture.plan = plan
-            lecture.week = week
-            lecture.save()
-            objectives = form.cleaned_data.pop('objectives_form_field').split(';')
-            lecture_objectives = []
-            for objective in objectives:
-                lecture_objective, exists = Objectives.objects.get_or_create(learning_objective=objective,
-                                                                             subject=plan.subject)
-                lecture_objectives.append(lecture_objective)
-            lecture.objectives = lecture_objectives
-            lecture.save()
-        return HttpResponseRedirect(reverse('plan', args=[plan_id]))
+    context = {}
+    if request.user.customuser.role == 'Teacher':
+        context['decline'] = 0
+        if request.method == 'POST':
+            form = CreateLectureForm(request.POST or None)
+            if form.is_valid():
+                plan = Plan.objects.get(id=plan_id)
+                week = Week.objects.get(id=week_id)
+                lecture = form.save(commit=False)
+                lecture.plan = plan
+                lecture.week = week
+                lecture.save()
+                objectives = form.cleaned_data.pop('objectives_form_field').split(';')
+                lecture_objectives = []
+                for objective in objectives:
+                    lecture_objective, exists = Objectives.objects.get_or_create(learning_objective=objective,
+                                                                                 subject=plan.subject)
+                    lecture_objectives.append(lecture_objective)
+                lecture.objectives = lecture_objectives
+                lecture.save()
+            return HttpResponseRedirect(reverse('plan', args=[plan_id]))
+    else:
+        context['decline'] = 1
+    return render(request,'plan/plan.html',context)
+
 
 """
 The edit_lecture view, for editing a lecture.
 """
 def edit_lecture(request, lecture_id=None):
-    if lecture_id and request.method == 'POST':
-        lecture = get_object_or_404(Lecture, id=lecture_id)
-        form = CreateLectureForm(request.POST, instance=lecture)
-        if form.is_valid():
-            objectives = form.cleaned_data.pop('objectives_form_field').split(';')
-            lecture_objectives = []
-            for objective in objectives:
-                lecture_objective, exists = Objectives.objects.get_or_create(learning_objective=objective,
-                                                                             subject=lecture.plan.subject)
-                lecture_objectives.append(lecture_objective)
-            lecture.objectives = lecture_objectives
-            lecture.save()
-            return HttpResponseRedirect(reverse('plan', args=[lecture.plan.id]))
-        else:
-            return HttpResponseRedirect(reverse('edit', args=[lecture.id]))
+    context = {}
+    if request.user.customuser.role == "Teacher":
+        context['decline'] = 0
+        if lecture_id and request.method == 'POST':
+            lecture = get_object_or_404(Lecture, id=lecture_id)
+            form = CreateLectureForm(request.POST, instance=lecture)
+            if form.is_valid():
+                objectives = form.cleaned_data.pop('objectives_form_field').split(';')
+                lecture_objectives = []
+                for objective in objectives:
+                    lecture_objective, exists = Objectives.objects.get_or_create(learning_objective=objective,
+                                                                                 subject=lecture.plan.subject)
+                    lecture_objectives.append(lecture_objective)
+                lecture.objectives = lecture_objectives
+                lecture.save()
+                return HttpResponseRedirect(reverse('plan', args=[lecture.plan.id]))
+            else:
+                return HttpResponseRedirect(reverse('edit', args=[lecture.id]))
+    else:
+        context['decline'] = 1
+    return render(request,'plan/plan.html',context)
+
 
 
 """
@@ -141,15 +159,21 @@ The delete_lecture view is used to delete a lecture. When the deletebutton is cl
 The view checks if the DeleteLectureForm is valid then deletes the lecture and redirects to the plan.
 """
 def delete_lecture(request):
-    lecture_id = request.POST.get('lecture_id', None)
-    lecture_to_delete = get_object_or_404(Lecture, id=lecture_id)
-    plan_id = lecture_to_delete.plan.id
+    context = {}
+    if request.user.customuser.role == "Teacher":
+        context['decline'] = 0
+        lecture_id = request.POST.get('lecture_id', None)
+        lecture_to_delete = get_object_or_404(Lecture, id=lecture_id)
+        plan_id = lecture_to_delete.plan.id
 
-    if request.method == 'POST':
-        form = DeleteLectureForm(request.POST, instance=lecture_to_delete)
-        if form.is_valid():
-            lecture_to_delete.delete()
-            return HttpResponseRedirect(reverse('plan', args=[plan_id]))
+        if request.method == 'POST':
+            form = DeleteLectureForm(request.POST, instance=lecture_to_delete)
+            if form.is_valid():
+                lecture_to_delete.delete()
+                return HttpResponseRedirect(reverse('plan', args=[plan_id]))
+    else:
+        context['decline'] = 1
+    return render(request,'plan/plan.html',context)
 
 """
 The create_week view is used to create a week. When request is POST the plan_id and week_number is retrieved. Add 1 to
@@ -158,19 +182,25 @@ it is saved without commit, for then to save foreign key plan and week_number to
 redirected to plan.
 """
 def create_week(request, plan_id):
-    if request.method == 'POST':
-        plan = Plan.objects.get(id=plan_id)
-        if plan.weeks.all():
-            week_number = list(plan.weeks.all().order_by('id'))[-1].week_number + 1
-        else:
-            week_number = 1;
-        form = CreateWeekForm(request.POST or None)
-        if form.is_valid():
-            week = form.save(commit=False)
-            week.plan = plan
-            week.week_number = week_number
-            form.save()
-        return HttpResponseRedirect(reverse('plan', args=[plan_id]))
+    context = {}
+    if request.user.customuser.role == "Teacher":
+        context['decline'] = 0
+        if request.method == 'POST':
+            plan = Plan.objects.get(id=plan_id)
+            if plan.weeks.all():
+                week_number = list(plan.weeks.all().order_by('id'))[-1].week_number + 1
+            else:
+                week_number = 1;
+            form = CreateWeekForm(request.POST or None)
+            if form.is_valid():
+                week = form.save(commit=False)
+                week.plan = plan
+                week.week_number = week_number
+                form.save()
+            return HttpResponseRedirect(reverse('plan', args=[plan_id]))
+    else:
+        context['decline'] = 1
+    return render(request,'plan/plan.html',context)
 
 """
 The delete_week view is used to delete a week. When the deletebutton is clicked a POST request is sent.

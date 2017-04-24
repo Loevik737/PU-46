@@ -1,4 +1,3 @@
-
 from django.test import TestCase
 
 from CheckPoint.apps.subject.models import Subject
@@ -114,7 +113,7 @@ class assignmentViewTest( TestCase):
         response = self.client.get('/assignment/allattending/')
         responceOk(self,'viewall/viewAttendingAssignments.html',response)
 
-    def test_view_edit_assignments_teacher(self):
+    def test_view_assignments_teacher(self):
         self.client.login(username='teacher',password="12345")
         response = self.client.get('/assignment/'+ str(Assignment.objects.all()[0].id) +'/edit')
         responceOk(self,'edit/editAssignment.html',response)
@@ -169,3 +168,15 @@ class assignmentViewTest( TestCase):
         response = self.client.post('/assignment/'+ str(Assignment.objects.all()[0].id)+ '/answer',follow=True)
         responceOk(self, 'answer/answerAssignment.html',response)
         self.assertEqual(response.context['decline'], 1)
+
+    def test_create_assignment_loads(self):
+        self.client.login(username='teacher',password="12345")
+        response = self.client.post('/assignment/create/')
+        self.assertEqual(response.context['decline'], 0)
+        responceOk(self, 'create/createAssignment.html',response)
+
+    def test_createAssignment_decline(self):
+        self.client.login(username='student',password="12345")
+        response = self.client.post('/assignment/create/')
+        self.assertEqual(response.context['decline'], 1)
+        responceOk(self, 'create/createAssignment.html',response)

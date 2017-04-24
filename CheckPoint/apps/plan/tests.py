@@ -85,6 +85,16 @@ class ViewTestCase(TestCase):
         self.sub = Subject.objects.create(**_test_subject_data)
         _test_plan_data['subject'] = self.sub
         self.plan = Plan.objects.create(**_test_plan_data)
+        _test_week_data['plan'] = self.plan
+        self.week = Week.objects.create(**_test_week_data)
+        _test_objectives_data[0]['subject'] = self.sub
+        _test_objectives_data[1]['subject'] = self.sub
+        self.obj1 = Objectives.objects.create(**_test_objectives_data[0])
+        self.obj2 = Objectives.objects.create(**_test_objectives_data[1])
+        _test_lecture_data['plan'] = self.plan
+        _test_lecture_data['week'] = self.week
+        self.lecture = Lecture.objects.create(**_test_lecture_data)
+        self.lecture.objectives = [self.obj1, self.obj2]
         self.teacher = User.objects.create(username='teacher')
         self.teacher.set_password('12345')
         self.teacher.save()
@@ -124,3 +134,51 @@ class ViewTestCase(TestCase):
         responceOk(self,'plan/createplan.html',response)
         self.assertEqual(response.context['decline'], 0)
         self.assertEqual(containsKey('form',response.context),True)
+
+    def test_view_edit_loads(self):
+        self.client.login(username='teacher',password="12345")
+        response = self.client.get('/plan/edit/'+str(Lecture.objects.all()[0].id))
+        responceOk(self,'plan/editlecture.html',response)
+        self.assertEqual(response.context['decline'],0)
+        self.assertEqual(containsKey('lecture',response.context),True)
+        self.assertEqual(containsKey('edit_form',response.context),True)
+
+    def test_view_edit_decline(self):
+        self.client.login(username='student',password="12345")
+        response = self.client.get('/plan/edit/'+str(Lecture.objects.all()[0].id))
+        responceOk(self,'plan/editlecture.html',response)
+        self.assertEqual(response.context['decline'],1)
+
+    def test_view_create_lecture_loads(self):
+        self.client.login(username='teacher',password="12345")
+        response = self.client.post('/plan/'+str(Plan.objects.all()[0].id) + '/addLecture/' + str(1),follow=True)
+        self.assertEqual(response.status_code,200)
+
+    def test_view_create_lecture_decline(self):
+        self.client.login(username='student',password="12345")
+        response = self.client.post('/plan/'+str(Plan.objects.all()[0].id) + '/addLecture/' + str(1),follow=True)
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.context['decline'],1)
+
+
+    def test_view_edit_lecture_loads(self):
+        self.client.login(username='teacher',password="12345")
+        response = self.client.post('/plan/editLecture/'+str(Lecture.objects.all()[0].id),follow=True)
+        self.assertEqual(response.status_code,200)
+
+    def test_view_edit_lecture_decline(self):
+        self.client.login(username='student',password="12345")
+        response = self.client.post('/plan/editLecture/'+str(Lecture.objects.all()[0].id),follow=True)
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.context['decline'],1)
+
+    def test_view_create_week_loads(self):
+        self.client.login(username='teacher',password="12345")
+        response = self.client.post('/plan/'+str(Plan.objects.all()[0].id)+'/createWeek/',follow=True)
+        self.assertEqual(response.status_code,200)
+
+    def test_view_create_week_decline(self):
+        self.client.login(username='student',password="12345")
+        response = self.client.post('/plan/'+str(Plan.objects.all()[0].id)+'/createWeek/',follow=True)
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.context['decline'],1)
