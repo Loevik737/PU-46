@@ -5,7 +5,7 @@
 2) Clone the project from github: git clone https://github.com/Loevik737/CheckPoint.git
 3) Set up an viritual envirement: pip install virtualenv
 4) Create the envirement: virtualenv venv
-5) Activate the envirement: . venv/bin/activate Or on windows: cd venv/Script/ and write activate
+5) Activate the envirement: . venv/bin/activate Or on windows: cd venv/Scripts and run(write) activate
 6) Navigate into the project you cloned earlier: cd CheckPoint/
 7) Install the projects requirements: pip install -r requirements.txt
 8) Create the database tables: python manage.py migrate
