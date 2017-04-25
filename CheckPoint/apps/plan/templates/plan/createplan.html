@@ -3,8 +3,12 @@
 {% block content %}
 <h2>Create plan</h2>
 <!--form for creating a new plan-->
+{% if not decline %}
 <form class="form-group" method="post" action=".">{% csrf_token %}
         {{ form.as_p }}
     <input class="acceptButton btn btn-default form-control" type="submit" value="Create" />
 </form>
+{% else %}
+<strong>You needs to be a teacer to create a plan</strong>
+{% endif %}
 {% endblock %}
