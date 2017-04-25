@@ -11,5 +11,5 @@
 8) Create the database tables: python manage.py migrate
 9) Run the server: python manage.py runserver
 - The site is now running on a local server and you can access it from: http://127.0.0.1:8000/
-  To run tests to se the sites test coverage run: python manage.py test --with-coverage
+  To run tests to see the sites test coverage run: python manage.py test --with-coverage
 
