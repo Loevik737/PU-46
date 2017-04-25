@@ -2,6 +2,7 @@
 {% block title %}Plan{% endblock %}
 {% block content %}
 <h2>Edit plan</h2>
+{% if not decline %}
 <!--form for creating a new plan-->
 <form class=" form-group" action="{% url 'editLecture' lecture.id %}" method="post">
     {% csrf_token %}
@@ -21,5 +22,7 @@
            onclick="return confirm('Delete this lecture?')"/>
 </form>
 <a href="{% url 'plan' lecture.plan.id %}"><span class="close">&times</span></a>
-
+{% else %}
+<strong> You need to be a teacher </strong>
+{% endif %}
 {% endblock %}
