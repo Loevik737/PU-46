@@ -7,7 +7,7 @@
 4) Create the environment: virtualenv venv
 5) Activate the environment: . venv/bin/activate Or on windows: cd venv/Scripts and run(write) activate
 6) Navigate into the folder of the project you cloned earlier: cd CheckPoint/
-7) Install the projects requirements: pip install -r requirements.txt
+7) Install the project's requirements: pip install -r requirements.txt
 8) Create the database tables: python manage.py migrate
 9) Run the server: python manage.py runserver
 - The site is now running on a local server and you can access it from: http://127.0.0.1:8000/
