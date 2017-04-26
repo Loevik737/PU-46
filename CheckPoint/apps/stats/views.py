@@ -2,6 +2,9 @@ from django.shortcuts import render
 from CheckPoint.apps.assignment.models import *
 from CheckPoint.apps.subject.models import Subject
 
+"""
+The get args function returns the stats for a user with % correct in each assignment and average
+"""
 def get_args(request,user_answers,related_subjects):
     args = {'drawData': {}}
     args['average'] = [0,0]
@@ -26,12 +29,19 @@ def get_args(request,user_answers,related_subjects):
          args['Student'] = 1
     return args
 
+"""
+The teacher stats view returns a dictionary to the stats template with the stats for a teacher
+"""
 def teacher_stats_view(request):
     user = request.user.customuser
     user_answers = UserAnswers.objects.all()
     related_subjects = user.teachingSubject.all()
     return render(request, 'stats.html', get_args(request,user_answers,related_subjects))
 
+
+"""
+The student stats view returns a dictionary to the stats template with the stats for a student
+"""
 def student_stats_view(request):
     user = request.user.customuser
     user_answers = UserAnswers.objects.filter(user_id=user.id)

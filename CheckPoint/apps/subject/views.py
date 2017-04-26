@@ -7,6 +7,10 @@ from CheckPoint.apps.plan.models import Plan
 import json
 import os
 
+"""
+This first bit takes in all the assignments from the ssubjects.json file with all subjects form NTNU's servers and
+makes it a dict with the code for all the subjects as key and the name as value
+"""
 module_dir = os.path.dirname(__file__)  # get current directory
 file_path = os.path.join(module_dir, './static/json/subjects.json')
 subjectDict = {}
@@ -17,6 +21,11 @@ with open(file_path) as json_data:
         temp = temp[13:len(temp)-2]
         subjectDict[temp] = ''.join(sub[0]['hasName'][0]['value']).encode('utf-8').strip()
 
+"""
+The subject view view returns the dictionary with subject so you can search them in the subjects template, and if
+a user sends a post request with a subject it creates a subject object and adds it to attending.
+It can also delete a subject from your teaching or attendign list
+"""
 def subjectView(request):
     #get costumuser
     user =request.user.customuser

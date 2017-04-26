@@ -182,3 +182,8 @@ class ViewTestCase(TestCase):
         response = self.client.post('/plan/'+str(Plan.objects.all()[0].id)+'/createWeek/',follow=True)
         self.assertEqual(response.status_code,200)
         self.assertEqual(response.context['decline'],1)
+
+    def test_view_delete_week_loads(self):
+        self.client.login(username='teacher',password="12345")
+        response = self.client.post('/plan/deleteWeek/',{u'week_id': [u'1'], },follow=True)
+        self.assertEqual(response.status_code,200)

@@ -11,6 +11,9 @@ from .forms import UpdateUser
 def index(request):
     return HttpResponse("Hello, world. You're at the user app")
 
+"""
+The user info view will based on the post request you send check if change your user info if its a a valid input
+"""
 #a view that shows the user info and form for editing
 def user_info(request):
     #user is the user you are loged in with

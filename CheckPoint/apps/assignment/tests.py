@@ -14,12 +14,11 @@ from django.shortcuts import get_object_or_404, render, reverse
 #and question forms
 class assignmentFormTest( TestCase):
     subject_pk = 1
-    @classmethod
-    def setUpTestData(cls):
-        subject = Subject.objects.create(code="TDT1000", name="test")
-        user =User.objects.create(username = 'per')
-        CustomUser.objects.create(user=user,role="Teacher")
-        CustomUser.objects.get(pk=1).teachingSubject.add(subject)
+    def setUp(self):
+        self.subject = Subject.objects.create(code="TDT1000", name="test")
+        self.user =User.objects.create(username = 'per')
+        CustomUser.objects.create(user=self.user,role="Teacher")
+        CustomUser.objects.get(pk=1).teachingSubject.add(self.subject)
     def test_createAssignment_acccept(self):
         data = {'title':'abc','subject':self.subject_pk,'term':'automn' ,'year':2019,'tries':3}
         form = CreateAssignment(data,user=CustomUser.objects.get(pk=1))
@@ -34,10 +33,10 @@ class assignmentFormTest( TestCase):
         self.assertFalse(form.is_valid())
 
 class questionsFormTest( TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.subject = Subject.objects.create(code="TDT1000", name="test")
-        Assignment.objects.create(title="test",subject=cls.subject,term="automn",year=2019)
+
+    def setUp(self):
+        self.subject = Subject.objects.create(code="TDT1000", name="test")
+        Assignment.objects.create(title="test",subject=self.subject,term="automn",year=2019)
 
     def test_createTFQ_acccept(self):
         data = {'question':'aaa','answear':True}

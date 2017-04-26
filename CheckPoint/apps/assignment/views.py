@@ -9,6 +9,9 @@ from CheckPoint.apps.assignment.forms import (CreateAssignment, CreateMultipleCh
 from CheckPoint.apps.assignment.models import (Assignment, MultipleChoiseQuestion, OneWordQuestion,
                      TrueFalseQuestion, UserAnswers)
 
+"""
+The index view shows the assignments guestions. It takes the assignments id as a parameter
+"""
 def index(request, assignment_id):
     #when we get the id of the assingement from url, we look up if there is an object in the
     #database who has that id
@@ -27,6 +30,9 @@ def index(request, assignment_id):
     }
     return render(request, 'view/assignment.html', context)
 
+"""
+The result assignment view shows how the user who are viewing the page did in a spesific assignment.
+"""
 def result_assignment(request,assignment_id):
     user = request.user.customuser
     context = {}
@@ -45,6 +51,10 @@ def result_assignment(request,assignment_id):
         context['as_id'] = assignment_id
     return render(request, 'result/resultAssignment.html', context)
 
+"""
+The answer assignment view takes the the answer to an assignment as a post request and checks how many questions were wrong.
+It then redirects you to the result page
+"""
 def answer_assignment(request,assignment_id):
 
     user = request.user.customuser
@@ -99,6 +109,9 @@ def answer_assignment(request,assignment_id):
         context['decline'] = 1
     return render(request,"answer/answerAssignment.html",context)
 
+"""
+The create assignment view takes in a post request and from the values it gets it checks if it can create a valid assignment.
+"""
 def create_assignment(request):
     user = request.user
     #the dictionary we will send to the html template
@@ -122,6 +135,11 @@ def create_assignment(request):
         context['decline'] = 1
     return render(request,'create/createAssignment.html',context)
 
+"""
+The edit assignment view takes in a post request, and from that it checks if i gets keywords like create_mcq_question.
+If it gets that, it checks if it can create a valid create_mcq_question out of the post request. It can also delete questions
+if it gets the right keywords.
+"""
 def edit_assignment(request, assignment_id):
     context={}
     user = request.user.customuser
@@ -201,6 +219,10 @@ def edit_assignment(request, assignment_id):
         context['decline'] = 1
     return render(request, 'edit/editAssignment.html', context)
 
+"""
+The view subject assignments returns all the assignments in the subjects you are teaching
+"""
+
 def viewSubjectAssignments(request):
     user = request.user.customuser
     teachingSubjects = user.teachingSubject.all()
@@ -211,6 +233,9 @@ def viewSubjectAssignments(request):
             args['assignments'][sub.code]=assignments
     return render(request, 'viewall/viewAssignments.html', args)
 
+"""
+The view subject attending assignments return all the assignments in the subjects you are attending
+"""
 def viewSubjectAttendingAssignments(request):
     user = request.user.customuser
     teachingSubjects = user.attendingSubject.all()
