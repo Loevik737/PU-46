@@ -1,7 +1,7 @@
-django==1.10.5
+django
 django-filter==1.0.1
 django-multiselectfield==0.1.5
 isort==4.2.5
-PyYAML==3.12
+PyYAML
 django-nose
 coverage
